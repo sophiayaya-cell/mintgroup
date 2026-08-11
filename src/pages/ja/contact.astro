@@ -1,17 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactInfo from '../../components/ContactInfo.astro';
 import { UI } from '../../i18n/ui';
 const t = UI.ja;
 ---
-<BaseLayout locale="ja" title="お問い合わせ">
+<BaseLayout locale="ja" title={t.contactTitle}>
   <section>
-    <div class="container" style="max-width:620px;">
+    <div class="container" style="max-width:680px;">
       <h2 class="section-title">{t.contactTitle}</h2>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;display:grid;gap:14px;">
-        <p style="margin:0;">📍 {t.contactAddress}</p>
-        <p style="margin:0;">✉️ {t.contactEmail}</p>
-        <p style="margin:0;">📞 {t.contactPhone}</p>
-      </div>
+      <ContactInfo locale="ja" />
     </div>
   </section>
 </BaseLayout>

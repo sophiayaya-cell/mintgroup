@@ -35,9 +35,6 @@ export const UI = {
     product3Desc: '舒适贴身，为长者提供安心保障。',
 
     contactTitle: '联系我们',
-    contactAddress: '地址：山东省淄博市（示例地址，待补充）',
-    contactEmail: '邮箱：info@mint-hygiene.com',
-    contactPhone: '电话：+86 （待补充）',
 
     rights: '保留所有权利。',
   },
@@ -71,9 +68,6 @@ export const UI = {
     product3Desc: 'Comfortable fit, providing peace of mind for seniors.',
 
     contactTitle: 'Contact Us',
-    contactAddress: 'Address: Zibo, Shandong, China (placeholder, to be updated)',
-    contactEmail: 'Email: info@mint-hygiene.com',
-    contactPhone: 'Phone: +86 (to be updated)',
 
     rights: 'All rights reserved.',
   },
@@ -107,9 +101,6 @@ export const UI = {
     product3Desc: 'Ajuste cómodo, brindando tranquilidad a los adultos mayores.',
 
     contactTitle: 'Contáctanos',
-    contactAddress: 'Dirección: Zibo, Shandong, China (por actualizar)',
-    contactEmail: 'Correo: info@mint-hygiene.com',
-    contactPhone: 'Teléfono: +86 (por actualizar)',
 
     rights: 'Todos los derechos reservados.',
   },
@@ -143,9 +134,6 @@ export const UI = {
     product3Desc: 'ملائمة مريحة توفر الطمأنينة لكبار السن.',
 
     contactTitle: 'اتصل بنا',
-    contactAddress: 'العنوان: زيبو، شاندونغ، الصين (سيتم التحديث)',
-    contactEmail: 'البريد الإلكتروني: info@mint-hygiene.com',
-    contactPhone: 'الهاتف: +86 (سيتم التحديث)',
 
     rights: 'جميع الحقوق محفوظة.',
   },
@@ -179,9 +167,6 @@ export const UI = {
     product3Desc: 'Diskret, bequem und zuverlässig – für Sicherheit und Lebensqualität im Alter.',
 
     contactTitle: 'Kontakt',
-    contactAddress: 'Adresse: Zibo, Shandong, China (wird aktualisiert)',
-    contactEmail: 'E-Mail: info@mint-hygiene.com',
-    contactPhone: 'Telefon: +86 (wird aktualisiert)',
 
     rights: 'Alle Rechte vorbehalten.',
   },
@@ -215,9 +200,6 @@ export const UI = {
     product3Desc: 'Ajustement confortable pour la tranquillité des personnes âgées.',
 
     contactTitle: 'Nous contacter',
-    contactAddress: 'Adresse : Zibo, Shandong, Chine (à actualiser)',
-    contactEmail: 'E-mail : info@mint-hygiene.com',
-    contactPhone: 'Téléphone : +86 (à actualiser)',
 
     rights: 'Tous droits réservés.',
   },
@@ -251,9 +233,6 @@ export const UI = {
     product3Desc: '快適で肌に優しく、高齢者の安心快適な生活を支えます。',
 
     contactTitle: 'お問い合わせ',
-    contactAddress: '住所：山東省淄博市（更新予定）',
-    contactEmail: 'メール：info@mint-hygiene.com',
-    contactPhone: '電話：+86（更新予定）',
 
     rights: '全著作権所有。',
   },
@@ -287,9 +266,6 @@ export const UI = {
     product3Desc: '편안하고 피부에 밀착되며, 노인의 안심을 보장합니다.',
 
     contactTitle: '문의',
-    contactAddress: '주소: 산둥성 짜보시 (更新 예정)',
-    contactEmail: '이메일: info@mint-hygiene.com',
-    contactPhone: '전화: +86 (更新 예정)',
 
     rights: '모든 권리 보유.',
   },
@@ -323,9 +299,6 @@ export const UI = {
     product3Desc: 'Комфортная посадка, обеспечивающая уверенность и спокойствие для пожилых людей.',
 
     contactTitle: 'Контакты',
-    contactAddress: 'Адрес: Цзыбо, пров. Шаньдун, Китай (к обновлению)',
-    contactEmail: 'E-mail: info@mint-hygiene.com',
-    contactPhone: 'Тел.: +86 (к обновлению)',
 
     rights: 'Все права защищены.',
   },

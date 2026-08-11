@@ -1,0 +1,82 @@
+---
+import { UI, type Locale } from '../i18n/ui';
+import { CONTACT } from '../data/contact';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = UI[locale];
+
+const address = CONTACT.address[locale] ?? CONTACT.address.en;
+const mapsQuery = encodeURIComponent(CONTACT.address.en);
+const telHref = `tel:${CONTACT.phone.replace(/\s/g, '')}`;
+const waNumber = CONTACT.whatsapp.replace(/[^0-9]/g, '');
+const waHref = `https://wa.me/${waNumber}`;
+const fbHref = `https://www.facebook.com/${CONTACT.facebook}`;
+const websiteLabel = CONTACT.website.replace(/^https?:\/\//, '');
+
+const btnStyle = 'margin-left:8px;font-size:0.78rem;padding:3px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--muted);cursor:pointer;';
+const rowStyle = 'display:flex;gap:12px;align-items:center;';
+const iconStyle = 'font-size:1.25rem;line-height:1;';
+const linkStyle = 'color:var(--primary);font-weight:600;text-decoration:none;';
+---
+
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;display:grid;gap:18px;">
+  <div style={rowStyle}>
+    <span style={iconStyle}>📍</span>
+    <div style="flex:1;">
+      <a href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`} target="_blank" rel="noopener" style={linkStyle}>{address}</a>
+      <div><button class="copy-btn" style={btnStyle} data-copy={address}>复制地址</button></div>
+    </div>
+  </div>
+
+  <div style={rowStyle}>
+    <span style={iconStyle}>📞</span>
+    <a href={telHref} style={linkStyle}>{CONTACT.phone}</a>
+    <button class="copy-btn" style={btnStyle} data-copy={CONTACT.phone}>复制</button>
+  </div>
+
+  <div style={rowStyle}>
+    <span style={iconStyle}>✉️</span>
+    <a href={`mailto:${CONTACT.email}`} style={linkStyle}>{CONTACT.email}</a>
+    <button class="copy-btn" style={btnStyle} data-copy={CONTACT.email}>复制</button>
+  </div>
+
+  <div style={rowStyle}>
+    <span style={iconStyle}>💬</span>
+    <a href={waHref} target="_blank" rel="noopener" style={linkStyle}>WhatsApp</a>
+  </div>
+
+  <div style={rowStyle}>
+    <span style={iconStyle}>👥</span>
+    <span>微信：<b style="color:var(--primary-dark);">{CONTACT.wechat}</b></span>
+    <button class="copy-btn" style={btnStyle} data-copy={CONTACT.wechat}>复制</button>
+  </div>
+
+  <div style={rowStyle}>
+    <span style={iconStyle}>🌐</span>
+    <a href={CONTACT.website} target="_blank" rel="noopener" style={linkStyle}>{websiteLabel}</a>
+  </div>
+
+  <div style={rowStyle}>
+    <span style={iconStyle}>📘</span>
+    <a href={fbHref} target="_blank" rel="noopener" style={linkStyle}>{CONTACT.facebookName}</a>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.copy-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.copy || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        const old = btn.textContent;
+        btn.textContent = '已复制';
+        setTimeout(() => (btn.textContent = old), 1500);
+      } catch (e) {
+        /* clipboard not available */
+      }
+    });
+  });
+</script>
