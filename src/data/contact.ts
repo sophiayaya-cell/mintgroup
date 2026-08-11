@@ -19,7 +19,7 @@ export const CONTACT = {
   wechat: '+86 18053308111',
   website: 'https://www.mint-gp.com',
   // Facebook：username 用于拼接链接，name 用于展示
-  facebook: 'MINTGROUP',
+  facebook: 'mintgroup1',
   facebookName: 'MINT GROUP',
   // 询盘表单：Web3Forms 免费接入（把线索直接发到你邮箱，无需后端）
   // 获取方式：打开 https://web3forms.com ，用 sophia.wang@mint-gp.com 注册即可得到 access key（免费、无需绑卡）
