@@ -1,0 +1,180 @@
+---
+import { type Locale, LOCALES } from '../i18n/ui';
+import { FORM } from '../i18n/form';
+import { CONTACT } from '../data/contact';
+import { PRODUCTS } from '../data/products';
+import { pick } from '../i18n/util';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const F = FORM[locale];
+const productOptions = PRODUCTS.map((p) => ({
+  slug: p.slug,
+  name: pick(p.i18n, locale).name,
+}));
+const key = CONTACT.web3formsKey;
+---
+
+<section style="margin-top:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;">
+  <h2 class="section-title" style="text-align:left;margin-top:0;">{F.title}</h2>
+  <p style="color:var(--muted);margin:6px 0 22px;">{F.subtitle}</p>
+
+  <form id="inquiry-form" class="inquiry-form" novalidate data-key={key}
+    data-success={F.success} data-error={F.error}
+    data-name-required={F.nameRequired} data-email-invalid={F.emailInvalid}
+    data-sending={F.sending}>
+    <div class="field">
+      <label for="name">{F.name} <span class="req">*</span></label>
+      <input id="name" name="name" type="text" autocomplete="name" required />
+    </div>
+
+    <div class="field">
+      <label for="company">{F.company}</label>
+      <input id="company" name="company" type="text" autocomplete="organization" />
+    </div>
+
+    <div class="field">
+      <label for="email">{F.email} <span class="req">*</span></label>
+      <input id="email" name="email" type="email" autocomplete="email" placeholder={F.emailPlaceholder} required />
+    </div>
+
+    <div class="field">
+      <label for="country">{F.country}</label>
+      <input id="country" name="country" type="text" placeholder={F.countryPlaceholder} />
+    </div>
+
+    <div class="field">
+      <label for="product">{F.product}</label>
+      <select id="product" name="product">
+        <option value={F.productGeneral}>{F.productGeneral}</option>
+        {productOptions.map((o) => <option value={o.name}>{o.name}</option>)}
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="quantity">{F.quantity}</label>
+      <input id="quantity" name="quantity" type="text" placeholder={F.quantityPlaceholder} />
+    </div>
+
+    <div class="field field-full">
+      <label for="message">{F.message}</label>
+      <textarea id="message" name="message" rows="4" placeholder={F.messagePlaceholder}></textarea>
+    </div>
+
+    <!-- 蜜罐字段：真人不会填，机器人填了就不提交 -->
+    <input type="checkbox" name="botcheck" class="hidden-botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+
+    <div class="field-full">
+      <button type="submit" class="btn submit-btn">{F.submit}</button>
+    </div>
+
+    <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+  </form>
+</section>
+
+<style>
+  .inquiry-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field-full { grid-column: 1 / -1; }
+  .inquiry-form label { font-weight: 600; color: var(--primary-dark); font-size: 0.92rem; }
+  .req { color: #d9534f; }
+  .inquiry-form input,
+  .inquiry-form select,
+  .inquiry-form textarea {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 0.98rem;
+    font-family: inherit;
+    background: var(--bg);
+    color: var(--text);
+    box-sizing: border-box;
+  }
+  .inquiry-form input:focus,
+  .inquiry-form select:focus,
+  .inquiry-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(77, 150, 111, 0.15);
+  }
+  .inquiry-form textarea { resize: vertical; }
+  .submit-btn { width: 100%; padding: 13px; font-size: 1rem; }
+  .form-status { margin: 4px 0 0; font-size: 0.95rem; min-height: 1.2em; }
+  .form-status.ok { color: var(--primary-dark); font-weight: 600; }
+  .form-status.err { color: #d9534f; font-weight: 600; }
+  @media (max-width: 640px) {
+    .inquiry-form { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('inquiry-form') as HTMLFormElement | null;
+  if (form) {
+    const status = document.getElementById('form-status') as HTMLElement;
+    const btn = form.querySelector('.submit-btn') as HTMLButtonElement;
+    const key = (form as HTMLElement).dataset.key || '';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.className = 'form-status';
+      status.textContent = '';
+
+      // 本地校验
+      const name = (form.querySelector('#name') as HTMLInputElement).value.trim();
+      const email = (form.querySelector('#email') as HTMLInputElement).value.trim();
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      const labels = {
+        nameRequired: (form as HTMLElement).dataset.nameRequired || 'Please enter your name',
+        emailInvalid: (form as HTMLElement).dataset.emailInvalid || 'Please enter a valid email',
+      };
+      if (!name) { status.className = 'form-status err'; status.textContent = labels.nameRequired; (form.querySelector('#name') as HTMLInputElement).focus(); return; }
+      if (!emailOk) { status.className = 'form-status err'; status.textContent = labels.emailInvalid; (form.querySelector('#email') as HTMLInputElement).focus(); return; }
+
+      if (!key || key === 'YOUR_WEB3FORMS_ACCESS_KEY') {
+        status.className = 'form-status err';
+        status.textContent = 'Form not activated yet. Please set the Web3Forms access key.';
+        return;
+      }
+
+      const submitText = btn.textContent || 'Submit';
+      const sendingText = (form as HTMLElement).dataset.sending || '…';
+      btn.disabled = true;
+      btn.textContent = sendingText;
+
+      const fd = new FormData(form);
+      const data: Record<string, unknown> = { access_key: key, from_name: name, subject: `New inquiry from ${name}` };
+      fd.forEach((v, k) => { if (k !== 'botcheck' || (v as boolean)) data[k] = v; });
+      // 蜜罐：被勾选则视为机器人，静默丢弃
+      if ((form.querySelector('.hidden-botcheck') as HTMLInputElement)?.checked) { btn.disabled = false; btn.textContent = submitText; return; }
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json();
+        if (json.success) {
+          status.className = 'form-status ok';
+          status.textContent = (form as HTMLElement).dataset.success || 'Sent!';
+          form.reset();
+        } else {
+          throw new Error(json.message || 'fail');
+        }
+      } catch (err) {
+        status.className = 'form-status err';
+        status.textContent = (form as HTMLElement).dataset.error || 'Failed.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = submitText;
+      }
+    });
+  }
+</script>

@@ -1,6 +1,7 @@
 ---
 import { UI, type Locale } from '../i18n/ui';
 import { CONTACT } from '../data/contact';
+import InquiryForm from './InquiryForm.astro';
 
 interface Props {
   locale: Locale;
@@ -64,6 +65,8 @@ const linkStyle = 'color:var(--primary);font-weight:600;text-decoration:none;';
     <a href={fbHref} target="_blank" rel="noopener" style={linkStyle}>{CONTACT.facebookName}</a>
   </div>
 </div>
+
+<InquiryForm locale={locale} />
 
 <script>
   document.querySelectorAll<HTMLButtonElement>('.copy-btn').forEach((btn) => {
