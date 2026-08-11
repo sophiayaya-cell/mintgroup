@@ -1,0 +1,67 @@
+---
+import { UI, type Locale } from '../i18n/ui';
+import { SITE } from '../consts';
+import { LABELS } from '../i18n/labels';
+
+interface Props {
+  locale?: Locale;
+}
+const { locale = 'zh' } = Astro.props;
+const t = UI[locale];
+
+const pathname = Astro.url.pathname;
+const segs = pathname.split('/').filter(Boolean); // e.g. ['zh','about']
+const rest = segs.slice(1).join('/');
+const switchTo = (code: string) => '/' + code + (rest ? '/' + rest : '');
+
+const languages = [
+  { code: 'zh', label: '中文' },
+  { code: 'en', label: 'English' },
+  { code: 'es', label: 'Español' },
+  { code: 'ar', label: 'العربية' },
+  { code: 'de', label: 'Deutsch' },
+  { code: 'fr', label: 'Français' },
+  { code: 'ja', label: '日本語' },
+  { code: 'ko', label: '한국어' },
+  { code: 'ru', label: 'Русский' },
+];
+const currentLabel = languages.find((l) => l.code === locale)?.label ?? locale;
+
+const nav = [
+  { href: `/${locale}/`, label: t.home },
+  { href: `/${locale}/about`, label: t.about },
+  { href: `/${locale}/products`, label: t.products },
+  { href: `/${locale}/news`, label: LABELS[locale].news },
+  { href: `/${locale}/team`, label: LABELS[locale].team },
+  { href: `/${locale}/contact`, label: t.contact },
+];
+const shortName = SITE[locale].shortName;
+const isActive = (href: string) =>
+  href === `/${locale}/` ? pathname === `/${locale}/` || pathname === `/${locale}` : pathname.startsWith(href);
+---
+<header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;height:64px;">
+    <a href={`/${locale}/`} style="display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.05rem;color:var(--primary-dark);">
+      <img src="/mint-logo-orig.png" alt="MINT" style="display:block;height:36px;width:auto;filter:saturate(0.94) brightness(0.92);" />
+      <span>{shortName}</span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:18px;">
+      {nav.map((item) => (
+        <a href={item.href} style={`color:${isActive(item.href) ? 'var(--primary)' : 'var(--text)'};font-weight:${isActive(item.href) ? '600' : '400'};`}>{item.label}</a>
+      ))}
+      <details style="position:relative;">
+        <summary style="cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1.5px solid var(--primary);border-radius:999px;color:var(--primary);font-size:.9rem;user-select:none;">{currentLabel} ▾</summary>
+        <div style="position:absolute;inset-inline-end:0;top:115%;background:#fff;border:1px solid var(--border);border-radius:10px;padding:6px;min-width:130px;box-shadow:0 8px 24px rgba(0,0,0,.08);">
+          {languages.map((l) => (
+            <a href={switchTo(l.code)} style={`display:block;padding:8px 12px;border-radius:8px;color:${l.code === locale ? 'var(--primary)' : 'var(--text)'};font-weight:${l.code === locale ? '600' : '400'};`}>{l.label}</a>
+          ))}
+        </div>
+      </details>
+    </nav>
+  </div>
+</header>
+
+<style>
+  summary::-webkit-details-marker { display: none; }
+  details[open] summary { background: var(--primary); color: #fff; }
+</style>

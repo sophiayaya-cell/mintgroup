@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { UI, type Locale, LOCALES } from '../../i18n/ui';
+import { LABELS } from '../../i18n/labels';
+import { pick } from '../../i18n/util';
+import { TEAM } from '../../data/team';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale }, props: { locale } }));
+}
+
+const { locale } = Astro.props;
+const t = UI[locale];
+const L = LABELS[locale];
+---
+<BaseLayout locale={locale} title={L.team}>
+  <section>
+    <div class="container" style="max-width:900px;">
+      <h2 class="section-title">{L.ourTeam}</h2>
+      <p style="color:var(--muted);text-align:center;max-width:640px;margin:0 auto 30px;">{L.teamIntro}</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;">
+        {TEAM.map((m) => {
+          const mem = pick(m.i18n, locale);
+          return (
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;">
+              <div style="width:72px;height:72px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:700;margin:0 auto 14px;">{mem.name.charAt(0)}</div>
+              <h3 style="margin:0 0 4px;color:var(--primary-dark);">{mem.name}</h3>
+              <div style="color:var(--primary);font-weight:600;font-size:.9rem;margin-bottom:8px;">{mem.role}</div>
+              <p style="margin:0;color:var(--muted);font-size:.92rem;">{mem.bio}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

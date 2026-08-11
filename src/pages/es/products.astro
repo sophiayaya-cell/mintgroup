@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductGrid from '../../components/ProductGrid.astro';
+import { UI } from '../../i18n/ui';
+const locale = 'es';
+const t = UI[locale];
+---
+<BaseLayout locale="es" title={t.productsTitle}>
+  <ProductGrid locale="es" />
+</BaseLayout>

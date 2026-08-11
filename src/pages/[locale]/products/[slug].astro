@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { UI, type Locale, LOCALES } from '../../../i18n/ui';
+import { LABELS } from '../../../i18n/labels';
+import { pick } from '../../../i18n/util';
+import { PRODUCTS } from '../../../data/products';
+import { PRODUCT_FAQ } from '../../../data/faq';
+import { SITE } from '../../../consts';
+
+export function getStaticPaths() {
+  return LOCALES.flatMap((locale) =>
+    PRODUCTS.map((product) => ({
+      params: { locale, slug: product.slug },
+      props: { locale, product },
+    }))
+  );
+}
+
+const { locale, product } = Astro.props;
+const t = UI[locale];
+const L = LABELS[locale];
+const p = pick(product.i18n, locale);
+const origin = Astro.site ?? Astro.url.origin;
+const pageUrl = new URL(Astro.url.pathname, origin).toString();
+
+// 结构化数据：Product（富媒体搜索结果）+ FAQ（GEO / AI 概览直接引用）
+const productJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: p.name,
+  description: p.description,
+  url: pageUrl,
+  brand: { '@type': 'Brand', name: SITE[locale].name },
+};
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: PRODUCT_FAQ.map((f) => ({
+    '@type': 'Question',
+    name: pick(f.q, locale),
+    acceptedAnswer: { '@type': 'Answer', text: pick(f.a, locale) },
+  })),
+};
+---
+<BaseLayout locale={locale} title={p.name} description={p.tagline} type="article">
+  <script type="application/ld+json" set:html={JSON.stringify(productJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  <section>
+    <div class="container" style="max-width:880px;">
+      <a href={`/${locale}/products`} style="color:var(--primary);font-weight:600;">← {L.backToProducts}</a>
+      <h1 style="margin:18px 0 6px;color:var(--primary-dark);">{p.name}</h1>
+      <p style="color:var(--muted);font-size:1.1rem;">{p.tagline}</p>
+      <p style="font-size:1.05rem;line-height:1.8;">{p.description}</p>
+
+      <h2 class="section-title" style="text-align:left;margin-top:40px;">{L.features}</h2>
+      <ul style="display:grid;gap:10px;list-style:none;padding:0;">
+        {p.features.map((f) => (
+          <li style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;">✓ {f}</li>
+        ))}
+      </ul>
+
+      <h2 class="section-title" style="text-align:left;margin-top:40px;">{L.specifications}</h2>
+      <table style="width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+        <tbody>
+          {p.specs.map((s) => (
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:12px 16px;font-weight:600;width:40%;color:var(--primary-dark);">{s.label}</td>
+              <td style="padding:12px 16px;color:var(--muted);">{s.value}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div style="margin-top:36px;">
+        <a href={`/${locale}/contact`} class="btn">{L.inquiry}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

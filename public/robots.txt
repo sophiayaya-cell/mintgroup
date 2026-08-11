@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# 站点上线后请将下方域名替换为真实域名，并取消注释：
+# Sitemap: https://example.com/sitemap.xml

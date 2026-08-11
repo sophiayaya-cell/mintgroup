@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { UI, type Locale, LOCALES } from '../../../i18n/ui';
+import { LABELS } from '../../../i18n/labels';
+import { pick } from '../../../i18n/util';
+import { NEWS } from '../../../data/news';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale }, props: { locale } }));
+}
+
+const { locale } = Astro.props;
+const t = UI[locale];
+const L = LABELS[locale];
+---
+<BaseLayout locale={locale} title={L.news}>
+  <section>
+    <div class="container" style="max-width:880px;">
+      <h2 class="section-title">{L.latestNews}</h2>
+      <div style="display:grid;gap:18px;margin-top:28px;">
+        {NEWS.map((a) => {
+          const n = pick(a.i18n, locale);
+          return (
+            <a href={`/${locale}/news/${a.slug}`} style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:box-shadow .15s ease;">
+              <div style="color:var(--muted);font-size:.85rem;">{a.date}</div>
+              <h3 style="margin:6px 0;color:var(--primary-dark);">{n.title}</h3>
+              <p style="margin:0;color:var(--muted);">{n.excerpt}</p>
+              <span style="display:inline-block;margin-top:12px;color:var(--primary);font-weight:600;">{L.readMore} →</span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

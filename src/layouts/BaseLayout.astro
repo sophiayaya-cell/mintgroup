@@ -1,0 +1,133 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { UI, type Locale, LOCALES } from '../i18n/ui';
+import { SITE, AUTHOR, TAGLINE } from '../consts';
+
+interface Props {
+  locale?: Locale;
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  type?: 'website' | 'article';
+}
+
+const { locale = 'zh', title, description, ogImage, type = 'website' } = Astro.props;
+const t = UI[locale];
+const siteName = SITE[locale].name;
+const pageTitle = title ? `${title} · ${siteName}` : siteName;
+const dir = locale === 'ar' ? 'rtl' : 'ltr';
+
+// SEO / 社交分享
+const origin = Astro.site ?? Astro.url.origin;
+const canonical = new URL(Astro.url.pathname, origin);
+const desc = description ?? TAGLINE[locale];
+const ogImageUrl = new URL(ogImage ?? '/apple-touch-icon.png', origin);
+
+// 多语言 hreflang 互链：把当前路径的第一段换成目标语种，避免 9 语种被谷歌判重复内容
+const segs = Astro.url.pathname.split('/').filter(Boolean);
+const localized = (l: string) => {
+  const s = [...segs];
+  if (s.length === 0) return `/${l}/`;
+  s[0] = l;
+  return `/${s.join('/')}/`;
+};
+const hreflangLinks = LOCALES.map((l) => ({
+  lang: l,
+  href: new URL(localized(l), origin).toString(),
+}));
+
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: siteName,
+  url: String(origin),
+  logo: new URL('/apple-touch-icon.png', origin).toString(),
+  description: TAGLINE[locale],
+  sameAs: [],
+};
+---
+<!doctype html>
+<html lang={locale} dir={dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- 多语言互链（hreflang）：帮助谷歌正确关联各语种版本 -->
+    {hreflangLinks.map((h) => (
+      <link rel="alternate" hreflang={h.lang} href={h.href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={new URL(localized('zh'), origin).toString()} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={locale} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
+    <style is:global>
+      :root {
+        --bg: #f7faf9;
+        --surface: #ffffff;
+        --primary: #4D966F;
+        --primary-dark: #3A7A59;
+        --text: #1f2a28;
+        --muted: #5b6b67;
+        --border: #e3ebe8;
+        --radius: 14px;
+        --max: 1080px;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", Roboto, Helvetica, Arial, sans-serif;
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.65;
+      }
+      a { color: inherit; text-decoration: none; }
+      .container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+      main { min-height: 70vh; }
+      h1, h2, h3 { line-height: 1.25; color: var(--text); }
+      .btn {
+        display: inline-block; padding: 12px 22px; border-radius: 999px;
+        background: var(--primary); color: #fff; font-weight: 600;
+        transition: background .2s ease; border: none; cursor: pointer;
+      }
+      .btn:hover { background: var(--primary-dark); }
+      .btn-ghost {
+        background: transparent; color: var(--primary);
+        border: 1.5px solid var(--primary);
+      }
+      .btn-ghost:hover { background: var(--primary); color: #fff; }
+      section { padding: 64px 0; }
+      .section-title { font-size: 1.9rem; margin: 0 0 8px; text-align: center; }
+    </style>
+  </head>
+  <body>
+    <Header locale={locale} />
+    <main>
+      <slot />
+    </main>
+    <Footer locale={locale} author={AUTHOR} />
+  </body>
+</html>

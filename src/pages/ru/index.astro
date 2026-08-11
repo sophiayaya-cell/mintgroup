@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { UI } from '../../i18n/ui';
+const t = UI.ru;
+---
+<BaseLayout locale="ru" title="Главная">
+  <section style="background:linear-gradient(135deg,#4D966F 0%,#5BAF7D 100%);color:#fff;text-align:center;padding:88px 0;">
+    <div class="container">
+      <img src="/mint-logo-orig.png" alt="MINT" style="margin:0 auto 24px;display:block;height:108px;width:auto;filter:brightness(0) invert(1);" />
+      <h1 style="font-size:2.6rem;margin:0 0 14px;color:#fff;">{t.heroTitle}</h1>
+      <p style="font-size:1.15rem;opacity:.92;margin:0 0 30px;line-height:1.8;" set:html={t.heroSubtitle} />
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a class="btn" href="/ru/products" style="background:#fff;color:var(--primary-dark);">{t.ctaProducts}</a>
+        <a class="btn btn-ghost" href="/ru/contact" style="border-color:#fff;color:#fff;">{t.ctaContact}</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container" style="max-width:760px;text-align:center;">
+      <h2 class="section-title">{t.introTitle}</h2>
+      <p style="color:var(--muted);font-size:1.05rem;">{t.introText}</p>
+    </div>
+  </section>
+</BaseLayout>

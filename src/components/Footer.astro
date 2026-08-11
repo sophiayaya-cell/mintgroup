@@ -1,0 +1,18 @@
+---
+import { UI, type Locale } from '../i18n/ui';
+import { SITE } from '../consts';
+
+interface Props {
+  locale?: Locale;
+  author: string;
+}
+const { locale = 'zh', author } = Astro.props;
+const t = UI[locale];
+const year = new Date().getFullYear();
+---
+<footer style="background:var(--surface);border-top:1px solid var(--border);padding:40px 0;margin-top:40px;">
+  <div class="container" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;color:var(--muted);font-size:.9rem;">
+    <span>{SITE[locale].name}</span>
+    <span>© {year} {author} · {t.rights}</span>
+  </div>
+</footer>

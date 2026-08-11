@@ -1,0 +1,28 @@
+---
+import { UI, type Locale } from '../i18n/ui';
+import { pick } from '../i18n/util';
+import { PRODUCTS } from '../data/products';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = UI[locale];
+---
+<section>
+  <div class="container">
+    <h2 class="section-title">{t.productsTitle}</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:28px;">
+      {PRODUCTS.map((p) => {
+        const pi = pick(p.i18n, locale);
+        return (
+          <a href={`/${locale}/products/${p.slug}`} style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:transform .15s ease, box-shadow .15s ease;">
+            <h3 style="margin:0 0 10px;color:var(--primary-dark);">{pi.name}</h3>
+            <p style="margin:0;color:var(--muted);">{pi.tagline}</p>
+            <span style="display:inline-block;margin-top:14px;color:var(--primary);font-weight:600;">→</span>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</section>

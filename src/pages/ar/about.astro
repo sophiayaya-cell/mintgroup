@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { UI } from '../../i18n/ui';
+const t = UI.ar;
+---
+<BaseLayout locale="ar" title="من نحن">
+  <section>
+    <div class="container" style="max-width:760px;">
+      <h2 class="section-title">{t.aboutTitle}</h2>
+      <p style="color:var(--muted);font-size:1.05rem;text-align:center;">{t.aboutText}</p>
+    </div>
+  </section>
+</BaseLayout>
