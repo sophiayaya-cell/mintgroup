@@ -24,7 +24,7 @@ export const CONTACT = {
   // 询盘表单：Web3Forms 免费接入（把线索直接发到你邮箱，无需后端）
   // 获取方式：打开 https://web3forms.com ，用 sophia.wang@mint-gp.com 注册即可得到 access key（免费、无需绑卡）
   // 拿到后把下面这串占位符替换成你的真实 key 即可，表单即刻生效。
-  web3formsKey: 'YOUR_WEB3FORMS_ACCESS_KEY',
+  web3formsKey: '65e7cfcf-7f44-429e-98e9-04406ea5fe5a',
 } as const;
 
 export type ContactData = typeof CONTACT;
