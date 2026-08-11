@@ -1,28 +1,117 @@
 ---
 import { UI, type Locale } from '../i18n/ui';
 import { pick } from '../i18n/util';
-import { PRODUCTS } from '../data/products';
+import { PRODUCTS, PRODUCT_CATEGORIES } from '../data/products';
 
 interface Props {
   locale: Locale;
 }
 const { locale } = Astro.props;
 const t = UI[locale];
+
+const allLabel: Record<Locale, string> = {
+  zh: '全部',
+  en: 'All',
+  es: 'Todo',
+  ar: 'الكل',
+  de: 'Alle',
+  fr: 'Tout',
+  ja: 'すべて',
+  ko: '전체',
+  ru: 'Все',
+};
+
+const catBtnStyle = (active: boolean) =>
+  `cursor:pointer;border:1px solid ${active ? 'var(--primary)' : 'var(--border)'};background:${
+    active ? 'var(--primary)' : 'transparent'
+  };color:${active ? '#fff' : 'var(--primary)'};border-radius:999px;padding:6px 16px;font-size:.9rem;transition:all .15s ease;`;
 ---
+
 <section>
   <div class="container">
     <h2 class="section-title">{t.productsTitle}</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:28px;">
-      {PRODUCTS.map((p) => {
-        const pi = pick(p.i18n, locale);
-        return (
-          <a href={`/${locale}/products/${p.slug}`} style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:transform .15s ease, box-shadow .15s ease;">
-            <h3 style="margin:0 0 10px;color:var(--primary-dark);">{pi.name}</h3>
-            <p style="margin:0;color:var(--muted);">{pi.tagline}</p>
-            <span style="display:inline-block;margin-top:14px;color:var(--primary);font-weight:600;">→</span>
-          </a>
-        );
-      })}
+
+    {
+      PRODUCT_CATEGORIES.length > 0 && (
+        <div id="cat-filter" style="display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 24px;">
+          <button class="cat-btn cat-active" data-filter="*" style={catBtnStyle(true)}>{allLabel[locale]}</button>
+          {PRODUCT_CATEGORIES.map((c) => (
+            <button class="cat-btn" data-filter={c} style={catBtnStyle(false)}>{c}</button>
+          ))}
+        </div>
+      )
+    }
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;">
+      {
+        PRODUCTS.map((p) => {
+          const pi = pick(p.i18n, locale);
+          return (
+            <a
+              href={`/${locale}/products/${p.slug}`}
+              data-category={p.category ?? ''}
+              style="display:block;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform .15s ease, box-shadow .15s ease;"
+            >
+              <div style="height:160px;background:#eaf3ee;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+                {p.image ? (
+                  <img src={p.image} alt={pi.name} style="width:100%;height:100%;object-fit:cover;" />
+                ) : (
+                  <img src="/mint-leaf-icon.png" alt="" style="width:64px;height:64px;opacity:.55;" />
+                )}
+              </div>
+              <div style="padding:20px;">
+                {p.category && (
+                  <span style="display:inline-block;font-size:.75rem;color:var(--primary);background:#eaf3ee;border-radius:999px;padding:2px 10px;margin-bottom:8px;">{p.category}</span>
+                )}
+                <h3 style="margin:0 0 10px;color:var(--primary-dark);">{pi.name}</h3>
+                <p style="margin:0;color:var(--muted);">{pi.tagline}</p>
+                <span style="display:inline-block;margin-top:14px;color:var(--primary);font-weight:600;">→</span>
+              </div>
+            </a>
+          );
+        })
+      }
     </div>
   </div>
 </section>
+
+<script>
+  const filterBar = document.getElementById('cat-filter');
+  if (filterBar) {
+    const buttons = filterBar.querySelectorAll<HTMLButtonElement>('.cat-btn');
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('a[data-category]'));
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        buttons.forEach((b) => {
+          const active = b === btn;
+          b.classList.toggle('cat-active', active);
+          b.style.background = active ? 'var(--primary)' : 'transparent';
+          b.style.color = active ? '#fff' : 'var(--primary)';
+          b.style.borderColor = active ? 'var(--primary)' : 'var(--border)';
+        });
+        cards.forEach((card) => {
+          const cat = card.dataset.category || '';
+          const show = filter === '*' || cat === filter;
+          card.style.display = show ? '' : 'none';
+        });
+      });
+    });
+  }
+</script>
+
+<style>
+  .cat-btn {
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--primary);
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: 0.9rem;
+    transition: all 0.15s ease;
+  }
+  .cat-btn:hover {
+    border-color: var(--primary);
+  }
+</style>

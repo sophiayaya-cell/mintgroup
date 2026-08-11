@@ -1,0 +1,86 @@
+backend:
+  name: github
+  repo: sophiayaya-cell/mintgroup
+  branch: main
+  site_domain: https://www.mint-gp.com
+  base_url: https://www.mint-gp.com
+  auth_endpoint: /api/auth
+
+# 媒体文件：上传的图片存放位置（public/images/products），字段存 /images/products/xxx.jpg
+media_folder: public/images/products
+public_folder: /images/products
+
+# 简单模式：编辑保存后直接提交到 main 并触发 Cloudflare 重新部署
+publish_mode: simple
+
+collections:
+  - name: products
+    label: 产品 Products
+    label_singular: 产品 Product
+    folder: content/products
+    create: true
+    slug: '{{slug}}'
+    format: json
+    extension: json
+    fields:
+      - name: slug
+        label: Slug（网址片段）
+        widget: string
+        required: true
+        hint: 仅小写字母/数字/横线，如 medical-care-pads；新增产品时即作为文件名与网址
+      - name: category
+        label: 分类 Category
+        widget: string
+        required: false
+        hint: 自由填写分类名（如 medical / baby / adult）；相同名字会自动归为一类，可随时自行修改
+      - name: image
+        label: 产品图片 Image
+        widget: image
+        required: false
+        hint: 点击上传图片；留空则前台显示品牌占位图
+      - name: i18n
+        label: 多语言内容
+        widget: object
+        fields:
+          - name: zh
+            label: 中文
+            widget: object
+            fields:
+              - { name: name, label: 名称, widget: string }
+              - { name: tagline, label: 一句话卖点, widget: string }
+              - { name: description, label: 详细描述, widget: text }
+              - name: features
+                label: 特性
+                widget: list
+                field: { name: item, label: 特性, widget: string }
+              - name: specs
+                label: 规格参数
+                widget: list
+                field:
+                  name: spec
+                  label: 规格
+                  widget: object
+                  fields:
+                    - { name: label, label: 参数名, widget: string }
+                    - { name: value, label: 值, widget: string }
+          - name: en
+            label: English
+            widget: object
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: tagline, label: Tagline, widget: string }
+              - { name: description, label: Description, widget: text }
+              - name: features
+                label: Features
+                widget: list
+                field: { name: item, label: Feature, widget: string }
+              - name: specs
+                label: Specifications
+                widget: list
+                field:
+                  name: spec
+                  label: Spec
+                  widget: object
+                  fields:
+                    - { name: label, label: Label, widget: string }
+                    - { name: value, label: Value, widget: string }

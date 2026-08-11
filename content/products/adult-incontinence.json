@@ -1,0 +1,38 @@
+{
+  "slug": "adult-incontinence",
+  "category": "adult",
+  "i18n": {
+    "zh": {
+      "name": "成人失禁用品",
+      "tagline": "舒适贴身，为长者提供安心保障",
+      "description": "成人失禁用品以舒适贴身的高容量吸收设计，配合亲肤防漏结构，守护长者尊严，让日常活动与整夜休息都更安心。",
+      "features": [
+        "舒适贴身，活动无负担",
+        "高容量吸收，整夜安心",
+        "亲肤防漏，呵护尊严",
+        "易穿脱设计，关爱长者"
+      ],
+      "specs": [
+        { "label": "材质", "value": "亲肤无纺布 + 高容量吸收芯" },
+        { "label": "适用场景", "value": "成人护理 / 养老机构 / 居家" },
+        { "label": "认证", "value": "ISO 9001 / ISO 13485（示例）" }
+      ]
+    },
+    "en": {
+      "name": "Adult Incontinence Care",
+      "tagline": "Comfortable fit, providing peace of mind for seniors",
+      "description": "Our adult incontinence care products feature a comfortable, body-hugging high-capacity design with a skin-friendly leak-proof structure that protects dignity and brings confidence to daily activities and restful nights.",
+      "features": [
+        "Comfortable body-hugging fit, no burden",
+        "High-capacity absorbency for all-night security",
+        "Skin-friendly leak-proof design, protects dignity",
+        "Easy to put on and take off, caring for seniors"
+      ],
+      "specs": [
+        { "label": "Material", "value": "Soft non-woven + high-capacity core" },
+        { "label": "Application", "value": "Adult care / Nursing homes / Home" },
+        { "label": "Certification", "value": "ISO 9001 / ISO 13485 (sample)" }
+      ]
+    }
+  }
+}

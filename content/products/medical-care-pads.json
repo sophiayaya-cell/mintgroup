@@ -1,0 +1,38 @@
+{
+  "slug": "medical-care-pads",
+  "category": "medical",
+  "i18n": {
+    "zh": {
+      "name": "医用护理垫",
+      "tagline": "柔软亲肤 · 高吸收，医疗与家庭护理的理想之选",
+      "description": "医用护理垫采用亲肤无纺布表层与高分子吸收芯体，快速锁液、不反渗，为医疗机构、家庭护理及术后康复场景提供安全、舒适的护理保障。",
+      "features": [
+        "高吸收芯体，快速锁液不反渗",
+        "亲肤无纺布表层，温和不刺激",
+        "透气底膜，干爽不闷热",
+        "医用级品控，安全放心"
+      ],
+      "specs": [
+        { "label": "材质", "value": "亲肤无纺布 + 高分子吸收芯" },
+        { "label": "适用场景", "value": "医疗机构 / 家庭护理 / 术后康复" },
+        { "label": "认证", "value": "ISO 9001 / ISO 13485（示例）" }
+      ]
+    },
+    "en": {
+      "name": "Medical Care Pads",
+      "tagline": "Soft, skin-friendly and highly absorbent for medical and home care",
+      "description": "Our medical care pads combine a skin-friendly non-woven top sheet with a high-polymer absorbent core that locks liquid quickly without backflow, delivering safe and comfortable protection for clinics, home care and post-operative recovery.",
+      "features": [
+        "High-polymer core locks liquid fast, no backflow",
+        "Skin-friendly non-woven top sheet, gentle on skin",
+        "Breathable backsheet keeps skin dry and fresh",
+        "Medical-grade quality control for peace of mind"
+      ],
+      "specs": [
+        { "label": "Material", "value": "Soft non-woven + polymer absorbent core" },
+        { "label": "Application", "value": "Clinics / Home care / Post-op recovery" },
+        { "label": "Certification", "value": "ISO 9001 / ISO 13485 (sample)" }
+      ]
+    }
+  }
+}
