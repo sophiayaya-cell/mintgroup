@@ -1,5 +1,6 @@
 ---
 import { UI, type Locale } from '../i18n/ui';
+import { LABELS } from '../i18n/labels';
 import { CONTACT } from '../data/contact';
 import InquiryForm from './InquiryForm.astro';
 
@@ -8,6 +9,7 @@ interface Props {
 }
 const { locale } = Astro.props;
 const t = UI[locale];
+const l = LABELS[locale];
 
 const address = CONTACT.address[locale] ?? CONTACT.address.en;
 const mapsQuery = encodeURIComponent(CONTACT.address.en);
@@ -28,20 +30,20 @@ const linkStyle = 'color:var(--primary);font-weight:600;text-decoration:none;';
     <span style={iconStyle}>📍</span>
     <div style="flex:1;">
       <a href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`} target="_blank" rel="noopener" style={linkStyle}>{address}</a>
-      <div><button class="copy-btn" style={btnStyle} data-copy={address}>复制地址</button></div>
+      <div><button class="copy-btn" style={btnStyle} data-copy={address} data-copied={l.copied}>{l.copyAddress}</button></div>
     </div>
   </div>
 
   <div style={rowStyle}>
     <span style={iconStyle}>📞</span>
     <a href={telHref} style={linkStyle}>{CONTACT.phone}</a>
-    <button class="copy-btn" style={btnStyle} data-copy={CONTACT.phone}>复制</button>
+    <button class="copy-btn" style={btnStyle} data-copy={CONTACT.phone} data-copied={l.copied}>{l.copy}</button>
   </div>
 
   <div style={rowStyle}>
     <span style={iconStyle}>✉️</span>
     <a href={`mailto:${CONTACT.email}`} style={linkStyle}>{CONTACT.email}</a>
-    <button class="copy-btn" style={btnStyle} data-copy={CONTACT.email}>复制</button>
+    <button class="copy-btn" style={btnStyle} data-copy={CONTACT.email} data-copied={l.copied}>{l.copy}</button>
   </div>
 
   <div style={rowStyle}>
@@ -51,8 +53,8 @@ const linkStyle = 'color:var(--primary);font-weight:600;text-decoration:none;';
 
   <div style={rowStyle}>
     <span style={iconStyle}>👥</span>
-    <span>微信：<b style="color:var(--primary-dark);">{CONTACT.wechat}</b></span>
-    <button class="copy-btn" style={btnStyle} data-copy={CONTACT.wechat}>复制</button>
+    <span>{l.wechat}: <b style="color:var(--primary-dark);">{CONTACT.wechat}</b></span>
+    <button class="copy-btn" style={btnStyle} data-copy={CONTACT.wechat} data-copied={l.copied}>{l.copy}</button>
   </div>
 
   <div style={rowStyle}>
@@ -75,7 +77,7 @@ const linkStyle = 'color:var(--primary);font-weight:600;text-decoration:none;';
       try {
         await navigator.clipboard.writeText(text);
         const old = btn.textContent;
-        btn.textContent = '已复制';
+        btn.textContent = btn.dataset.copied || 'Copied';
         setTimeout(() => (btn.textContent = old), 1500);
       } catch (e) {
         /* clipboard not available */

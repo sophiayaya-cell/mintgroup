@@ -14,6 +14,10 @@ export const LABELS: Record<Locale, {
   ourTeam: string;
   teamIntro: string;
   allNews: string;
+  wechat: string;
+  copy: string;
+  copyAddress: string;
+  copied: string;
 }> = {
   zh: {
     news: '新闻动态',
@@ -27,6 +31,10 @@ export const LABELS: Record<Locale, {
     ourTeam: '我们的团队',
     teamIntro: '我们是一支专注卫生用品研发与制造的团队，以严谨的品控与持续创新，守护每一位用户的健康与安心。',
     allNews: '全部动态',
+    wechat: '微信',
+    copy: '复制',
+    copyAddress: '复制地址',
+    copied: '已复制',
   },
   en: {
     news: 'News',
@@ -40,6 +48,10 @@ export const LABELS: Record<Locale, {
     ourTeam: 'Our Team',
     teamIntro: 'We are a team dedicated to R&D and manufacturing of hygiene products, safeguarding the health and peace of mind of every user with rigorous quality control and continuous innovation.',
     allNews: 'All News',
+    wechat: 'WeChat',
+    copy: 'Copy',
+    copyAddress: 'Copy address',
+    copied: 'Copied',
   },
   es: {
     news: 'Noticias',
@@ -53,6 +65,10 @@ export const LABELS: Record<Locale, {
     ourTeam: 'Nuestro equipo',
     teamIntro: 'Somos un equipo dedicado a la I+D y fabricación de productos de higiene, protegiendo la salud de cada usuario con un riguroso control de calidad y una innovación continua.',
     allNews: 'Todas las noticias',
+    wechat: 'WeChat',
+    copy: 'Copiar',
+    copyAddress: 'Copiar dirección',
+    copied: 'Copiado',
   },
   ar: {
     news: 'الأخبار',
@@ -66,6 +82,10 @@ export const LABELS: Record<Locale, {
     ourTeam: 'فريقنا',
     teamIntro: 'نحن فريق متخصص في البحث والتطوير وتصنيع المنتجات الصحية، نحمي صحة كل مستخدم بنظام صارم لضبط الجودة وابتكار مستمر.',
     allNews: 'كل الأخبار',
+    wechat: 'WeChat',
+    copy: 'نسخ',
+    copyAddress: 'نسخ العنوان',
+    copied: 'تم النسخ',
   },
   de: {
     news: 'Neuigkeiten',
@@ -79,6 +99,10 @@ export const LABELS: Record<Locale, {
     ourTeam: 'Unser Team',
     teamIntro: 'Wir sind ein Team, das sich der Forschung, Entwicklung und Herstellung von Hygieneprodukten widmet und die Gesundheit jedes Anwenders mit strenger Qualitätskontrolle und kontinuierlicher Innovation schützt.',
     allNews: 'Alle Nachrichten',
+    wechat: 'WeChat',
+    copy: 'Kopieren',
+    copyAddress: 'Adresse kopieren',
+    copied: 'Kopiert',
   },
   fr: {
     news: 'Actualités',
@@ -92,6 +116,10 @@ export const LABELS: Record<Locale, {
     ourTeam: 'Notre équipe',
     teamIntro: 'Nous sommes une équipe dédiée à la R&D et à la fabrication de produits d\'hygiène, protégeant la santé de chaque utilisateur grâce à un contrôle qualité rigoureux et à une innovation continue.',
     allNews: 'Toutes les actualités',
+    wechat: 'WeChat',
+    copy: 'Copier',
+    copyAddress: 'Copier l\'adresse',
+    copied: 'Copié',
   },
   ja: {
     news: 'お知らせ',
@@ -105,6 +133,10 @@ export const LABELS: Record<Locale, {
     ourTeam: '私たちのチーム',
     teamIntro: '私たちは衛生用品の研究開発・製造に携わるチームです。厳格な品質管理と継続的な技術革新で、すべての人々の健康を守ります。',
     allNews: 'すべてのお知らせ',
+    wechat: 'WeChat',
+    copy: 'コピー',
+    copyAddress: '住所をコピー',
+    copied: 'コピーしました',
   },
   ko: {
     news: '뉴스',
@@ -118,6 +150,10 @@ export const LABELS: Record<Locale, {
     ourTeam: '우리 팀',
     teamIntro: '우리는 위생용품 연구개발 및 제조에 전념하는 팀으로, 엄격한 품질 관리와 지속적인 기술 혁신으로 모든 사용자의 건강을 지킵니다.',
     allNews: '모든 소식',
+    wechat: 'WeChat',
+    copy: '복사',
+    copyAddress: '주소 복사',
+    copied: '복사됨',
   },
   ru: {
     news: 'Новости',
@@ -131,5 +167,9 @@ export const LABELS: Record<Locale, {
     ourTeam: 'Наша команда',
     teamIntro: 'Мы — команда, преданная НИОКР и производству гигиенической продукции, защищающая здоровье каждого пользователя строгим контролем качества и постоянными инновациями.',
     allNews: 'Все новости',
+    wechat: 'WeChat',
+    copy: 'Копировать',
+    copyAddress: 'Копировать адрес',
+    copied: 'Скопировано',
   },
 };
