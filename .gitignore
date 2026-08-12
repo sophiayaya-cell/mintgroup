@@ -20,3 +20,5 @@ Thumbs.db
 # env / secrets
 .env
 .env.*
+.dev.vars
+.dev.vars.*
