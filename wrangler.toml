@@ -1,4 +1,5 @@
 name = "mintgroup"
-compatibility_date = "2025-04-01"
-compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = "dist"
+compatibility_date = "2026-08-12"
+
+[assets]
+directory = "./dist"
