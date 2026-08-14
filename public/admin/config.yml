@@ -5,6 +5,8 @@ backend:
   site_domain: https://www.mint-gp.com
   base_url: https://www.mint-gp.com
   auth_endpoint: /api/auth
+  # GitHub API 代理：浏览器经此 Worker 转发到 api.github.com，规避中国大陆直连超时
+  api_root: https://www.mint-gp.com/api/gh
 
 # 媒体文件：上传的图片存放位置（public/images/products），字段存 /images/products/xxx.jpg
 media_folder: public/images/products
