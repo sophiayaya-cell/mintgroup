@@ -1,6 +1,6 @@
 {
   "slug": "adult-incontinence",
-  "category": "adult",
+  "category": "adult-incontinence",
   "i18n": {
     "zh": {
       "name": "成人失禁用品",
@@ -13,9 +13,18 @@
         "易穿脱设计，关爱长者"
       ],
       "specs": [
-        { "label": "材质", "value": "亲肤无纺布 + 高容量吸收芯" },
-        { "label": "适用场景", "value": "成人护理 / 养老机构 / 居家" },
-        { "label": "认证", "value": "ISO 9001 / ISO 13485（示例）" }
+        {
+          "label": "材质",
+          "value": "亲肤无纺布 + 高容量吸收芯"
+        },
+        {
+          "label": "适用场景",
+          "value": "成人护理 / 养老机构 / 居家"
+        },
+        {
+          "label": "认证",
+          "value": "ISO 9001 / ISO 13485（示例）"
+        }
       ]
     },
     "en": {
@@ -29,9 +38,18 @@
         "Easy to put on and take off, caring for seniors"
       ],
       "specs": [
-        { "label": "Material", "value": "Soft non-woven + high-capacity core" },
-        { "label": "Application", "value": "Adult care / Nursing homes / Home" },
-        { "label": "Certification", "value": "ISO 9001 / ISO 13485 (sample)" }
+        {
+          "label": "Material",
+          "value": "Soft non-woven + high-capacity core"
+        },
+        {
+          "label": "Application",
+          "value": "Adult care / Nursing homes / Home"
+        },
+        {
+          "label": "Certification",
+          "value": "ISO 9001 / ISO 13485 (sample)"
+        }
       ]
     }
   }

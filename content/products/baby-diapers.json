@@ -1,6 +1,6 @@
 {
   "slug": "baby-diapers",
-  "category": "baby",
+  "category": "baby-diapers",
   "i18n": {
     "zh": {
       "name": "婴儿纸尿裤",
@@ -13,9 +13,18 @@
         "柔软魔术贴，反复粘贴"
       ],
       "specs": [
-        { "label": "材质", "value": "透气无纺布 + 瞬吸芯体" },
-        { "label": "适用场景", "value": "婴幼儿日常 / 夜间护理" },
-        { "label": "认证", "value": "ISO 9001（示例）" }
+        {
+          "label": "材质",
+          "value": "透气无纺布 + 瞬吸芯体"
+        },
+        {
+          "label": "适用场景",
+          "value": "婴幼儿日常 / 夜间护理"
+        },
+        {
+          "label": "认证",
+          "value": "ISO 9001（示例）"
+        }
       ]
     },
     "en": {
@@ -29,9 +38,18 @@
         "Soft refastenable magic tape"
       ],
       "specs": [
-        { "label": "Material", "value": "Breathable non-woven + quick-absorb core" },
-        { "label": "Application", "value": "Daily / Overnight infant care" },
-        { "label": "Certification", "value": "ISO 9001 (sample)" }
+        {
+          "label": "Material",
+          "value": "Breathable non-woven + quick-absorb core"
+        },
+        {
+          "label": "Application",
+          "value": "Daily / Overnight infant care"
+        },
+        {
+          "label": "Certification",
+          "value": "ISO 9001 (sample)"
+        }
       ]
     }
   }
