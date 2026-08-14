@@ -1,0 +1,24 @@
+{
+  "slug": "iso13485-certification",
+  "date": "2026-05-20",
+  "i18n": {
+    "zh": {
+      "title": "通过 ISO 13485 医疗器械质量管理体系认证",
+      "excerpt": "公司质量管理体系再获权威认可，医用护理产品合规性进一步增强。",
+      "body": [
+        { "para": "经第三方权威机构审核，公司正式通过 ISO 13485 医疗器械质量管理体系认证。" },
+        { "para": "该认证标志着公司在医用护理产品的设计、生产与服务全过程，已建立与国际接轨的质量管理体系。" },
+        { "para": "我们将以此为新的起点，持续完善合规与品控，为客户与终端用户提供更可靠的保障。" }
+      ]
+    },
+    "en": {
+      "title": "Certified to ISO 13485 Quality Management System",
+      "excerpt": "Our quality management system earns further recognition, strengthening compliance of medical care products.",
+      "body": [
+        { "para": "Following audit by an accredited third-party organization, we have been officially certified to the ISO 13485 quality management system for medical devices." },
+        { "para": "This certification confirms that our medical care product design, production and service processes follow an internationally aligned quality management system." },
+        { "para": "We will take this as a new starting point, continuously improving compliance and quality control to provide more reliable assurance to customers and end users." }
+      ]
+    }
+  }
+}

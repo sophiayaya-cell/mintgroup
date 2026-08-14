@@ -1,0 +1,24 @@
+{
+  "slug": "new-automated-production-line",
+  "date": "2026-06-15",
+  "i18n": {
+    "zh": {
+      "title": "全新自动化生产线正式投产",
+      "excerpt": "公司引进的自动化卫生用品生产线已正式投产，产能与品控再升级。",
+      "body": [
+        { "para": "为进一步提升产品一致性与交付能力，公司引进的全新自动化生产线已于本月正式投产。" },
+        { "para": "新产线集成了在线视觉检测与智能分拣，关键工序实现全流程可追溯，显著降低了人为误差。" },
+        { "para": "未来我们将持续投入智能制造，为全球客户提供更稳定、更安全的高品质卫生用品。" }
+      ]
+    },
+    "en": {
+      "title": "New Automated Production Line Goes Live",
+      "excerpt": "Our newly introduced automated hygiene products line is now operational, upgrading both capacity and quality control.",
+      "body": [
+        { "para": "To further improve product consistency and delivery capability, our newly introduced automated production line officially went into operation this month." },
+        { "para": "The new line integrates inline visual inspection and intelligent sorting, making key processes fully traceable and significantly reducing human error." },
+        { "para": "Moving forward, we will keep investing in smart manufacturing to deliver more stable, safer, high-quality hygiene products to customers worldwide." }
+      ]
+    }
+  }
+}

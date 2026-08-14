@@ -1,0 +1,16 @@
+{
+  "id": "wang-qiang",
+  "order": 3,
+  "i18n": {
+    "zh": {
+      "name": "王强",
+      "role": "质量管控经理",
+      "bio": "建立全流程可追溯品控体系，守护每一件产品的安全。"
+    },
+    "en": {
+      "name": "Wang Qiang",
+      "role": "Quality Control Manager",
+      "bio": "Built an end-to-end traceable QC system, safeguarding the safety of every product."
+    }
+  }
+}

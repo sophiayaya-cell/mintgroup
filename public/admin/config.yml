@@ -84,3 +84,88 @@ collections:
                   fields:
                     - { name: label, label: Label, widget: string }
                     - { name: value, label: Value, widget: string }
+
+  - name: news
+    label: 新闻动态 News
+    label_singular: 新闻 News
+    folder: content/news
+    create: true
+    slug: '{{slug}}'
+    format: json
+    extension: json
+    fields:
+      - name: slug
+        label: Slug（网址片段）
+        widget: string
+        required: true
+        hint: 仅小写字母/数字/横线；作为文件名与网址 /news/xxx
+      - name: date
+        label: 发布日期 Date
+        widget: datetime
+        required: true
+        format: YYYY-MM-DD
+        date_format: YYYY-MM-DD
+        time_format: false
+      - name: i18n
+        label: 多语言内容
+        widget: object
+        fields:
+          - name: zh
+            label: 中文
+            widget: object
+            fields:
+              - { name: title, label: 标题, widget: string }
+              - { name: excerpt, label: 摘要, widget: text }
+              - name: body
+                label: 正文（每段一行）
+                widget: list
+                field: { name: para, label: 段落, widget: text }
+          - name: en
+            label: English
+            widget: object
+            fields:
+              - { name: title, label: Title, widget: string }
+              - { name: excerpt, label: Excerpt, widget: text }
+              - name: body
+                label: Body (one paragraph per line)
+                widget: list
+                field: { name: para, label: Paragraph, widget: text }
+
+  - name: team
+    label: 团队成员 Team
+    label_singular: 成员 Member
+    folder: content/team
+    create: true
+    slug: '{{id}}'
+    format: json
+    extension: json
+    fields:
+      - name: id
+        label: ID（唯一标识，建议小写拼音/英文）
+        widget: string
+        required: true
+        hint: 用于程序识别与文件名，例如 zhang-ming；修改后文件名会随之更新
+      - name: order
+        label: 显示顺序 Order
+        widget: number
+        required: false
+        hint: 数字越小越靠前；留空排最后
+        default: 99
+      - name: i18n
+        label: 多语言内容
+        widget: object
+        fields:
+          - name: zh
+            label: 中文
+            widget: object
+            fields:
+              - { name: name, label: 姓名, widget: string }
+              - { name: role, label: 职务, widget: string }
+              - { name: bio, label: 简介, widget: text }
+          - name: en
+            label: English
+            widget: object
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: role, label: Role, widget: string }
+              - { name: bio, label: Bio, widget: text }

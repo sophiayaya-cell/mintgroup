@@ -1,0 +1,24 @@
+{
+  "slug": "global-export-milestone",
+  "date": "2026-04-10",
+  "i18n": {
+    "zh": {
+      "title": "产品出口突破 30 个国家和地区",
+      "excerpt": "凭借稳定的品质与本地化服务，我们的产品远销全球 30+ 市场。",
+      "body": [
+        { "para": "依托稳定的产品品质与日益完善的本地化服务体系，公司产品已出口至全球 30 多个国家和地区。" },
+        { "para": "针对不同市场的法规与偏好，我们提供多语言资料与合规支持，帮助海外合作伙伴快速落地。" },
+        { "para": "感谢每一位客户的信任，我们期待与更多全球伙伴携手，将“自然呵护”带给世界。" }
+      ]
+    },
+    "en": {
+      "title": "Exports Surpass 30 Countries and Regions",
+      "excerpt": "With consistent quality and localized service, our products now reach 30+ markets worldwide.",
+      "body": [
+        { "para": "Relying on consistent product quality and an increasingly complete localized service system, our products are now exported to more than 30 countries and regions." },
+        { "para": "For different markets’ regulations and preferences, we provide multilingual materials and compliance support to help overseas partners move fast." },
+        { "para": "We thank every customer for their trust and look forward to working with more global partners to bring \"Pure Care\" to the world." }
+      ]
+    }
+  }
+}

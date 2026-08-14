@@ -1,0 +1,16 @@
+{
+  "id": "chen-jing",
+  "order": 4,
+  "i18n": {
+    "zh": {
+      "name": "陈静",
+      "role": "海外业务经理",
+      "bio": "深耕国际市场，为多语种客户提供本地化合规与服务支持。"
+    },
+    "en": {
+      "name": "Chen Jing",
+      "role": "Overseas Business Manager",
+      "bio": "Deeply engaged in international markets, providing localized compliance and service support for multilingual clients."
+    }
+  }
+}

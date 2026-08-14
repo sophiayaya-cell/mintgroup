@@ -1,0 +1,16 @@
+{
+  "id": "zhang-ming",
+  "order": 1,
+  "i18n": {
+    "zh": {
+      "name": "张明",
+      "role": "研发中心负责人",
+      "bio": "拥有 15 年卫生用品研发经验，主导多项核心吸收材料专利。"
+    },
+    "en": {
+      "name": "Zhang Ming",
+      "role": "Head of R&D",
+      "bio": "15 years of hygiene product R&D experience, leading multiple core absorbent material patents."
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "li-na",
+  "order": 2,
+  "i18n": {
+    "zh": {
+      "name": "李娜",
+      "role": "生产总监",
+      "bio": "统筹智能制造与精益生产，推动产能与良率双提升。"
+    },
+    "en": {
+      "name": "Li Na",
+      "role": "Production Director",
+      "bio": "Oversees smart manufacturing and lean production, driving gains in both capacity and yield."
+    }
+  }
+}

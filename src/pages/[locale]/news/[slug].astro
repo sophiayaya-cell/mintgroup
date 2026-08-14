@@ -25,7 +25,7 @@ const n = pick(article.i18n, locale);
       <a href={`/${locale}/news`} style="color:var(--primary);font-weight:600;">← {L.allNews}</a>
       <div style="color:var(--muted);font-size:.85rem;margin-top:14px;">{article.date}</div>
       <h1 style="margin:6px 0 18px;color:var(--primary-dark);">{n.title}</h1>
-      {n.body.map((para) => <p style="font-size:1.05rem;line-height:1.85;">{para}</p>)}
+      {n.body.map((b) => <p style="font-size:1.05rem;line-height:1.85;">{b.para}</p>)}
       <div style="margin-top:30px;">
         <a href={`/${locale}/contact`} class="btn">{L.inquiry}</a>
       </div>
