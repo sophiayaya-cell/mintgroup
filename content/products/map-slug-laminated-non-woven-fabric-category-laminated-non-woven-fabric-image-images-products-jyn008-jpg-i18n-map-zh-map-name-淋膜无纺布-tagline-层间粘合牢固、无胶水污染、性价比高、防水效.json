@@ -1,0 +1,69 @@
+{
+  "slug": "laminated non-woven fabric",
+  "category": "laminated non-woven fabric",
+  "image": "/images/products/jyn008.jpg",
+  "i18n": {
+    "zh": {
+      "name": "淋膜无纺布",
+      "tagline": "层间粘合牢固、无胶水污染、性价比高、防水效果均匀稳定，可定制微孔透气款式，适配场景广泛。",
+      "description": "淋膜无纺布适用场景：装修地面保护膜、医疗手术铺单 / 隔离用品、外卖打包袋、农业防寒保湿布、工地防雨遮盖布、一次性家居床品、工业临时防护用品。",
+      "features": [
+        "高牢固度",
+        "高性价比",
+        "耐弯折",
+        "防水透气"
+      ],
+      "specs": [
+        {
+          "spec": {
+            "label": "克重（GSM）",
+            "value": "25-100"
+          }
+        },
+        {
+          "spec": {
+            "label": "幅宽（CM）",
+            "value": "10-320"
+          }
+        },
+        {
+          "spec": {
+            "label": "颜色",
+            "value": "可根据潘通色卡号定制"
+          }
+        }
+      ]
+    },
+    "en": {
+      "name": "laminated non-woven fabric",
+      "tagline": "The interlayer bonding is firm, without glue contamination, cost-effective, and the waterproof effect is uniform and stable. It can be customized with microporous breathable styles, suitable for a wide range of scenarios.",
+      "description": "Application scenarios of laminated nonwoven fabric: floor protection film for decoration, medical surgical drapes/isolation supplies, takeout packaging bags, agricultural cold-proof and moisture-retaining cloth, rainproof and covering cloth for construction sites, disposable household bedding, and industrial temporary protective supplies.",
+      "features": [
+        "High durability",
+        "cost-effective",
+        "Bend-resistant",
+        "waterproof and breathable"
+      ],
+      "specs": [
+        {
+          "spec": {
+            "label": "WEIGHT (GSM)",
+            "value": "25-200"
+          }
+        },
+        {
+          "spec": {
+            "label": "WIDTH (CM)",
+            "value": "10-320"
+          }
+        },
+        {
+          "spec": {
+            "label": "COLOR",
+            "value": "OEM free according to Pantone number"
+          }
+        }
+      ]
+    }
+  }
+}
