@@ -1,0 +1,81 @@
+{
+  "slug": "spunbonded-nonwoven-fabric",
+  "category": "Spunbond Nonwoven Fabric",
+  "i18n": {
+    "zh": {
+      "name": "纺粘无纺布",
+      "tagline": "纺粘无纺布以高性价比为核心，兼具强度好、透气耐腐、可功能改性，适配多领域一次性及工程类产品使用",
+      "description": "主要用途\n医疗卫生：一次性口罩外层布、防护服面料、手术衣、帽、鞋套、医用床单、隔离衣。\n卫生用品：卫生巾、纸尿裤面层 / 底层、护垫，做拒水背膜或亲水表层。\n包装行业：无纺布购物袋、收纳袋、礼品包装、防尘罩。\n土工建筑：土工布，道路路基加固、防渗隔离、护坡排水。\n家居家纺：沙发衬布、床品衬垫、防尘布、一次性床单枕套。\n农业：农作物保温防寒布、防草布、育苗覆盖布。\n其他：过滤材料、汽车内饰、口罩布、一次性防护用品。",
+      "features": [
+        "生产效率高、成本低，可大规模连续化生产，性价比高",
+        "透气性优良，重量轻，质地柔软，强度高，相比短纤无纺布，拉力好，不易破",
+        "加工性能好，可复合、染色、印刷，可做多种功能改性 ",
+        "化学稳定性好，耐酸碱，不易腐烂，部分原料（PP 聚丙烯）可回收"
+      ],
+      "specs": [
+        {
+          "label": "材质",
+          "value": "亲肤无纺布 + 高容量吸收芯",
+          "spec": {
+            "label": "克重（GSM）",
+            "value": "9-200"
+          }
+        },
+        {
+          "label": "适用场景",
+          "value": "成人护理 / 养老机构 / 居家",
+          "spec": {
+            "label": "幅宽（CM）",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "认证",
+          "value": "ISO 9001 / ISO 13485（示例）",
+          "spec": {
+            "label": "颜色",
+            "value": "所有颜色均可定制"
+          }
+        }
+      ]
+    },
+    "en": {
+      "name": "Spunbonded  Nonwoven Fabric",
+      "tagline": "Spunbond nonwoven fabric, with high cost-effectiveness as its core, combines good strength, breathability, corrosion resistance, and functional modification, making it suitable for use in disposable and engineering products across multiple fields.",
+      "description": "main usage\nMedical and health care: disposable mask outer fabric, protective clothing fabric, surgical gown, cap, shoe cover, medical bed sheet, isolation gown.\nSanitary products: sanitary napkins, diaper topsheet/backsheet, panty liners, making water-repellent backsheets or hydrophilic topsheets.\nPackaging industry: non-woven shopping bags, storage bags, gift packaging, dust covers.\nGeotechnical construction: geotextiles, road subgrade reinforcement, seepage prevention and isolation, slope protection and drainage.\nHome textiles: sofa lining, bedding pads, dustproof covers, disposable bedsheets and pillowcases.\nAgriculture: crop insulation and cold-proof cloth, weed-proof cloth, seedling covering cloth.\nOthers: Filter materials, automotive interiors, mask fabrics, disposable protective gear.",
+      "features": [
+        "High production efficiency, low cost, capable of large-scale continuous production, and high cost-effectiveness.",
+        "It boasts excellent breathability, lightweight, soft texture, high strength, and better tensile strength compared to spunlace nonwoven fabric, making it less prone to breakage.",
+        "It has good processing performance and can be compounded, dyed, and printed, allowing for various functional modifications.",
+        "It has good chemical stability, is resistant to acid and alkali, and is not prone to decay. Some of its raw materials (PP polypropylene) are recyclable."
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Soft non-woven + high-capacity core",
+          "spec": {
+            "label": "WEIGHT (GSM)",
+            "value": "9-200"
+          }
+        },
+        {
+          "label": "Application",
+          "value": "Adult care / Nursing homes / Home",
+          "spec": {
+            "label": "WIDTH (CM)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "Certification",
+          "value": "ISO 9001 / ISO 13485 (sample)",
+          "spec": {
+            "label": "COLOR",
+            "value": "OEM FREE"
+          }
+        }
+      ]
+    }
+  },
+  "image": "/images/products/jyn011.jpg"
+}
