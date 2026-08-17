@@ -4,5 +4,6 @@ import type { Locale } from './ui';
 export type I18n<T> = Partial<Record<Locale, T>> & { en: T };
 
 export function pick<T>(map: I18n<T>, locale: Locale): T {
-  return map[locale] ?? map.en;
+  // 优先请求语种；缺失时回退英文，再回退中文（中文为源语言，保证永不出现 undefined）
+  return map[locale] ?? map.en ?? map.zh;
 }

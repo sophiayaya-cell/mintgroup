@@ -66,8 +66,9 @@ collections:
                     - { name: label, label: 参数名, widget: string }
                     - { name: value, label: 值, widget: string }
           - name: en
-            label: English
+            label: English（可选：留空则由机翻自动生成）
             widget: object
+            required: false
             fields:
               - { name: name, label: Name, widget: string }
               - { name: tagline, label: Tagline, widget: string }
