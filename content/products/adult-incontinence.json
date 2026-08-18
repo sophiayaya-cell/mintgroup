@@ -38,14 +38,16 @@
       ]
     },
     "en": {
-      "name": "Spunbonded  Nonwoven Fabric",
-      "tagline": "Spunbond nonwoven fabric, with high cost-effectiveness as its core, combines good strength, breathability, corrosion resistance, and functional modification, making it suitable for use in disposable and engineering products across multiple fields.",
-      "description": "main usage\nMedical and health care: disposable mask outer fabric, protective clothing fabric, surgical gown, cap, shoe cover, medical bed sheet, isolation gown.\nSanitary products: sanitary napkins, diaper topsheet/backsheet, panty liners, making water-repellent backsheets or hydrophilic topsheets.\nPackaging industry: non-woven shopping bags, storage bags, gift packaging, dust covers.\nGeotechnical construction: geotextiles, road subgrade reinforcement, seepage prevention and isolation, slope protection and drainage.\nHome textiles: sofa lining, bedding pads, dustproof covers, disposable bedsheets and pillowcases.\nAgriculture: crop insulation and cold-proof cloth, weed-proof cloth, seedling covering cloth.\nOthers: Filter materials, automotive interiors, mask fabrics, disposable protective gear.",
+      "name": "SMS  Nonwoven Fabric",
+      "tagline": "Primarily used for protective layers, isolation layers, and medical consumables",
+      "description": "It is moderately breathable and soft, and can undergo three-resistance treatment. It is mainly used for making ordinary surgical gowns, isolation gowns, pads, and ordinary protective clothing.",
       "features": [
-        "High production efficiency, low cost, capable of large-scale continuous production, and high cost-effectiveness.",
-        "It boasts excellent breathability, lightweight, soft texture, high strength, and better tensile strength compared to spunlace nonwoven fabric, making it less prone to breakage.",
-        "It has good processing performance and can be compounded, dyed, and printed, allowing for various functional modifications.",
-        "It has good chemical stability, is resistant to acid and alkali, and is not prone to decay. Some of its raw materials (PP polypropylene) are recyclable."
+        "Good mechanical properties: Spunbond filaments impart high tensile and tear resistance to the fabric, making it wear-resistant and less prone to shedding, and much stronger than pure meltblown fabric.",
+        "High-barrier filtration: The intermediate melt-blown ultrafine fibers can block bacteria, dust, droplets, blood, and body fluids; achieving high bacterial filtration efficiency.",
+        "Breathable and water-repellent: Liquid is difficult to penetrate, but water vapor can pass through, providing protection without being stifling.",
+        "Soft and skin-friendly, non-toxic and odorless, suitable for direct contact with skin, single-use only.",
+        "Functional modification: It can be treated with various functionalities such as alcohol resistance, plasma resistance, water resistance, antistatic properties, hydrophilicity, antibacterial properties, and UV resistance.",
+        "Primarily disposable, with moderate cost, hot-rolled bonding, and no chemical glue."
       ],
       "specs": [
         {
@@ -53,7 +55,7 @@
           "value": "Soft non-woven + high-capacity core",
           "spec": {
             "label": "WEIGHT (GSM)",
-            "value": "9-200"
+            "value": "12-60"
           }
         },
         {
@@ -61,7 +63,7 @@
           "value": "Adult care / Nursing homes / Home",
           "spec": {
             "label": "WIDTH (CM)",
-            "value": "10-320"
+            "value": "WITHIN 320"
           }
         },
         {
