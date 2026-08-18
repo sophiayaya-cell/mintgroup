@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- ========== 首页 ========== -->
+  <url>
+    <loc>https://www.mint-gp.com/</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- ========== 关于我们（E-E-A-T 关键页） ========== -->
+  <url>
+    <loc>https://www.mint-gp.com/about-us/</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ========== 产品页（4个主产品线） ========== -->
+  <url>
+    <loc>https://www.mint-gp.com/products/spunbond-nonwoven-fabric/</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.mint-gp.com/images/spunbond-fabric.jpg</image:loc>
+      <image:title>Spunbond Nonwoven Fabric Manufacturer - ZIBO MINT HYGIENE</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.mint-gp.com/products/laminated-nonwoven-fabric/</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.mint-gp.com/images/laminated-nonwoven.jpg</image:loc>
+      <image:title>Laminated Coated Nonwoven Fabric - ZIBO MINT HYGIENE</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.mint-gp.com/products/stitch-bonded-fabric/</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.mint-gp.com/images/stitch-bonded-fabric.jpg</image:loc>
+      <image:title>Stitch-bonded Nonwoven Fabric - ZIBO MINT HYGIENE</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.mint-gp.com/products/geotextile-nonwoven-fabric/</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.mint-gp.com/images/geotextile-nonwoven.jpg</image:loc>
+      <image:title>Geotextile Nonwoven Fabric Manufacturer - ZIBO MINT HYGIENE</image:title>
+    </image:image>
+  </url>
+
+  <!-- ========== 新闻/博客（3篇 GEO 文章，错开发布） ========== -->
+  <!-- 文章 1 — 建议发布日：2026-08-19 -->
+  <url>
+    <loc>https://www.mint-gp.com/news/mint-expands-nonwoven-production/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <news:news>
+      <news:publication>
+        <news:name>ZIBO MINT HYGIENE PRODUCTS CO., LTD.</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-08-19</news:publication_date>
+      <news:title>ZIBO MINT Expands Nonwoven Fabric Production to Serve Global Markets</news:title>
+    </news:news>
+  </url>
+
+  <!-- 文章 2 — 建议发布日：2026-08-21 -->
+  <url>
+    <loc>https://www.mint-gp.com/news/nonwoven-market-trends-2026/</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <news:news>
+      <news:publication>
+        <news:name>ZIBO MINT HYGIENE PRODUCTS CO., LTD.</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-08-21</news:publication_date>
+      <news:title>Nonwoven Fabric Market Trends 2026: Sustainability &amp; China Supplier Guide</news:title>
+    </news:news>
+  </url>
+
+  <!-- 文章 3 — 建议发布日：2026-08-23 -->
+  <url>
+    <loc>https://www.mint-gp.com/news/what-is-nonwoven-fabric-guide/</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <news:news>
+      <news:publication>
+        <news:name>ZIBO MINT HYGIENE PRODUCTS CO., LTD.</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-08-23</news:publication_date>
+      <news:title>What Is Nonwoven Fabric? Types, Applications &amp; China Supplier Guide 2026</news:title>
+    </news:news>
+  </url>
+
+  <!-- ========== 联系页面（高优先级，Contact 页） ========== -->
+  <url>
+    <loc>https://www.mint-gp.com/contact/</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+</urlset>
