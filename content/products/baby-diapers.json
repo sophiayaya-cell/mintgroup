@@ -51,6 +51,181 @@
           "value": "ISO 9001 (sample)"
         }
       ]
+    },
+    "es": {
+      "name": "pañales para bebés",
+      "tagline": "Transpirable y seco para proteger la delicada piel de tu bebé",
+      "description": "Los pañales para bebés utilizan una estructura transpirable ultrafina y bordes tridimensionales 3D a prueba de fugas, combinados con una capa superficial seca por succión instantánea, para que el bebé pueda mantenerse alejado de los pedos rojos, realizar actividades más cómodas y dormir tranquilamente toda la noche.",
+      "features": [
+        "Actividades ultradelgadas y transpirables para bebés más cómodas",
+        "Partición estéreo 3D a prueba de fugas",
+        "Chupa al instante la superficie seca y aléjate de los pedos rojos",
+        "Velcro suave, repetir"
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "No tejido transpirable + Núcleo instantáneo"
+        },
+        {
+          "label": "Escenarios aplicables",
+          "value": "Cuidado diario/nocturno para bebés y niños pequeños"
+        },
+        {
+          "label": "Autenticación",
+          "value": "ISO 9001 (ejemplo)"
+        }
+      ]
+    },
+    "ar": {
+      "name": "حفاضات أطفال",
+      "tagline": "مسامية وجافة لحماية بشرة طفلك الرقيقة",
+      "description": "تستخدم حفاضات الأطفال بنية رقيقة للغاية ومسامية وحواف ثلاثية الأبعاد مانعة للتسرب، جنبًا إلى جنب مع طبقة سطح جافة للشفط الفوري، بحيث يمكن للطفل الابتعاد عن الضراط الأحمر، وأنشطة أكثر راحة، والنوم بسلام طوال الليل.",
+      "features": [
+        "رقيقة للغاية وجيدة التهوية، وأنشطة الأطفال أكثر راحة",
+        "قسم ستيريو ثلاثي الأبعاد مانع للتسرب",
+        "تمتص على الفور على السطح الجاف والابتعاد عن الريح الحمراء",
+        "فيلكرو ناعم، مكرر"
+      ],
+      "specs": [
+        {
+          "label": "المادة",
+          "value": "مسامي غير منسوج + نواة فورية"
+        },
+        {
+          "label": "السيناريوهات القابلة للتطبيق",
+          "value": "الرعاية اليومية/الليلية للرضع والأطفال الصغار"
+        },
+        {
+          "label": "مصادقة",
+          "value": "ISO 9001 (مثال)"
+        }
+      ]
+    },
+    "de": {
+      "name": "Babywindeln",
+      "tagline": "Atmungsaktiv und trocken, um die empfindliche Haut Ihres Babys zu schützen",
+      "description": "Babywindeln verwenden eine ultradünne, atmungsaktive Struktur und 3D dreidimensionale, auslaufsichere Kanten, kombiniert mit einer sofort saugenden, trockenen Oberflächenschicht, damit das Baby sich von den roten Fürzen fernhalten, bequemere Aktivitäten ausüben und die ganze Nacht ruhig schlafen kann.",
+      "features": [
+        "Ultradünn und atmungsaktiv, Babyaktivitäten komfortabler",
+        "Leckdichte 3D-Stereo-Trennwand",
+        "Saugen Sie sofort an der trockenen Oberfläche und halten Sie sich von den roten Fürzen fern",
+        "Weicher Klettverschluss, Wiederholen"
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Atmungsaktives Non-Woven + Instant Core"
+        },
+        {
+          "label": "Anwendbare Gelegenheiten",
+          "value": "Tägliche/Nachtbetreuung für Säuglinge und Kleinkinder"
+        },
+        {
+          "label": "APOSTILLE",
+          "value": "ISO 9001 (Beispiel)"
+        }
+      ]
+    },
+    "fr": {
+      "name": "couches bébé",
+      "tagline": "Respirant et sec pour protéger la peau délicate de votre bébé",
+      "description": "Les couches pour bébé utilisent une structure respirante ultra-mince et des bords tridimensionnels étanches, combinés à une couche de surface sèche par aspiration instantanée, afin que le bébé puisse rester à l'écart des pets rouges, des activités plus confortables et dormir paisiblement toute la nuit.",
+      "features": [
+        "Ultra-minces et respirantes, les activités pour bébé sont plus confortables",
+        "Cloison 3D stéréo étanche",
+        "Aspirez instantanément sur la surface sèche et restez à l'écart des pets rouges",
+        "Velcro souple, répéter"
+      ],
+      "specs": [
+        {
+          "label": "Matériau",
+          "value": "Non tissé respirant + Noyau instantané"
+        },
+        {
+          "label": "Scénarios applicables",
+          "value": "Soins quotidiens/nocturnes pour les nourrissons et les tout-petits"
+        },
+        {
+          "label": "Facteur d'authentification",
+          "value": "ISO 9001 (exemple)"
+        }
+      ]
+    },
+    "ja": {
+      "name": "赤ちゃん用おむつ",
+      "tagline": "赤ちゃんの繊細な肌を保護するための通気性と乾燥性",
+      "description": "赤ちゃんのおむつは、超薄型の通気性構造と3 D立体防漏エッジを採用し、瞬時に吸引乾燥した表面層を組み合わせることで、赤いおならから離れ、より快適な活動を行い、一晩中安心して眠ることができます。",
+      "features": [
+        "超薄型で通気性のある、より快適なベビーアクティビティ",
+        "3 Dステレオ防漏仕切り",
+        "すぐに乾燥した表面に吸い込み、赤いおならに近づかないでください",
+        "ソフトベルクロ、リピート"
+      ],
+      "specs": [
+        {
+          "label": "材質",
+          "value": "通気性不織布+インスタントコア"
+        },
+        {
+          "label": "該当するシナリオ",
+          "value": "乳幼児の日常／夜間ケア"
+        },
+        {
+          "label": "認証",
+          "value": "ISO 9001 （例）"
+        }
+      ]
+    },
+    "ko": {
+      "name": "아기 기저귀",
+      "tagline": "아기의 연약한 피부를 보호하는 통기성 및 건조성",
+      "description": "아기 기저귀는 매우 얇은 통기성 구조와 3D 입체 누출 방지 가장자리, 즉각적인 흡입 건조 표면 층을 사용하여 아기가 붉은 방귀에서 벗어나 더 편안한 활동을하고 밤새 평화롭게 잘 수 있습니다.",
+      "features": [
+        "통기성이 뛰어나고 얇은 아기 활동이 더욱 편안합니다.",
+        "3D 스테레오 누출 방지 파티션",
+        "건조한 표면을 즉시 빨아들이고 붉은 방귀에서 멀리 떨어지십시오.",
+        "부드러운 벨크로, 반복"
+      ],
+      "specs": [
+        {
+          "label": "재료",
+          "value": "통기성 부직포 + 인스턴트 코어"
+        },
+        {
+          "label": "사용 장소",
+          "value": "영유아를 위한 일일/야간 관리"
+        },
+        {
+          "label": "인증",
+          "value": "ISO 9001 (예시)"
+        }
+      ]
+    },
+    "ru": {
+      "name": "детские подгузники",
+      "tagline": "Дышащий и сухой материал для защиты нежной кожи вашего ребенка",
+      "description": "Детские подгузники используют ультратонкую дышащую структуру и трехмерные герметичные края в сочетании с мгновенным всасывающим сухим поверхностным слоем, чтобы ребенок мог держаться подальше от красных пердежей, более комфортных занятий и спокойно спать всю ночь.",
+      "features": [
+        "Ультратонкие и дышащие, более удобные занятия для малышей",
+        "3D стерео герметичная перегородка",
+        "Мгновенно сосите сухую поверхность и держитесь подальше от красных пердежей",
+        "Мягкая липучка, повторить"
+      ],
+      "specs": [
+        {
+          "label": "Материал",
+          "value": "Дышащий нетканый материал + Instant Core"
+        },
+        {
+          "label": "Возможности использования",
+          "value": "Ежедневный/ночной уход за младенцами и малышами"
+        },
+        {
+          "label": "аттестации",
+          "value": "ISO 9001 (пример)"
+        }
+      ]
     }
   }
 }

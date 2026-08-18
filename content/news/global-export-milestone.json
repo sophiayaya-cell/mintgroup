@@ -6,18 +6,135 @@
       "title": "产品出口突破 30 个国家和地区",
       "excerpt": "凭借稳定的品质与本地化服务，我们的产品远销全球 30+ 市场。",
       "body": [
-        { "para": "依托稳定的产品品质与日益完善的本地化服务体系，公司产品已出口至全球 30 多个国家和地区。" },
-        { "para": "针对不同市场的法规与偏好，我们提供多语言资料与合规支持，帮助海外合作伙伴快速落地。" },
-        { "para": "感谢每一位客户的信任，我们期待与更多全球伙伴携手，将“自然呵护”带给世界。" }
+        {
+          "para": "依托稳定的产品品质与日益完善的本地化服务体系，公司产品已出口至全球 30 多个国家和地区。"
+        },
+        {
+          "para": "针对不同市场的法规与偏好，我们提供多语言资料与合规支持，帮助海外合作伙伴快速落地。"
+        },
+        {
+          "para": "感谢每一位客户的信任，我们期待与更多全球伙伴携手，将“自然呵护”带给世界。"
+        }
       ]
     },
     "en": {
       "title": "Exports Surpass 30 Countries and Regions",
       "excerpt": "With consistent quality and localized service, our products now reach 30+ markets worldwide.",
       "body": [
-        { "para": "Relying on consistent product quality and an increasingly complete localized service system, our products are now exported to more than 30 countries and regions." },
-        { "para": "For different markets’ regulations and preferences, we provide multilingual materials and compliance support to help overseas partners move fast." },
-        { "para": "We thank every customer for their trust and look forward to working with more global partners to bring \"Pure Care\" to the world." }
+        {
+          "para": "Relying on consistent product quality and an increasingly complete localized service system, our products are now exported to more than 30 countries and regions."
+        },
+        {
+          "para": "For different markets’ regulations and preferences, we provide multilingual materials and compliance support to help overseas partners move fast."
+        },
+        {
+          "para": "We thank every customer for their trust and look forward to working with more global partners to bring \"Pure Care\" to the world."
+        }
+      ]
+    },
+    "es": {
+      "title": "Las exportaciones de productos superan los 30 países y regiones",
+      "excerpt": "Con una calidad estable y un servicio localizado, nuestros productos se exportan a más de 30 mercados en todo el mundo.",
+      "body": [
+        {
+          "para": "Basándose en una calidad de producto estable y un sistema de servicio localizado cada vez más sofisticado, los productos de la compañía se han exportado a más de 30 países y regiones de todo el mundo."
+        },
+        {
+          "para": "Para las regulaciones y preferencias en diferentes mercados, proporcionamos materiales multilingües y soporte de cumplimiento para ayudar a los socios extranjeros a aterrizar rápidamente."
+        },
+        {
+          "para": "Gracias a la confianza de todos y cada uno de los clientes, esperamos trabajar con más socios globales para llevar el \"cuidado de la naturaleza\" al mundo."
+        }
+      ]
+    },
+    "ar": {
+      "title": "تتجاوز صادرات المنتجات 30 دولة ومنطقة",
+      "excerpt": "مع الجودة المستقرة والخدمة المحلية، يتم تصدير منتجاتنا إلى أكثر من 30 سوقًا حول العالم.",
+      "body": [
+        {
+          "para": "بالاعتماد على جودة المنتج المستقرة ونظام الخدمة المحلية المتطورة بشكل متزايد، تم تصدير منتجات الشركة إلى أكثر من 30 دولة ومنطقة حول العالم."
+        },
+        {
+          "para": "بالنسبة للوائح والتفضيلات في الأسواق المختلفة، نقدم مواد متعددة اللغات ودعم الامتثال لمساعدة الشركاء في الخارج على الهبوط بسرعة."
+        },
+        {
+          "para": "بفضل ثقة كل عميل، نتطلع إلى العمل مع المزيد من الشركاء العالميين لجلب \"رعاية الطبيعة\" إلى العالم."
+        }
+      ]
+    },
+    "de": {
+      "title": "Produktexporte übersteigen 30 Länder und Regionen",
+      "excerpt": "Mit stabiler Qualität und lokalem Service werden unsere Produkte in mehr als 30 Märkte auf der ganzen Welt exportiert.",
+      "body": [
+        {
+          "para": "Auf der Grundlage einer stabilen Produktqualität und eines immer ausgefeilteren lokalen Service-Systems wurden die Produkte des Unternehmens in mehr als 30 Länder und Regionen auf der ganzen Welt exportiert."
+        },
+        {
+          "para": "Für Vorschriften und Präferenzen in verschiedenen Märkten bieten wir mehrsprachige Materialien und Compliance-Unterstützung, damit ausländische Partner schnell landen können."
+        },
+        {
+          "para": "Dank des Vertrauens jedes einzelnen Kunden freuen wir uns darauf, mit mehr globalen Partnern zusammenzuarbeiten, um „Naturpflege“ in die Welt zu bringen."
+        }
+      ]
+    },
+    "fr": {
+      "title": "Les exportations de produits dépassent 30 pays et régions",
+      "excerpt": "Avec une qualité stable et un service localisé, nos produits sont exportés vers plus de 30 marchés à travers le monde.",
+      "body": [
+        {
+          "para": "S'appuyant sur une qualité de produit stable et un système de service localisé de plus en plus sophistiqué, les produits de la société ont été exportés vers plus de 30 pays et régions du monde."
+        },
+        {
+          "para": "Pour les réglementations et les préférences dans différents marchés, nous fournissons du matériel multilingue et une assistance à la conformité pour aider les partenaires étrangers à atterrir rapidement."
+        },
+        {
+          "para": "Grâce à la confiance de chaque client, nous sommes impatients de travailler avec davantage de partenaires mondiaux pour apporter des « soins de la nature » au monde."
+        }
+      ]
+    },
+    "ja": {
+      "title": "製品の輸出は30カ国・地域を超えています",
+      "excerpt": "安定した品質とローカライズされたサービスにより、当社の製品は世界中の30以上の市場に輸出されています。",
+      "body": [
+        {
+          "para": "安定した製品品質とますます洗練されたローカライズされたサービスシステムに頼って、同社の製品は世界中の30以上の国と地域に輸出されています。"
+        },
+        {
+          "para": "さまざまな市場での規制や好みのために、多言語資料とコンプライアンスサポートを提供し、海外パートナーが迅速に上陸できるようにします。"
+        },
+        {
+          "para": "すべてのお客様の信頼のおかげで、私たちはより多くのグローバルパートナーと協力して「自然のケア」を世界にもたらすことを楽しみにしています。"
+        }
+      ]
+    },
+    "ko": {
+      "title": "제품 수출이 30개 국가 및 지역을 초과함",
+      "excerpt": "안정적인 품질과 현지화된 서비스를 통해 당사의 제품은 전 세계 30개 이상의 시장에 수출됩니다.",
+      "body": [
+        {
+          "para": "안정적인 제품 품질과 점점 더 정교해지는 현지화된 서비스 시스템에 의존하여 이 회사의 제품은 전 세계 30개 이상의 국가 및 지역에 수출되었습니다."
+        },
+        {
+          "para": "다양한 시장의 규제 및 선호도를 위해 해외 파트너의 신속한 상륙을 돕기 위해 다국어 자료 및 규정 준수 지원을 제공합니다."
+        },
+        {
+          "para": "모든 고객의 신뢰 덕분에 더 많은 글로벌 파트너와 협력하여 전 세계에 \"자연 보호\" 를 제공 할 수 있기를 기대합니다."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Экспорт продукции превышает 30 стран и регионов",
+      "excerpt": "Благодаря стабильному качеству и локализованному сервису наша продукция экспортируется на более чем 30 рынков по всему миру.",
+      "body": [
+        {
+          "para": "Опираясь на стабильное качество продукции и все более совершенную локализованную систему обслуживания, продукция компании экспортируется в более чем 30 стран и регионов мира."
+        },
+        {
+          "para": "Для регулирования и предпочтений на разных рынках мы предоставляем многоязычные материалы и поддержку соответствия, чтобы помочь зарубежным партнерам быстро приземлиться."
+        },
+        {
+          "para": "Благодаря доверию каждого клиента мы с нетерпением ждем возможности работать с более глобальными партнерами, чтобы принести «заботу о природе» в мир."
+        }
       ]
     }
   }

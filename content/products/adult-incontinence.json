@@ -75,6 +75,265 @@
           }
         }
       ]
+    },
+    "es": {
+      "name": "Telas sin tejer Spunbond",
+      "tagline": "Tejido no tejido hilado con un alto rendimiento de coste como núcleo, con buena resistencia, permeabilidad al aire, resistencia a la corrosión y modificación funcional, adecuado para productos desechables y de ingeniería en múltiples campos",
+      "description": "Uso principal\nCuidado de la salud: paño exterior de mascarilla desechable, tela de ropa protectora, batas quirúrgicas, sombreros, fundas de zapatos, sábanas médicas, ropa aislante.\nProductos de higiene: compresas higiénicas, toallas/fondos de pañales, almohadillas, espaldas repelentes al agua o superficies hidrófilas.\nIndustria del embalaje: bolsas de compra no tejidas, bolsas de almacenamiento, embalaje de regalo, cubrepolvo.\nConstrucción geotécnica: geotextil, refuerzo de la calzada, aislamiento impermeable, protección de taludes y drenaje.\nTextil para el hogar: forro de sofá, forro de cama, tela a prueba de polvo, funda de almohada desechable.\nAgricultura: Aislamiento de cultivos paño frío, paño a prueba de césped, paño de cubierta de vivero.\nOtros: materiales de filtro, interiores de automóviles, paños de mascarilla, equipo de protección desechable.",
+      "features": [
+        "Alta eficiencia de producción, bajo coste, producción continua a gran escala, alto rendimiento de costes",
+        "Excelente transpirabilidad, peso ligero, textura suave, alta resistencia, en comparación con la tela no tejida básica, buena tensión, no es fácil de romper",
+        "Buen rendimiento de procesamiento, se puede componer, teñir, imprimir, puede hacer una variedad de modificaciones funcionales",
+        "Buena estabilidad química, resistencia a ácidos y álcalis, no perecedero, algunas materias primas (polipropileno PP) se pueden reciclar"
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Tela no tejida respetuosa con la piel + núcleo absorbente de alta capacidad",
+          "spec": {
+            "label": "Peso en gramos (GSM)",
+            "value": "9-200"
+          }
+        },
+        {
+          "label": "Escenarios aplicables",
+          "value": "Cuidado de adultos/Cuidado de ancianos/Hogar",
+          "spec": {
+            "label": "Ancho (CM)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "Autenticación",
+          "value": "ISO 9001/ISO 13485 (ejemplo)",
+          "spec": {
+            "label": "Color",
+            "value": "Todos los colores se pueden personalizar"
+          }
+        }
+      ]
+    },
+    "ar": {
+      "name": "منسوجات سبونبوند",
+      "tagline": "قماش غير منسوج مغزول مع أداء عالي التكلفة كنواة، مع قوة جيدة، ونفاذية للهواء، ومقاومة للتآكل، وتعديل وظيفي، ومناسب للمنتجات التي تستخدم لمرة واحدة والهندسة في مجالات متعددة",
+      "description": "الاستخدام الأساسي\nالرعاية الصحية: القماش الخارجي للقناع القابل للتصرف، قماش الملابس الواقية، العباءات الجراحية، القبعات، أغطية الأحذية، الملاءات الطبية، الملابس العازلة.\nمنتجات النظافة: الفوط الصحية، قمم/قيعان الحفاضات، الفوط، ظهور المواد الطاردة للماء أو الأسطح المحبة للماء.\nصناعة التعبئة والتغليف: أكياس التسوق غير المنسوجة، وأكياس التخزين، وتغليف الهدايا، وغطاء الغبار.\nالبناء الجيوتقني: التكسية الأرضية، وتعزيز قاع الطريق، والعزل غير المنفذ، وحماية المنحدرات والصرف.\nالمنسوجات المنزلية: بطانة أريكة، بطانة سرير، قماش مقاوم للغبار، غطاء وسادة ملاءة سرير للاستخدام مرة واحدة.\nالزراعة: قطعة قماش باردة لعزل المحاصيل، قطعة قماش مقاومة للعشب، قطعة قماش لغطاء الحضانة.\nأخرى: مواد الترشيح، والديكورات الداخلية للسيارة، وأقمشة الأقنعة، ومعدات الحماية التي تستخدم لمرة واحدة.",
+      "features": [
+        "كفاءة إنتاج عالية، تكلفة منخفضة، إنتاج مستمر واسع النطاق، أداء عالي التكلفة",
+        "تهوية ممتازة، وزن خفيف، ملمس ناعم، قوة عالية، مقارنة بالقماش غير المنسوج الأساسي، توتر جيد، ليس من السهل كسره",
+        "أداء معالجة جيد، يمكن أن يكون مركبًا، مصبوغًا، مطبوعًا، يمكن أن يقوم بمجموعة متنوعة من التعديلات الوظيفية",
+        "استقرار كيميائي جيد، مقاومة للأحماض والقلويات، غير قابلة للتلف، يمكن إعادة تدوير بعض المواد الخام (بولي بروبيلين)"
+      ],
+      "specs": [
+        {
+          "label": "المادة",
+          "value": "نسيج غير منسوج صديق للبشرة + نواة ماصة عالية السعة",
+          "spec": {
+            "label": "وزن الجرام (جي إس إم)",
+            "value": "9-200"
+          }
+        },
+        {
+          "label": "السيناريوهات القابلة للتطبيق",
+          "value": "رعاية الكبار/رعاية المسنين/المنزل",
+          "spec": {
+            "label": "العرض (سم)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "مصادقة",
+          "value": "ISO 9001/ISO 13485 (مثال)",
+          "spec": {
+            "label": "لون",
+            "value": "يمكن تخصيص جميع الألوان"
+          }
+        }
+      ]
+    },
+    "de": {
+      "name": "Spinnvliese",
+      "tagline": "Spinnvliesstoff mit hoher Kostenleistung als Kern, mit guter Festigkeit, Luftdurchlässigkeit, Korrosionsbeständigkeit und Funktionsmodifikation, geeignet für Einweg- und Engineering-Produkte in mehreren Bereichen",
+      "description": "Primäre Verwendung\nGesundheitswesen: Einwegmasken-Oberstoff, Schutzkleidung, OP-Kittel, Hüte, Schuhbezüge, medizinische Laken, Isolationskleidung.\nHygieneprodukte: Damenbinden, Windeloberteile/-unterteile, Polster, wasserabweisende Rücken oder hydrophile Oberflächen.\nVerpackungsindustrie: Vlies-Einkaufstüten, Aufbewahrungsbeutel, Geschenkverpackungen, Staubschutzhülle.\nGeotechnische Konstruktion: Geotextil, Straßenbefestigung, undurchlässige Isolierung, Hangschutz und Entwässerung.\nHeimtextil: Schlafsofa, Bettwäsche, staubdichtes Tuch, Einweg-Bettwäsche-Kissenbezug.\nLandwirtschaft: Ernteisolierung Kältetuch, grasfestes Tuch, Kinderzimmerabdecktuch.\nSonstiges: Filtermaterialien, Autoinnenräume, Maskentücher, Einweg-Schutzausrüstung.",
+      "features": [
+        "Hohe Produktionseffizienz, niedrige Kosten, große kontinuierliche Produktion, hohe Kostenleistung",
+        "Hervorragende Atmungsaktivität, geringes Gewicht, weiche Textur, hohe Festigkeit, im Vergleich zu Stapelfaservlies, gute Spannung, nicht leicht zu brechen",
+        "Gute Verarbeitungsleistung, kann zusammengesetzt, gefärbt, gedruckt werden, kann eine Vielzahl von funktionalen Modifikationen vornehmen",
+        "Gute chemische Stabilität, Säure- und Alkalibeständigkeit, nicht verderblich, einige Rohstoffe (PP-Polypropylen) können recycelt werden"
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Hautfreundlicher Vliesstoff + saugfähiger Kern mit hoher Kapazität",
+          "spec": {
+            "label": "Grammgewicht (GSM)",
+            "value": "9-200"
+          }
+        },
+        {
+          "label": "Anwendbare Gelegenheiten",
+          "value": "Erwachsenenbetreuung/Altenpflege/Zuhause",
+          "spec": {
+            "label": "Breite (cm)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "APOSTILLE",
+          "value": "ISO 9001/ISO 13485 (Beispiel)",
+          "spec": {
+            "label": "Farbe",
+            "value": "Alle Farben können angepasst werden"
+          }
+        }
+      ]
+    },
+    "fr": {
+      "name": "Non-tissés Spunbond",
+      "tagline": "Tissu non tissé filé-lié avec des performances de coût élevé comme noyau, avec une bonne résistance, perméabilité à l'air, résistance à la corrosion et modification fonctionnelle, adapté aux produits jetables et d'ingénierie dans de multiples domaines",
+      "description": "Utilisation principale\nSoins de santé : Chiffon extérieur de masque jetable, tissu de vêtements de protection, blouses chirurgicales, chapeaux, couvre-chaussures, draps médicaux, vêtements isolants.\nProduits d'hygiène : serviettes hygiéniques, dessus/dessous de couches, coussinets, dos hydrofuges ou surfaces hydrophiles.\nIndustrie de l'emballage : sacs à provisions non tissés, sacs de rangement, emballages cadeaux, housse anti-poussière.\nConstruction géotechnique : géotextile, renforcement de la plate-forme, isolation imperméable, protection des pentes et drainage.\nTextile de maison : doublure de canapé, doublure de lit, chiffon anti-poussière, taie d'oreiller en drap de lit jetable.\nAgriculture : tissu froid d'isolation des cultures, tissu à l'épreuve de l'herbe, tissu de couverture de pépinière.\nAutres : Matériaux filtrants, intérieurs de voiture, chiffons de masques, équipements de protection jetables.",
+      "features": [
+        "Efficacité de production élevée, faible coût, production continue à grande échelle, performance à coût élevé",
+        "Excellente respirabilité, légèreté, texture douce, haute résistance, par rapport au tissu non tissé de base, bonne tension, pas facile à casser",
+        "Bonnes performances de traitement, peut être composé, teint, imprimé, peut faire une variété de modifications fonctionnelles",
+        "Bonne stabilité chimique, résistance aux acides et aux alcalis, non périssable, certaines matières premières (polypropylène PP) peuvent être recyclées"
+      ],
+      "specs": [
+        {
+          "label": "Matériau",
+          "value": "Tissu non tissé respectueux de la peau + âme absorbante haute capacité",
+          "spec": {
+            "label": "Poids en grammes (GSM)",
+            "value": "9-200"
+          }
+        },
+        {
+          "label": "Scénarios applicables",
+          "value": "Soins aux adultes/Soins aux personnes âgées/Accueil",
+          "spec": {
+            "label": "Largeur (CM)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "Facteur d'authentification",
+          "value": "ISO 9001/ISO 13485 (exemple)",
+          "spec": {
+            "label": "<g id=\"Bold\">Couleur </g>",
+            "value": "Toutes les couleurs peuvent être personnalisées"
+          }
+        }
+      ]
+    },
+    "ja": {
+      "name": "スパンボンド不織布",
+      "tagline": "高コストパフォーマンスを核としたスパンボンド不織布で、強度、空気透過性、耐食性、機能変更性に優れ、複数の分野の使い捨て製品やエンジニアリング製品に適しています。",
+      "description": "主な用途\nヘルスケア：使い捨てマスクのアウタークロス、防護服の生地、外科用ガウン、帽子、靴カバー、医療シート、断熱衣類。\n衛生用品：生理用ナプキン、おむつのトップス/ボトムス、パッド、撥水性バックまたは親水性表面。\n包装産業：不織布ショッピングバッグ、収納バッグ、ギフト包装、ダストカバー。\n地質工学的構造：ジオテキスタイル、路盤補強、不浸透性隔離、斜面保護、排水。\nホームテキスタイル：ソファライナー、ベッドライナー、防塵布、使い捨てベッドシート枕カバー。\n農業：作物断熱冷たい布、防草布、育児用カバー布。\nその他：フィルター材、車内、マスククロス、使い捨て保護具。",
+      "features": [
+        "高生産効率、低コスト、大規模連続生産、高コストパフォーマンス",
+        "通気性に優れ、軽量、柔らかい質感、高強度、ステープル不織布と比較して、張力が良く、壊れにくい",
+        "良好な加工性能、配合、染色、印刷が可能、様々な機能変更が可能",
+        "良好な化学安定性、耐酸性および耐アルカリ性、腐食性がなく、いくつかの原材料（ PPポリプロピレン）をリサイクルすることができます"
+      ],
+      "specs": [
+        {
+          "label": "材質",
+          "value": "肌にやさしい不織布+高容量の吸収コア",
+          "spec": {
+            "label": "グラム重量（ GSM ）",
+            "value": "9 -200"
+          }
+        },
+        {
+          "label": "該当するシナリオ",
+          "value": "成人介護/高齢者介護/在宅",
+          "spec": {
+            "label": "幅（ CM ）",
+            "value": "10 -320"
+          }
+        },
+        {
+          "label": "認証",
+          "value": "ISO 9001/ISO 13485 （例）",
+          "spec": {
+            "label": "色",
+            "value": "すべての色をカスタマイズ可能"
+          }
+        }
+      ]
+    },
+    "ko": {
+      "name": "스펀본드 부직포",
+      "tagline": "고비용 성능을 핵심으로 하는 스펀본드 부직포로 강도, 공기 투과성, 내식성 및 기능적 변형이 우수하여 여러 분야의 일회용 및 엔지니어링 제품에 적합합니다.",
+      "description": "기본 사용\n의료: 일회용 마스크 겉감, 보호복 원단, 수술 가운, 모자, 신발 커버, 의료용 시트, 단열 의류.\n위생 제품: 생리대, 기저귀 상판/하의, 패드, 발수 등 또는 친수성 표면.\n포장 산업: 부직포 쇼핑백, 보관 가방, 선물 포장, 먼지 덮개.\n지반 공학 구조: 지오텍스타일, 노반 보강재, 불침투성 분리, 경사 보호 및 배수.\n홈 섬유: 소파 라이너, 침대 라이너, 방진 천, 일회용 침대 시트 베개 커버.\n농업: 작물 단열 차가운 천, 잔디 방지 천, 보육원 덮개 천.\n기타: 필터 소재, 자동차 인테리어, 마스크 천, 일회용 보호 장비.",
+      "features": [
+        "높은 생산 효율, 낮은 비용, 대규모 연속 생산, 높은 비용 성과",
+        "뛰어난 통기성, 가벼운 무게, 부드러운 질감, 높은 강도, 주요 부직포에 비해, 좋은 장력, 깨지기 쉽지 않음",
+        "우수한 가공 성능, 합성, 염색, 인쇄 가능, 다양한 기능적 수정 가능",
+        "우수한 화학적 안정성, 산 및 알칼리 내성, 부패하지 않음, 일부 원료 (PP 폴리프로필렌) 를 재활용할 수 있음"
+      ],
+      "specs": [
+        {
+          "label": "재료",
+          "value": "피부 친화적인 부직포 + 고용량 흡수성 코어",
+          "spec": {
+            "label": "그램 중량 (GSM)",
+            "value": "9-200"
+          }
+        },
+        {
+          "label": "사용 장소",
+          "value": "성인 관리/노인 관리/가정",
+          "spec": {
+            "label": "너비 (CM)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "인증",
+          "value": "ISO 9001/ISO 13485 (예시)",
+          "spec": {
+            "label": "색",
+            "value": "모든 색상을 사용자 정의할 수 있습니다"
+          }
+        }
+      ]
+    },
+    "ru": {
+      "name": "Нетканые материалы Spunbond",
+      "tagline": "Спэндбондированный нетканый материал с высокими эксплуатационными характеристиками в качестве основы, с хорошей прочностью, воздухопроницаемостью, коррозионной стойкостью и функциональной модификацией, подходящий для одноразовых и инженерных изделий в нескольких областях",
+      "description": "Основное применение\nЗдравоохранение: одноразовая наружная ткань для маски, защитная ткань для одежды, хирургические халаты, головные уборы, бахилы, медицинские простыни, изоляционная одежда.\nСредства гигиены: гигиенические салфетки, подгузники, прокладки, водоотталкивающие спинки или гидрофильные поверхности.\nУпаковочная промышленность: нетканые пакеты для покупок, пакеты для хранения, подарочная упаковка, пылезащитный чехол.\nГеотехническое строительство: геотекстиль, армирование земляного полотна, непроницаемая изоляция, защита склонов и дренаж.\nДомашний текстиль: подкладка для дивана, подкладка для постельного белья, пыленепроницаемая ткань, одноразовая наволочка для постельного белья.\nСельское хозяйство: холодная ткань для изоляции сельскохозяйственных культур, защищенная от травы ткань, ткань для покрытия питомника.\nПрочее: фильтрующие материалы, интерьеры автомобилей, салфетки для масок, одноразовые средства защиты.",
+      "features": [
+        "Высокая эффективность производства, низкая себестоимость, крупномасштабное непрерывное производство, высокая себестоимость",
+        "Отличная воздухопроницаемость, легкий вес, мягкая текстура, высокая прочность, по сравнению со штапельным нетканым материалом, хорошее натяжение, непросто сломать",
+        "Хорошая производительность обработки, может быть смешана, окрашена, напечатана, может выполнять различные функциональные модификации",
+        "Хорошая химическая стабильность, устойчивость к кислотам и щелочам, не скоропортящиеся, некоторые сырьевые материалы (полипропилен ПП) могут быть переработаны"
+      ],
+      "specs": [
+        {
+          "label": "Материал",
+          "value": "Легкая для кожи нетканая ткань + впитывающая сердцевина большой емкости",
+          "spec": {
+            "label": "Вес в граммах (GSM)",
+            "value": "9-200"
+          }
+        },
+        {
+          "label": "Возможности использования",
+          "value": "Уход за взрослыми/уход за пожилыми людьми/на дому",
+          "spec": {
+            "label": "Ширина (см)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "аттестации",
+          "value": "ISO 9001/ISO 13485 (пример)",
+          "spec": {
+            "label": "Цвет",
+            "value": "Все цвета можно настроить"
+          }
+        }
+      ]
     }
   },
   "image": "/images/products/jyn023.jpg"

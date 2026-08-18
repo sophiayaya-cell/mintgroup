@@ -25,6 +25,9 @@ Thumbs.db
 
 # 构建前机翻生成的合并侧车（由 prebuild 生成，不入库）
 src/data/.product-translations.json
+
+# 翻译脚本运行时的临时请求文件
+.mm-req.tmp
 # 注意：scripts/.translate-cache.json 已改为提交进仓库复用（见下方说明）
 # 翻译缓存：把机翻结果持久化进仓库，Cloudflare 每次全新构建时检出复用，
 # 未改动的原文不再重复调用 OpenAI，节省费用。

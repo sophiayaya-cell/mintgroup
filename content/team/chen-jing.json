@@ -11,6 +11,41 @@
       "name": "Chen Jing",
       "role": "Overseas Business Manager",
       "bio": "Deeply engaged in international markets, providing localized compliance and service support for multilingual clients."
+    },
+    "es": {
+      "name": "Chen Jing",
+      "role": "Gerente de Negocios en el Extranjero",
+      "bio": "Profundice en el mercado internacional para proporcionar cumplimiento localizado y soporte de servicio para clientes multilingües."
+    },
+    "ar": {
+      "name": "تشن جينغ",
+      "role": "مدير الأعمال في الخارج",
+      "bio": "احفر عميقًا في السوق الدولية لتوفير الامتثال المحلي ودعم الخدمة للعملاء متعددي اللغات."
+    },
+    "de": {
+      "name": "Chen Jing",
+      "role": "Overseas Business Manager",
+      "bio": "Tauchen Sie tief in den internationalen Markt ein, um mehrsprachigen Kunden lokalisierten Compliance- und Service-Support zu bieten."
+    },
+    "fr": {
+      "name": "Chen Jing",
+      "role": "Directeur commercial à l'étranger",
+      "bio": "Creusez profondément dans le marché international pour fournir une conformité localisée et un support de service pour les clients multilingues."
+    },
+    "ja": {
+      "name": "Chen Jing",
+      "role": "海外ビジネスマネージャー",
+      "bio": "国際市場を深く掘り下げ、多言語の顧客にローカライズされたコンプライアンスとサービスサポートを提供します。"
+    },
+    "ko": {
+      "name": "첸징",
+      "role": "해외사업부장",
+      "bio": "다국어 고객에게 현지화된 규정 준수 및 서비스 지원을 제공하기 위해 국제 시장을 깊이 파고듭니다."
+    },
+    "ru": {
+      "name": "Чэнь Цзин",
+      "role": "Менеджер по зарубежному бизнесу",
+      "bio": "Копайте вглубь международного рынка, чтобы обеспечить локализованное соответствие и сервисную поддержку для многоязычных клиентов."
     }
   }
 }

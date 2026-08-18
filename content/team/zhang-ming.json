@@ -11,6 +11,41 @@
       "name": "Zhang Ming",
       "role": "Head of R&D",
       "bio": "15 years of hygiene product R&D experience, leading multiple core absorbent material patents."
+    },
+    "es": {
+      "name": "Zhang Ming",
+      "role": "Responsable del Centro de I + D",
+      "bio": "Tiene 15 años de experiencia en investigación y desarrollo de productos de higiene, y lidera una serie de patentes de materiales absorbentes de núcleo."
+    },
+    "ar": {
+      "name": "تشانغ مينغ",
+      "role": "رئيس مركز البحث والتطوير",
+      "bio": "لديه 15 عامًا من الخبرة في مجال البحث والتطوير لمنتجات النظافة، ويقود عددًا من براءات الاختراع الأساسية للمواد الماصة."
+    },
+    "de": {
+      "name": "Zhang Ming",
+      "role": "Leiter des F&E-Zentrums",
+      "bio": "Hat 15 Jahre Erfahrung in der Forschung und Entwicklung von Hygieneprodukten und leitet eine Reihe von Patenten für saugfähiges Kernmaterial."
+    },
+    "fr": {
+      "name": "Hsin ",
+      "role": "Responsable du centre R&D",
+      "bio": "Possède 15 ans d'expérience dans la recherche et le développement de produits d'hygiène et est à la tête d'un certain nombre de brevets sur les matériaux absorbants de base."
+    },
+    "ja": {
+      "name": "張明",
+      "role": "研究開発センター長",
+      "bio": "衛生製品の研究開発で15年の経験を持ち、多くのコア吸収材料特許をリードしています。"
+    },
+    "ko": {
+      "name": "장밍",
+      "role": "R&D 센터장",
+      "bio": "위생 제품 연구 및 개발 분야에서 15년의 경력을 쌓았으며, 다수의 핵심 흡수재 특허를 이끌고 있습니다."
+    },
+    "ru": {
+      "name": "Чжан Мин",
+      "role": "Руководитель R&D центра",
+      "bio": "Имеет 15-летний опыт исследований и разработок в области гигиенических средств и имеет ряд патентов на основные абсорбирующие материалы."
     }
   }
 }

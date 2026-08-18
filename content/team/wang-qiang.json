@@ -11,6 +11,41 @@
       "name": "Wang Qiang",
       "role": "Quality Control Manager",
       "bio": "Built an end-to-end traceable QC system, safeguarding the safety of every product."
+    },
+    "es": {
+      "name": "Wang Qiang",
+      "role": "Responsable de Control de Calidad",
+      "bio": "Establecer un sistema de control de calidad de trazabilidad de todo el proceso para proteger la seguridad de cada producto."
+    },
+    "ar": {
+      "name": "وانغ تشيانغ",
+      "role": "مدير مراقبة الجودة",
+      "bio": "إنشاء نظام مراقبة جودة التتبع الكامل للعملية لحماية سلامة كل منتج."
+    },
+    "de": {
+      "name": "Wang Qiang",
+      "role": "Leiter der Qualitätskontrolle",
+      "bio": "Etablieren Sie ein Qualitätskontrollsystem für die Rückverfolgbarkeit des gesamten Prozesses, um die Sicherheit jedes Produkts zu schützen."
+    },
+    "fr": {
+      "name": "Wang Qiang ",
+      "role": "Responsable Contrôle Qualité",
+      "bio": "Mettre en place un système de contrôle qualité de la traçabilité de l'ensemble du processus pour protéger la sécurité de chaque produit."
+    },
+    "ja": {
+      "name": "王強",
+      "role": "品質管理マネージャー",
+      "bio": "全工程トレーサビリティ品質管理システムを確立し、各製品の安全性を確保する。"
+    },
+    "ko": {
+      "name": "왕청",
+      "role": "품질 관리 관리자",
+      "bio": "각 제품의 안전을 보호하기 위해 전체 공정 추적성 품질 관리 시스템을 구축하십시오."
+    },
+    "ru": {
+      "name": "Ван Цян",
+      "role": "Менеджер по контролю качества",
+      "bio": "Создать систему контроля качества прослеживаемости всего процесса для защиты безопасности каждого продукта."
     }
   }
 }

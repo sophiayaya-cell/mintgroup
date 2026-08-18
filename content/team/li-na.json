@@ -11,6 +11,41 @@
       "name": "Li Na",
       "role": "Production Director",
       "bio": "Oversees smart manufacturing and lean production, driving gains in both capacity and yield."
+    },
+    "es": {
+      "name": "Li Na",
+      "role": "Director de Producción",
+      "bio": "Coordinar la fabricación inteligente y la producción ajustada para promover tanto la capacidad de producción como el rendimiento."
+    },
+    "ar": {
+      "name": "لي نا",
+      "role": "مدير الإنتاج",
+      "bio": "تنسيق التصنيع الذكي والإنتاج الضعيف لتعزيز كل من الطاقة الإنتاجية والإنتاجية."
+    },
+    "de": {
+      "name": "Li Na",
+      "role": "Produktionsleiter",
+      "bio": "Koordinieren Sie intelligente Fertigung und schlanke Produktion, um sowohl die Produktionskapazität als auch den Ertrag zu fördern."
+    },
+    "fr": {
+      "name": "Li Na",
+      "role": "Directeur de production",
+      "bio": "Coordonner la fabrication intelligente et la production allégée pour promouvoir à la fois la capacité de production et le rendement."
+    },
+    "ja": {
+      "name": "Li Na",
+      "role": "プロダクションディレクター",
+      "bio": "インテリジェントな製造とリーン生産を調整して、生産能力と歩留まりの両方を促進します。"
+    },
+    "ko": {
+      "name": "리나",
+      "role": "프로덕션 디렉터",
+      "bio": "지능형 제조 및 린 (lean) 생산을 조정하여 생산 능력과 수율을 모두 촉진합니다."
+    },
+    "ru": {
+      "name": "Li Na",
+      "role": "директор по производству.",
+      "bio": "Координация интеллектуального производства и бережливого производства для повышения производственных мощностей и урожайности."
     }
   }
 }

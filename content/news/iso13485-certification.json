@@ -6,18 +6,135 @@
       "title": "通过 ISO 13485 医疗器械质量管理体系认证",
       "excerpt": "公司质量管理体系再获权威认可，医用护理产品合规性进一步增强。",
       "body": [
-        { "para": "经第三方权威机构审核，公司正式通过 ISO 13485 医疗器械质量管理体系认证。" },
-        { "para": "该认证标志着公司在医用护理产品的设计、生产与服务全过程，已建立与国际接轨的质量管理体系。" },
-        { "para": "我们将以此为新的起点，持续完善合规与品控，为客户与终端用户提供更可靠的保障。" }
+        {
+          "para": "经第三方权威机构审核，公司正式通过 ISO 13485 医疗器械质量管理体系认证。"
+        },
+        {
+          "para": "该认证标志着公司在医用护理产品的设计、生产与服务全过程，已建立与国际接轨的质量管理体系。"
+        },
+        {
+          "para": "我们将以此为新的起点，持续完善合规与品控，为客户与终端用户提供更可靠的保障。"
+        }
       ]
     },
     "en": {
       "title": "Certified to ISO 13485 Quality Management System",
       "excerpt": "Our quality management system earns further recognition, strengthening compliance of medical care products.",
       "body": [
-        { "para": "Following audit by an accredited third-party organization, we have been officially certified to the ISO 13485 quality management system for medical devices." },
-        { "para": "This certification confirms that our medical care product design, production and service processes follow an internationally aligned quality management system." },
-        { "para": "We will take this as a new starting point, continuously improving compliance and quality control to provide more reliable assurance to customers and end users." }
+        {
+          "para": "Following audit by an accredited third-party organization, we have been officially certified to the ISO 13485 quality management system for medical devices."
+        },
+        {
+          "para": "This certification confirms that our medical care product design, production and service processes follow an internationally aligned quality management system."
+        },
+        {
+          "para": "We will take this as a new starting point, continuously improving compliance and quality control to provide more reliable assurance to customers and end users."
+        }
+      ]
+    },
+    "es": {
+      "title": "Aprobó la certificación del sistema de gestión de calidad de dispositivos médicos ISO 13485",
+      "excerpt": "El sistema de gestión de calidad de la empresa ha sido reconocido por las autoridades y se ha mejorado aún más la conformidad de los productos de atención médica.",
+      "body": [
+        {
+          "para": "Después de ser auditada por una autoridad externa, la empresa ha aprobado oficialmente la certificación del sistema de gestión de calidad de dispositivos médicos ISO 13485."
+        },
+        {
+          "para": "Esta certificación marca todo el proceso de diseño, producción y servicio de productos de atención médica de la compañía, y ha establecido un sistema de gestión de calidad que está en línea con los estándares internacionales."
+        },
+        {
+          "para": "Utilizaremos esto como un nuevo punto de partida, continuaremos mejorando el cumplimiento y el control de calidad, y proporcionaremos una protección más confiable para los clientes y usuarios finales."
+        }
+      ]
+    },
+    "ar": {
+      "title": "اجتاز شهادة نظام إدارة جودة الأجهزة الطبية ISO 13485",
+      "excerpt": "وقد اعترفت السلطات بنظام إدارة الجودة في الشركة، وتم تعزيز الامتثال لمنتجات الرعاية الطبية.",
+      "body": [
+        {
+          "para": "بعد تدقيقها من قبل سلطة خارجية، حصلت الشركة رسميًا على شهادة نظام إدارة جودة الأجهزة الطبية ISO 13485."
+        },
+        {
+          "para": "تمثل هذه الشهادة العملية الكاملة للشركة لتصميم وإنتاج وخدمة منتجات الرعاية الطبية، وقد أنشأت نظامًا لإدارة الجودة يتماشى مع المعايير الدولية."
+        },
+        {
+          "para": "سنستخدم هذا كنقطة انطلاق جديدة، وسنواصل تحسين الامتثال ومراقبة الجودة، وتوفير حماية أكثر موثوقية للعملاء والمستخدمين النهائيين."
+        }
+      ]
+    },
+    "de": {
+      "title": "ISO 13485 Zertifizierung des Qualitätsmanagementsystems für Medizinprodukte bestanden",
+      "excerpt": "Das Qualitätsmanagementsystem des Unternehmens wurde von den Behörden anerkannt und die Konformität von medizinischen Pflegeprodukten wurde weiter verbessert.",
+      "body": [
+        {
+          "para": "Nach der Prüfung durch eine Drittbehörde hat das Unternehmen die Zertifizierung nach ISO 13485 für das Qualitätsmanagementsystem für Medizinprodukte offiziell bestanden."
+        },
+        {
+          "para": "Diese Zertifizierung kennzeichnet den gesamten Prozess der Entwicklung, Herstellung und des Service von medizinischen Pflegeprodukten des Unternehmens und hat ein Qualitätsmanagementsystem etabliert, das den internationalen Standards entspricht."
+        },
+        {
+          "para": "Wir werden dies als neuen Ausgangspunkt nutzen, die Compliance und Qualitätskontrolle weiter verbessern und einen zuverlässigeren Schutz für Kunden und Endverbraucher bieten."
+        }
+      ]
+    },
+    "fr": {
+      "title": "Certification du système de gestion de la qualité des dispositifs médicaux ISO 13485 réussie",
+      "excerpt": "Le système de gestion de la qualité de l'entreprise a été reconnu par les autorités, et la conformité des produits de soins médicaux a été encore améliorée.",
+      "body": [
+        {
+          "para": "Après avoir été auditée par une autorité tierce, l'entreprise a officiellement passé la certification ISO 13485 du système de gestion de la qualité des dispositifs médicaux."
+        },
+        {
+          "para": "Cette certification marque l'ensemble du processus de conception, de production et de service des produits de soins médicaux de l'entreprise et a mis en place un système de gestion de la qualité conforme aux normes internationales."
+        },
+        {
+          "para": "Nous utiliserons cela comme un nouveau point de départ, continuerons à améliorer la conformité et le contrôle de la qualité, et fournirons une protection plus fiable aux clients et aux utilisateurs finaux."
+        }
+      ]
+    },
+    "ja": {
+      "title": "ISO 13485医療機器品質マネジメントシステム認証に合格",
+      "excerpt": "同社の品質マネジメントシステムは当局に認められており、医療製品のコンプライアンスがさらに強化されています。",
+      "body": [
+        {
+          "para": "第三者機関による監査を受けた後、同社はISO 13485医療機器品質管理システム認証を正式に合格しました。"
+        },
+        {
+          "para": "この認証は、同社の医療製品の設計、製造、サービスの全プロセスをマークし、国際基準に沿った品質マネジメントシステムを確立しています。"
+        },
+        {
+          "para": "これを新たな出発点として、コンプライアンスと品質管理の改善を継続し、顧客とエンドユーザーにより信頼性の高い保護を提供します。"
+        }
+      ]
+    },
+    "ko": {
+      "title": "ISO 13485 의료기기 품질경영시스템 인증 통과",
+      "excerpt": "당국으로부터 회사의 품질경영시스템을 인정받아 의료제품의 적합성이 더욱 강화되었습니다.",
+      "body": [
+        {
+          "para": "제3자 기관의 감사를 받은 후, 회사는 ISO 13485 의료기기 품질 경영 시스템 인증을 공식적으로 통과했습니다."
+        },
+        {
+          "para": "이 인증은 회사의 의료 제품 설계, 생산 및 서비스 전 과정을 표시하며 국제 표준에 부합하는 품질 관리 시스템을 구축했습니다."
+        },
+        {
+          "para": "이를 새로운 출발점으로 삼고, 규정 준수 및 품질 관리를 지속적으로 개선하며, 고객과 최종 사용자에게 보다 신뢰할 수 있는 보호 기능을 제공할 것입니다."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Пройдена сертификация системы менеджмента качества медицинского изделия по стандарту ISO 13485",
+      "excerpt": "Система менеджмента качества компании была признана властями, а соответствие продукции медицинского назначения было дополнительно улучшено.",
+      "body": [
+        {
+          "para": "После аудита сторонним органом компания официально прошла сертификацию системы менеджмента качества медицинских изделий по стандарту ISO 13485."
+        },
+        {
+          "para": "Эта сертификация знаменует собой весь процесс проектирования, производства и обслуживания изделий медицинского назначения и установила систему менеджмента качества, соответствующую международным стандартам."
+        },
+        {
+          "para": "Мы будем использовать это как новую отправную точку, продолжать улучшать соответствие и контроль качества, а также обеспечивать более надежную защиту для клиентов и конечных пользователей."
+        }
       ]
     }
   }

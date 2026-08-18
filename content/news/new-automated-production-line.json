@@ -6,18 +6,135 @@
       "title": "全新自动化生产线正式投产",
       "excerpt": "公司引进的自动化卫生用品生产线已正式投产，产能与品控再升级。",
       "body": [
-        { "para": "为进一步提升产品一致性与交付能力，公司引进的全新自动化生产线已于本月正式投产。" },
-        { "para": "新产线集成了在线视觉检测与智能分拣，关键工序实现全流程可追溯，显著降低了人为误差。" },
-        { "para": "未来我们将持续投入智能制造，为全球客户提供更稳定、更安全的高品质卫生用品。" }
+        {
+          "para": "为进一步提升产品一致性与交付能力，公司引进的全新自动化生产线已于本月正式投产。"
+        },
+        {
+          "para": "新产线集成了在线视觉检测与智能分拣，关键工序实现全流程可追溯，显著降低了人为误差。"
+        },
+        {
+          "para": "未来我们将持续投入智能制造，为全球客户提供更稳定、更安全的高品质卫生用品。"
+        }
       ]
     },
     "en": {
       "title": "New Automated Production Line Goes Live",
       "excerpt": "Our newly introduced automated hygiene products line is now operational, upgrading both capacity and quality control.",
       "body": [
-        { "para": "To further improve product consistency and delivery capability, our newly introduced automated production line officially went into operation this month." },
-        { "para": "The new line integrates inline visual inspection and intelligent sorting, making key processes fully traceable and significantly reducing human error." },
-        { "para": "Moving forward, we will keep investing in smart manufacturing to deliver more stable, safer, high-quality hygiene products to customers worldwide." }
+        {
+          "para": "To further improve product consistency and delivery capability, our newly introduced automated production line officially went into operation this month."
+        },
+        {
+          "para": "The new line integrates inline visual inspection and intelligent sorting, making key processes fully traceable and significantly reducing human error."
+        },
+        {
+          "para": "Moving forward, we will keep investing in smart manufacturing to deliver more stable, safer, high-quality hygiene products to customers worldwide."
+        }
+      ]
+    },
+    "es": {
+      "title": "Nueva línea de producción automatizada puesta en funcionamiento oficialmente",
+      "excerpt": "La línea de producción automatizada de productos de higiene introducida por la empresa se ha puesto oficialmente en producción, y se ha mejorado la capacidad de producción y el control de calidad.",
+      "body": [
+        {
+          "para": "Con el fin de mejorar aún más la consistencia del producto y las capacidades de entrega, la nueva línea de producción automatizada introducida por la empresa se puso en funcionamiento oficialmente este mes."
+        },
+        {
+          "para": "La nueva línea de producción integra la inspección visual en línea y la clasificación inteligente, y se puede rastrear todo el proceso de los procesos clave, lo que reduce significativamente el error humano."
+        },
+        {
+          "para": "En el futuro, continuaremos invirtiendo en fabricación inteligente para proporcionar a los clientes de todo el mundo productos de higiene de alta calidad más estables y seguros."
+        }
+      ]
+    },
+    "ar": {
+      "title": "خط إنتاج آلي جديد تم تشغيله رسميًا",
+      "excerpt": "تم وضع خط إنتاج منتجات النظافة الآلية الذي قدمته الشركة رسميًا في الإنتاج، وتم ترقية الطاقة الإنتاجية ومراقبة الجودة.",
+      "body": [
+        {
+          "para": "من أجل زيادة تحسين اتساق المنتج وقدرات التسليم، تم تشغيل خط الإنتاج الآلي الجديد الذي قدمته الشركة رسميًا هذا الشهر."
+        },
+        {
+          "para": "يدمج خط الإنتاج الجديد الفحص البصري عبر الإنترنت والفرز الذكي، ويمكن تتبع العملية الكاملة للعمليات الرئيسية، مما يقلل بشكل كبير من الخطأ البشري."
+        },
+        {
+          "para": "في المستقبل، سنواصل الاستثمار في التصنيع الذكي لتزويد العملاء في جميع أنحاء العالم بمنتجات نظافة عالية الجودة أكثر استقرارًا وأمانًا."
+        }
+      ]
+    },
+    "de": {
+      "title": "Neue automatisierte Produktionslinie offiziell in Betrieb genommen",
+      "excerpt": "Die vom Unternehmen eingeführte automatisierte Produktionslinie für Hygieneprodukte wurde offiziell in Betrieb genommen und die Produktionskapazität und die Qualitätskontrolle wurden verbessert.",
+      "body": [
+        {
+          "para": "Um die Produktkonsistenz und Lieferfähigkeit weiter zu verbessern, wurde die vom Unternehmen eingeführte neue automatisierte Produktionslinie in diesem Monat offiziell in Betrieb genommen."
+        },
+        {
+          "para": "Die neue Produktionslinie integriert eine visuelle Online-Inspektion und eine intelligente Sortierung, und der gesamte Prozess der Schlüsselprozesse kann nachverfolgt werden, wodurch menschliche Fehler erheblich reduziert werden."
+        },
+        {
+          "para": "In Zukunft werden wir weiterhin in intelligente Fertigung investieren, um Kunden auf der ganzen Welt stabilere und sicherere hochwertige Hygieneprodukte zu bieten."
+        }
+      ]
+    },
+    "fr": {
+      "title": "Nouvelle ligne de production automatisée officiellement mise en service",
+      "excerpt": "La ligne de production automatisée de produits d'hygiène introduite par l'entreprise a été officiellement mise en production, et la capacité de production et le contrôle qualité ont été améliorés.",
+      "body": [
+        {
+          "para": "Afin d'améliorer encore la cohérence des produits et les capacités de livraison, la nouvelle ligne de production automatisée introduite par la société a été officiellement mise en service ce mois-ci."
+        },
+        {
+          "para": "La nouvelle ligne de production intègre l'inspection visuelle en ligne et le tri intelligent, et l'ensemble du processus des processus clés peut être tracé, ce qui réduit considérablement les erreurs humaines."
+        },
+        {
+          "para": "À l'avenir, nous continuerons d'investir dans la fabrication intelligente pour fournir aux clients du monde entier des produits d'hygiène de haute qualité plus stables et plus sûrs."
+        }
+      ]
+    },
+    "ja": {
+      "title": "新しい自動化生産ラインが正式に稼働",
+      "excerpt": "同社が導入した自動衛生製品生産ラインが正式に生産に投入され、生産能力と品質管理が強化されました。",
+      "body": [
+        {
+          "para": "製品の一貫性と納入能力をさらに向上させるために、同社が導入した新しい自動化生産ラインが今月正式に稼働しました。"
+        },
+        {
+          "para": "新しい生産ラインは、オンラインの目視検査とインテリジェントな選別を統合し、主要なプロセスの全プロセスを追跡することができ、ヒューマンエラーを大幅に削減します。"
+        },
+        {
+          "para": "今後もスマートマニュファクチャリングへの投資を継続し、世界中のお客様により安定した安全な高品質の衛生製品を提供してまいります。"
+        }
+      ]
+    },
+    "ko": {
+      "title": "공식적으로 가동되는 새로운 자동화 생산 라인",
+      "excerpt": "회사에서 도입한 자동화 위생용품 생산라인이 공식 생산에 투입되어 생산능력과 품질관리가 업그레이드 되었습니다.",
+      "body": [
+        {
+          "para": "제품 일관성과 납품 능력을 더욱 향상시키기 위해, 회사가 도입한 새로운 자동화 생산 라인이 이달에 공식적으로 가동되었습니다."
+        },
+        {
+          "para": "새로운 생산 라인은 온라인 육안 검사와 지능형 분류를 통합하며, 주요 프로세스의 전체 프로세스를 추적할 수 있어 사람의 실수를 크게 줄여줍니다."
+        },
+        {
+          "para": "앞으로도 전 세계 고객에게 보다 안정적이고 안전한 고품질 위생 제품을 제공하기 위해 스마트 제조에 지속적으로 투자할 것입니다."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Новая автоматизированная производственная линия официально введена в эксплуатацию",
+      "excerpt": "Внедренная компанией автоматизированная линия по производству средств гигиены официально запущена в производство, модернизированы производственные мощности и контроль качества.",
+      "body": [
+        {
+          "para": "В целях дальнейшего повышения согласованности продукции и возможностей поставки в текущем месяце официально введена в эксплуатацию новая автоматизированная производственная линия, внедренная компанией."
+        },
+        {
+          "para": "Новая производственная линия интегрирует онлайн-визуальный осмотр и интеллектуальную сортировку, и весь процесс ключевых процессов можно проследить, что значительно снижает человеческую ошибку."
+        },
+        {
+          "para": "В будущем мы продолжим инвестировать в интеллектуальное производство, чтобы предоставить клиентам по всему миру более стабильные и безопасные высококачественные средства гигиены."
+        }
       ]
     }
   }

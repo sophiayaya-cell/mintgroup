@@ -64,6 +64,265 @@
           }
         }
       ]
+    },
+    "es": {
+      "name": "Tela no tejida laminada",
+      "tagline": "Fuerte adhesión entre capas, sin contaminación por pegamento, rendimiento de alto costo, efecto impermeable uniforme y estable, se puede personalizar el estilo transpirable microporoso, adecuado para una amplia gama de escenarios.",
+      "description": "Escenarios aplicables para telas no tejidas laminadas: película protectora decorativa para pisos, suministros de cama/aislamiento para cirugía médica, bolsas para llevar, paño humectante agrícola a prueba de frío, paño de cubierta a prueba de lluvia para obras de construcción, ropa de cama doméstica desechable y suministros de protección temporal industrial.",
+      "features": [
+        "Alta firmeza",
+        "Rentable",
+        "Resistencia a la flexión",
+        "Impermeable y transpirable"
+      ],
+      "specs": [
+        {
+          "label": "Peso en gramos (GSM)",
+          "value": "25-100",
+          "spec": {
+            "label": "Peso en gramos (GSM)",
+            "value": "25-100"
+          }
+        },
+        {
+          "label": "Ancho (CM)",
+          "value": "10-320",
+          "spec": {
+            "label": "Ancho (CM)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "Color",
+          "value": "Se puede personalizar según el número de tarjeta de color Pantone",
+          "spec": {
+            "label": "Color",
+            "value": "Se puede personalizar según el número de tarjeta de color Pantone"
+          }
+        }
+      ]
+    },
+    "ar": {
+      "name": "أقمشة غير منسوجة مغلفة",
+      "tagline": "يمكن تخصيص التصاق قوي بين الطبقات، وعدم وجود تلوث بالغراء، وأداء عالي التكلفة، وتأثير موحد ومستقر مقاوم للماء، ونمط مسامي صغير، ومناسب لمجموعة واسعة من السيناريوهات.",
+      "description": "السيناريوهات القابلة للتطبيق على الأقمشة غير المنسوجة المغلفة: طبقة واقية من الأرضيات المزخرفة، ولوازم فراش/عزل الجراحة الطبية، وأكياس الوجبات الجاهزة، وقطعة قماش ترطيب زراعية مقاومة للبرد، وقطعة قماش واقية من المطر لمواقع البناء، وفراش منزلي يمكن التخلص منه، ولوازم واقية مؤقتة صناعية.",
+      "features": [
+        "صلابة عالية",
+        "فعالة من حيث التكلفة",
+        "مقاومة الانحناء",
+        "مقاوم للماء وجيد التهوية"
+      ],
+      "specs": [
+        {
+          "label": "وزن الجرام (جي إس إم)",
+          "value": "25-100",
+          "spec": {
+            "label": "وزن الجرام (جي إس إم)",
+            "value": "25-100"
+          }
+        },
+        {
+          "label": "العرض (سم)",
+          "value": "10-320",
+          "spec": {
+            "label": "العرض (سم)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "لون",
+          "value": "يمكن تخصيصها وفقًا لرقم بطاقة لون بانتون",
+          "spec": {
+            "label": "لون",
+            "value": "يمكن تخصيصها وفقًا لرقم بطاقة لون بانتون"
+          }
+        }
+      ]
+    },
+    "de": {
+      "name": "Laminierter Vliesstoff",
+      "tagline": "Starke Haftung zwischen den Schichten, keine Leimbelastung, hohe Kostenleistung, gleichmäßige und stabile wasserdichte Wirkung, mikroporöser atmungsaktiver Stil kann angepasst werden, geeignet für eine Vielzahl von Szenarien.",
+      "description": "Anwendbare Szenarien für laminierte Vliesstoffe: dekorative Bodenschutzfolie, medizinisch-chirurgische Bettwäsche/Isolationsmaterialien, Mitnahmetaschen, landwirtschaftliches kältebeständiges Feuchtigkeitstuch, regendichtes Abdeckungstuch für Baustellen, Einweg-Haushaltsbettwäsche und industrielle temporäre Schutzmaterialien.",
+      "features": [
+        "Hohe Festigkeit",
+        "Kostengünstig",
+        "Biegewiderstand",
+        "Wasserdicht und atmungsaktiv"
+      ],
+      "specs": [
+        {
+          "label": "Grammgewicht (GSM)",
+          "value": "25-100",
+          "spec": {
+            "label": "Grammgewicht (GSM)",
+            "value": "25-100"
+          }
+        },
+        {
+          "label": "Breite (cm)",
+          "value": "10-320",
+          "spec": {
+            "label": "Breite (cm)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "Farbe",
+          "value": "Kann gemäß der Pantone-Farbkartennummer angepasst werden",
+          "spec": {
+            "label": "Farbe",
+            "value": "Kann gemäß der Pantone-Farbkartennummer angepasst werden"
+          }
+        }
+      ]
+    },
+    "fr": {
+      "name": "Tissu non-tissé stratifié",
+      "tagline": "Forte adhérence entre les couches, pas de pollution par la colle, performance à coût élevé, effet imperméable uniforme et stable, le style respirant microporeux peut être personnalisé, adapté à un large éventail de scénarios.",
+      "description": "Scénarios applicables aux tissus non tissés stratifiés : film de protection décoratif pour le sol, fournitures de literie/isolation pour la chirurgie médicale, sacs à emporter, chiffon hydratant agricole résistant au froid, chiffon de couverture résistant à la pluie pour les chantiers de construction, literie domestique jetable et fournitures de protection temporaires industrielles.",
+      "features": [
+        "Haute fermeté",
+        "Rentable",
+        "Résistance à la flexion",
+        "Imperméable et respirant"
+      ],
+      "specs": [
+        {
+          "label": "Poids en grammes (GSM)",
+          "value": "25-100",
+          "spec": {
+            "label": "Poids en grammes (GSM)",
+            "value": "25-100"
+          }
+        },
+        {
+          "label": "Largeur (CM)",
+          "value": "10-320",
+          "spec": {
+            "label": "Largeur (CM)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "<g id=\"Bold\">Couleur </g>",
+          "value": "Peut être personnalisé en fonction du numéro de carte couleur Pantone",
+          "spec": {
+            "label": "<g id=\"Bold\">Couleur </g>",
+            "value": "Peut être personnalisé en fonction du numéro de carte couleur Pantone"
+          }
+        }
+      ]
+    },
+    "ja": {
+      "name": "ラミネート不織布",
+      "tagline": "層間の強力な接着、接着剤の汚染なし、高いコストパフォーマンス、均一で安定した防水効果、微小孔のある通気性のあるスタイルをカスタマイズでき、幅広いシナリオに適しています。",
+      "description": "ラミネート不織布に適用可能なシナリオ：装飾的な床保護フィルム、医療手術用寝具/隔離用品、テイクアウトバッグ、農業用防寒保湿布、建設現場用防雨カバークロス、使い捨ての家庭用寝具、および工業用仮設保護用品。",
+      "features": [
+        "しっかり度が高い",
+        "高いコスパ",
+        "曲げ抵抗",
+        "防水性と通気性"
+      ],
+      "specs": [
+        {
+          "label": "グラム重量（ GSM ）",
+          "value": "25 ～ 100人",
+          "spec": {
+            "label": "グラム重量（ GSM ）",
+            "value": "25 ～ 100人"
+          }
+        },
+        {
+          "label": "幅（ CM ）",
+          "value": "10 -320",
+          "spec": {
+            "label": "幅（ CM ）",
+            "value": "10 -320"
+          }
+        },
+        {
+          "label": "色",
+          "value": "PANTONEカラーカード番号に従ってカスタマイズ可能",
+          "spec": {
+            "label": "色",
+            "value": "PANTONEカラーカード番号に従ってカスタマイズ可能"
+          }
+        }
+      ]
+    },
+    "ko": {
+      "name": "라미네이트 부직포",
+      "tagline": "층 사이의 강력한 접착력, 접착제 오염 없음, 높은 비용 성능, 균일하고 안정적인 방수 효과, 미세 다공성 통기성 스타일을 사용자 정의 할 수 있으며 다양한 시나리오에 적합합니다.",
+      "description": "적층 부직포에 적용 가능한 시나리오: 장식 바닥 보호 필름, 의료 수술 침구/격리 용품, 테이크아웃 가방, 농업용 내한성 보습 천, 건설 현장용 방수 커버 천, 일회용 가정용 침구, 산업용 임시 보호 용품.",
+      "features": [
+        "높은 탄력성",
+        "가성비",
+        "굽힘 저항",
+        "방수 및 통기성"
+      ],
+      "specs": [
+        {
+          "label": "그램 중량 (GSM)",
+          "value": "25-100",
+          "spec": {
+            "label": "그램 중량 (GSM)",
+            "value": "25-100"
+          }
+        },
+        {
+          "label": "너비 (CM)",
+          "value": "10-320",
+          "spec": {
+            "label": "너비 (CM)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "색",
+          "value": "Pantone 색상 카드 번호에 따라 사용자 정의 가능",
+          "spec": {
+            "label": "색",
+            "value": "Pantone 색상 카드 번호에 따라 사용자 정의 가능"
+          }
+        }
+      ]
+    },
+    "ru": {
+      "name": "Ламинированное нетканое полотно",
+      "tagline": "Сильная адгезия между слоями, отсутствие загрязнения клеем, высокая стоимость, равномерный и стабильный водонепроницаемый эффект, микропористый дышащий стиль можно настроить, подходящий для широкого спектра сценариев.",
+      "description": "Применимые сценарии для ламинированных нетканых материалов: декоративная напольная защитная пленка, медицинские хирургические принадлежности для постельного белья/изоляции, сумки на вынос, сельскохозяйственная холодостойкая увлажняющая ткань, непромокаемая ткань для строительных площадок, одноразовые бытовые постельные принадлежности и промышленные временные защитные принадлежности.",
+      "features": [
+        "Высокая твердость",
+        "Экономичность",
+        "Сопротивление изгибу",
+        "Водонепроницаемый и дышащий"
+      ],
+      "specs": [
+        {
+          "label": "Вес в граммах (GSM)",
+          "value": "25-100",
+          "spec": {
+            "label": "Вес в граммах (GSM)",
+            "value": "25-100"
+          }
+        },
+        {
+          "label": "Ширина (см)",
+          "value": "10-320",
+          "spec": {
+            "label": "Ширина (см)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "Цвет",
+          "value": "Может быть настроен в соответствии с номером цветовой карты Pantone",
+          "spec": {
+            "label": "Цвет",
+            "value": "Может быть настроен в соответствии с номером цветовой карты Pantone"
+          }
+        }
+      ]
     }
   }
 }
