@@ -1,107 +1,7 @@
 {
   "slug": "medical-care-pads",
-  "category": "medical",
+  "category": "Medical Care Pads",
   "i18n": {
-    "zh": {
-      "name": "医用护理垫",
-      "tagline": "柔软亲肤 · 高吸收，医疗与家庭护理的理想之选",
-      "description": "医用护理垫采用亲肤无纺布表层与高分子吸收芯体，快速锁液、不反渗，为医疗机构、家庭护理及术后康复场景提供安全、舒适的护理保障。",
-      "features": [
-        "高吸收芯体，快速锁液不反渗",
-        "亲肤无纺布表层，温和不刺激",
-        "透气底膜，干爽不闷热",
-        "医用级品控，安全放心"
-      ],
-      "specs": [
-        {
-          "label": "材质",
-          "value": "亲肤无纺布 + 高分子吸收芯"
-        },
-        {
-          "label": "适用场景",
-          "value": "医疗机构 / 家庭护理 / 术后康复"
-        },
-        {
-          "label": "认证",
-          "value": "ISO 9001 / ISO 13485（示例）"
-        }
-      ]
-    },
-    "en": {
-      "name": "Medical Care Pads",
-      "tagline": "Soft, skin-friendly and highly absorbent for medical and home care",
-      "description": "Our medical care pads combine a skin-friendly non-woven top sheet with a high-polymer absorbent core that locks liquid quickly without backflow, delivering safe and comfortable protection for clinics, home care and post-operative recovery.",
-      "features": [
-        "High-polymer core locks liquid fast, no backflow",
-        "Skin-friendly non-woven top sheet, gentle on skin",
-        "Breathable backsheet keeps skin dry and fresh",
-        "Medical-grade quality control for peace of mind"
-      ],
-      "specs": [
-        {
-          "label": "Material",
-          "value": "Soft non-woven + polymer absorbent core"
-        },
-        {
-          "label": "Application",
-          "value": "Clinics / Home care / Post-op recovery"
-        },
-        {
-          "label": "Certification",
-          "value": "ISO 9001 / ISO 13485 (sample)"
-        }
-      ]
-    },
-    "es": {
-      "name": "Almohadilla de enfermería médica",
-      "tagline": "Suave y respetuoso con la piel · Altamente absorbente, ideal para el cuidado médico y doméstico",
-      "description": "La almohadilla de atención médica adopta una superficie de tela no tejida respetuosa con la piel y un núcleo absorbente de polímeros, que bloquea el líquido rápidamente y no revierte la ósmosis, proporcionando una garantía de atención segura y cómoda para las instituciones médicas, la atención domiciliaria y los escenarios de rehabilitación postoperatoria.",
-      "features": [
-        "Núcleo de alta absorción, bloqueo rápido de líquidos, sin ósmosis inversa",
-        "Superficie no tejida respetuosa con la piel, suave y no irritante",
-        "Película base transpirable, seca y no congestionada",
-        "Control de calidad de grado médico, seguridad y tranquilidad"
-      ],
-      "specs": [
-        {
-          "label": "Material",
-          "value": "Tela no tejida respetuosa con la piel + núcleo absorbente de polímero"
-        },
-        {
-          "label": "Escenarios aplicables",
-          "value": "Atención médica/Atención domiciliaria/Rehabilitación posquirúrgica"
-        },
-        {
-          "label": "Autenticación",
-          "value": "ISO 9001/ISO 13485 (ejemplo)"
-        }
-      ]
-    },
-    "ar": {
-      "name": "وسادة تمريض طبية",
-      "tagline": "ناعمة وصديقة للبشرة · ماصة للغاية، مثالية للرعاية الطبية والمنزلية",
-      "description": "تتبنى وسادة الرعاية الطبية سطحًا من القماش غير المنسوج صديق للبشرة وقلبًا ممتصًا للبوليمر، والذي يقفل السائل بسرعة ولا يعكس التناضح، مما يوفر ضمانًا آمنًا ومريحًا للرعاية للمؤسسات الطبية والرعاية المنزلية وسيناريوهات إعادة التأهيل بعد الجراحة.",
-      "features": [
-        "قلب عالي الامتصاص، قفل سائل سريع، لا يوجد تناضح عكسي",
-        "سطح غير منسوج صديق للبشرة ولطيف وغير مهيج",
-        "غشاء أساسي جيد التهوية، جاف وغير خانق",
-        "مراقبة الجودة الطبية والسلامة وراحة البال"
-      ],
-      "specs": [
-        {
-          "label": "المادة",
-          "value": "نسيج غير منسوج صديق للبشرة + لب ماص للبوليمر"
-        },
-        {
-          "label": "السيناريوهات القابلة للتطبيق",
-          "value": "الرعاية الصحية/الرعاية المنزلية/إعادة التأهيل بعد الجراحة"
-        },
-        {
-          "label": "مصادقة",
-          "value": "ISO 9001/ISO 13485 (مثال)"
-        }
-      ]
-    },
     "de": {
       "name": "Medizinisches Stillpad",
       "tagline": "Weich und hautfreundlich · Sehr saugfähig, ideal für die medizinische und häusliche Pflege",
@@ -127,53 +27,28 @@
         }
       ]
     },
-    "fr": {
-      "name": "Coussinet d'allaitement médical",
-      "tagline": "Doux et respectueux de la peau · Très absorbant, idéal pour les soins médicaux et à domicile",
-      "description": "Le tampon de soins médicaux adopte une surface en tissu non tissé respectueuse de la peau et un noyau absorbant les polymères, qui verrouille rapidement le liquide et n'inverse pas l'osmose, offrant une garantie de soins sûrs et confortables pour les établissements médicaux, les soins à domicile et les scénarios de réadaptation postopératoire.",
+    "ru": {
+      "name": "Медицинская медсестринская подушка",
+      "tagline": "Мягкий и благоприятный для кожи · Высоко впитывающий, идеально подходит для медицинского и домашнего ухода",
+      "description": "Медицинская прокладка использует благоприятную для кожи нетканую тканевую поверхность и полимер-поглощающую сердцевину, которая быстро фиксирует жидкость и не обращает вспять осмос, обеспечивая гарантию безопасного и комфортного ухода для медицинских учреждений, ухода на дому и послеоперационных реабилитационных сценариев.",
       "features": [
-        "Noyau à haute absorption, verrouillage rapide du liquide, pas d'osmose inverse",
-        "Surface non tissée respectueuse de la peau, douce et non irritante",
-        "Film de base respirant, sec et non bouché",
-        "Contrôle qualité de qualité médicale, sécurité et tranquillité d'esprit"
+        "Высокая абсорбция сердечника, быстрое запирание жидкостью, отсутствие обратного осмоса",
+        "Чистая для кожи нетканая поверхность, нежная и не раздражающая",
+        "Дышащая базовая пленка, сухая и не душная",
+        "Медицинский контроль качества, безопасность и спокойствие"
       ],
       "specs": [
         {
-          "label": "Matériau",
-          "value": "Tissu non tissé respectueux de la peau + noyau absorbant polymère"
+          "label": "Материал",
+          "value": "Легкая для кожи нетканая ткань + полимерная абсорбирующая сердцевина"
         },
         {
-          "label": "Scénarios applicables",
-          "value": "Soins de santé/Soins à domicile/Réadaptation post-chirurgicale"
+          "label": "Возможности использования",
+          "value": "Здравоохранение/Уход на дому/Послеоперационная реабилитация"
         },
         {
-          "label": "Facteur d'authentification",
-          "value": "ISO 9001/ISO 13485 (exemple)"
-        }
-      ]
-    },
-    "ja": {
-      "name": "医療看護パッド",
-      "tagline": "柔らかく肌にやさしい・吸収性が高く、医療やホームケアに最適",
-      "description": "メディカルケアパッドは、皮膚に優しい不織布の表面とポリマー吸収コアを採用しており、液体を迅速にロックし、浸透を逆転させず、医療機関、在宅ケア、術後リハビリシナリオに安全で快適なケアを保証します。",
-      "features": [
-        "高吸収コア、高速液体ロック、逆浸透なし",
-        "肌にやさしい不織布表面、穏やかで刺激性のない",
-        "通気性のあるベースフィルム、乾燥していて息苦しくない",
-        "医療グレードの品質管理、安全性、安心"
-      ],
-      "specs": [
-        {
-          "label": "材質",
-          "value": "肌にやさしい不織布+ポリマー吸収コア"
-        },
-        {
-          "label": "該当するシナリオ",
-          "value": "ヘルスケア/在宅ケア/術後リハビリテーション"
-        },
-        {
-          "label": "認証",
-          "value": "ISO 9001/ISO 13485 （例）"
+          "label": "аттестации",
+          "value": "ISO 9001/ISO 13485 (пример)"
         }
       ]
     },
@@ -202,30 +77,180 @@
         }
       ]
     },
-    "ru": {
-      "name": "Медицинская медсестринская подушка",
-      "tagline": "Мягкий и благоприятный для кожи · Высоко впитывающий, идеально подходит для медицинского и домашнего ухода",
-      "description": "Медицинская прокладка использует благоприятную для кожи нетканую тканевую поверхность и полимер-поглощающую сердцевину, которая быстро фиксирует жидкость и не обращает вспять осмос, обеспечивая гарантию безопасного и комфортного ухода для медицинских учреждений, ухода на дому и послеоперационных реабилитационных сценариев.",
+    "en": {
+      "name": "Medical Care Pads",
+      "tagline": "Soft, skin-friendly and highly absorbent for medical and home care",
+      "description": "Our medical care pads combine a skin-friendly non-woven top sheet with a high-polymer absorbent core that locks liquid quickly without backflow, delivering safe and comfortable protection for clinics, home care and post-operative recovery.",
       "features": [
-        "Высокая абсорбция сердечника, быстрое запирание жидкостью, отсутствие обратного осмоса",
-        "Чистая для кожи нетканая поверхность, нежная и не раздражающая",
-        "Дышащая базовая пленка, сухая и не душная",
-        "Медицинский контроль качества, безопасность и спокойствие"
+        "High-polymer core locks liquid fast, no backflow",
+        "Skin-friendly non-woven top sheet, gentle on skin",
+        "Breathable backsheet keeps skin dry and fresh",
+        "Medical-grade quality control for peace of mind"
       ],
       "specs": [
         {
-          "label": "Материал",
-          "value": "Легкая для кожи нетканая ткань + полимерная абсорбирующая сердцевина"
+          "label": "Material",
+          "value": "Soft non-woven + polymer absorbent core",
+          "spec": {
+            "label": "SIZE (CM)",
+            "value": "30x40, 40x50, 40x60, 50x50, 50x60, 60x90, 80x80, 100x120, OEM accepted"
+          }
         },
         {
-          "label": "Возможности использования",
-          "value": "Здравоохранение/Уход на дому/Послеоперационная реабилитация"
+          "label": "Application",
+          "value": "Clinics / Home care / Post-op recovery",
+          "spec": {
+            "label": "MATERIAL",
+            "value": "PP, SMS, PE Film+PP, PE Film+SMS, PE Film+Wood Pulp Paper+PP"
+          }
         },
         {
-          "label": "аттестации",
-          "value": "ISO 9001/ISO 13485 (пример)"
+          "label": "Certification",
+          "value": "ISO 9001 / ISO 13485 (sample)",
+          "spec": {
+            "label": "COLOR",
+            "value": "OEM FREE"
+          }
+        }
+      ]
+    },
+    "fr": {
+      "name": "Coussinet d'allaitement médical",
+      "tagline": "Doux et respectueux de la peau · Très absorbant, idéal pour les soins médicaux et à domicile",
+      "description": "Le tampon de soins médicaux adopte une surface en tissu non tissé respectueuse de la peau et un noyau absorbant les polymères, qui verrouille rapidement le liquide et n'inverse pas l'osmose, offrant une garantie de soins sûrs et confortables pour les établissements médicaux, les soins à domicile et les scénarios de réadaptation postopératoire.",
+      "features": [
+        "Noyau à haute absorption, verrouillage rapide du liquide, pas d'osmose inverse",
+        "Surface non tissée respectueuse de la peau, douce et non irritante",
+        "Film de base respirant, sec et non bouché",
+        "Contrôle qualité de qualité médicale, sécurité et tranquillité d'esprit"
+      ],
+      "specs": [
+        {
+          "label": "Matériau",
+          "value": "Tissu non tissé respectueux de la peau + noyau absorbant polymère"
+        },
+        {
+          "label": "Scénarios applicables",
+          "value": "Soins de santé/Soins à domicile/Réadaptation post-chirurgicale"
+        },
+        {
+          "label": "Facteur d'authentification",
+          "value": "ISO 9001/ISO 13485 (exemple)"
+        }
+      ]
+    },
+    "es": {
+      "name": "Almohadilla de enfermería médica",
+      "tagline": "Suave y respetuoso con la piel · Altamente absorbente, ideal para el cuidado médico y doméstico",
+      "description": "La almohadilla de atención médica adopta una superficie de tela no tejida respetuosa con la piel y un núcleo absorbente de polímeros, que bloquea el líquido rápidamente y no revierte la ósmosis, proporcionando una garantía de atención segura y cómoda para las instituciones médicas, la atención domiciliaria y los escenarios de rehabilitación postoperatoria.",
+      "features": [
+        "Núcleo de alta absorción, bloqueo rápido de líquidos, sin ósmosis inversa",
+        "Superficie no tejida respetuosa con la piel, suave y no irritante",
+        "Película base transpirable, seca y no congestionada",
+        "Control de calidad de grado médico, seguridad y tranquilidad"
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Tela no tejida respetuosa con la piel + núcleo absorbente de polímero"
+        },
+        {
+          "label": "Escenarios aplicables",
+          "value": "Atención médica/Atención domiciliaria/Rehabilitación posquirúrgica"
+        },
+        {
+          "label": "Autenticación",
+          "value": "ISO 9001/ISO 13485 (ejemplo)"
+        }
+      ]
+    },
+    "zh": {
+      "name": "医用护理垫",
+      "tagline": "柔软亲肤 · 高吸收，医疗与家庭护理的理想之选",
+      "description": "医用护理垫采用亲肤无纺布表层与高分子吸收芯体，快速锁液、不反渗，为医疗机构、家庭护理及术后康复场景提供安全、舒适的护理保障。",
+      "features": [
+        "高吸收芯体，快速锁液不反渗",
+        "亲肤无纺布表层，温和不刺激",
+        "透气底膜，干爽不闷热",
+        "医用级品控，安全放心"
+      ],
+      "specs": [
+        {
+          "label": "材质",
+          "value": "亲肤无纺布 + 高分子吸收芯",
+          "spec": {
+            "label": "尺寸（CM）",
+            "value": "30x40, 40x50, 40x60, 50x50, 50x60, 60x90, 80x80, 100x120, 可定制尺寸"
+          }
+        },
+        {
+          "label": "适用场景",
+          "value": "医疗机构 / 家庭护理 / 术后康复",
+          "spec": {
+            "label": "材质",
+            "value": "PP, SMS, PE膜+PP, PE膜+SMS, PE膜+木浆纸+PP"
+          }
+        },
+        {
+          "label": "认证",
+          "value": "ISO 9001 / ISO 13485（示例）",
+          "spec": {
+            "label": "颜色",
+            "value": "可定制"
+          }
+        }
+      ]
+    },
+    "ar": {
+      "name": "وسادة تمريض طبية",
+      "tagline": "ناعمة وصديقة للبشرة · ماصة للغاية، مثالية للرعاية الطبية والمنزلية",
+      "description": "تتبنى وسادة الرعاية الطبية سطحًا من القماش غير المنسوج صديق للبشرة وقلبًا ممتصًا للبوليمر، والذي يقفل السائل بسرعة ولا يعكس التناضح، مما يوفر ضمانًا آمنًا ومريحًا للرعاية للمؤسسات الطبية والرعاية المنزلية وسيناريوهات إعادة التأهيل بعد الجراحة.",
+      "features": [
+        "قلب عالي الامتصاص، قفل سائل سريع، لا يوجد تناضح عكسي",
+        "سطح غير منسوج صديق للبشرة ولطيف وغير مهيج",
+        "غشاء أساسي جيد التهوية، جاف وغير خانق",
+        "مراقبة الجودة الطبية والسلامة وراحة البال"
+      ],
+      "specs": [
+        {
+          "label": "المادة",
+          "value": "نسيج غير منسوج صديق للبشرة + لب ماص للبوليمر"
+        },
+        {
+          "label": "السيناريوهات القابلة للتطبيق",
+          "value": "الرعاية الصحية/الرعاية المنزلية/إعادة التأهيل بعد الجراحة"
+        },
+        {
+          "label": "مصادقة",
+          "value": "ISO 9001/ISO 13485 (مثال)"
+        }
+      ]
+    },
+    "ja": {
+      "name": "医療看護パッド",
+      "tagline": "柔らかく肌にやさしい・吸収性が高く、医療やホームケアに最適",
+      "description": "メディカルケアパッドは、皮膚に優しい不織布の表面とポリマー吸収コアを採用しており、液体を迅速にロックし、浸透を逆転させず、医療機関、在宅ケア、術後リハビリシナリオに安全で快適なケアを保証します。",
+      "features": [
+        "高吸収コア、高速液体ロック、逆浸透なし",
+        "肌にやさしい不織布表面、穏やかで刺激性のない",
+        "通気性のあるベースフィルム、乾燥していて息苦しくない",
+        "医療グレードの品質管理、安全性、安心"
+      ],
+      "specs": [
+        {
+          "label": "材質",
+          "value": "肌にやさしい不織布+ポリマー吸収コア"
+        },
+        {
+          "label": "該当するシナリオ",
+          "value": "ヘルスケア/在宅ケア/術後リハビリテーション"
+        },
+        {
+          "label": "認証",
+          "value": "ISO 9001/ISO 13485 （例）"
         }
       ]
     }
-  }
+  },
+  "image": "/images/products/sms_underpad_high_barrier_medical_underpad_for_surgical.jpg"
 }
