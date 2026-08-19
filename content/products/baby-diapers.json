@@ -1,107 +1,7 @@
 {
-  "slug": "baby-diapers",
-  "category": "baby-diapers",
+  "slug": "agricultural-nonwoven-fabric",
+  "category": "Agricultural Nonwoven Fabric",
   "i18n": {
-    "zh": {
-      "name": "婴儿纸尿裤",
-      "tagline": "透气干爽，呵护宝宝娇嫩肌肤",
-      "description": "婴儿纸尿裤采用超薄透气结构与 3D 立体防漏隔边，配合瞬吸干爽表层，让宝宝远离红屁屁，活动更自在，整夜安睡无忧。",
-      "features": [
-        "超薄透气，宝宝活动更自在",
-        "3D 立体防漏隔边",
-        "瞬吸干爽表层，远离红屁屁",
-        "柔软魔术贴，反复粘贴"
-      ],
-      "specs": [
-        {
-          "label": "材质",
-          "value": "透气无纺布 + 瞬吸芯体"
-        },
-        {
-          "label": "适用场景",
-          "value": "婴幼儿日常 / 夜间护理"
-        },
-        {
-          "label": "认证",
-          "value": "ISO 9001（示例）"
-        }
-      ]
-    },
-    "en": {
-      "name": "Baby Diapers",
-      "tagline": "Breathable and dry, gentle on delicate baby skin",
-      "description": "Our baby diapers feature an ultra-thin breathable structure with 3D leak-guard barriers and a fast-absorbing dry top sheet that helps protect delicate skin from rashes, keeping babies comfortable and sleeping soundly through the night.",
-      "features": [
-        "Ultra-thin and breathable for free movement",
-        "3D leak-guard barriers",
-        "Fast-absorbing dry top sheet, no rashes",
-        "Soft refastenable magic tape"
-      ],
-      "specs": [
-        {
-          "label": "Material",
-          "value": "Breathable non-woven + quick-absorb core"
-        },
-        {
-          "label": "Application",
-          "value": "Daily / Overnight infant care"
-        },
-        {
-          "label": "Certification",
-          "value": "ISO 9001 (sample)"
-        }
-      ]
-    },
-    "es": {
-      "name": "pañales para bebés",
-      "tagline": "Transpirable y seco para proteger la delicada piel de tu bebé",
-      "description": "Los pañales para bebés utilizan una estructura transpirable ultrafina y bordes tridimensionales 3D a prueba de fugas, combinados con una capa superficial seca por succión instantánea, para que el bebé pueda mantenerse alejado de los pedos rojos, realizar actividades más cómodas y dormir tranquilamente toda la noche.",
-      "features": [
-        "Actividades ultradelgadas y transpirables para bebés más cómodas",
-        "Partición estéreo 3D a prueba de fugas",
-        "Chupa al instante la superficie seca y aléjate de los pedos rojos",
-        "Velcro suave, repetir"
-      ],
-      "specs": [
-        {
-          "label": "Material",
-          "value": "No tejido transpirable + Núcleo instantáneo"
-        },
-        {
-          "label": "Escenarios aplicables",
-          "value": "Cuidado diario/nocturno para bebés y niños pequeños"
-        },
-        {
-          "label": "Autenticación",
-          "value": "ISO 9001 (ejemplo)"
-        }
-      ]
-    },
-    "ar": {
-      "name": "حفاضات أطفال",
-      "tagline": "مسامية وجافة لحماية بشرة طفلك الرقيقة",
-      "description": "تستخدم حفاضات الأطفال بنية رقيقة للغاية ومسامية وحواف ثلاثية الأبعاد مانعة للتسرب، جنبًا إلى جنب مع طبقة سطح جافة للشفط الفوري، بحيث يمكن للطفل الابتعاد عن الضراط الأحمر، وأنشطة أكثر راحة، والنوم بسلام طوال الليل.",
-      "features": [
-        "رقيقة للغاية وجيدة التهوية، وأنشطة الأطفال أكثر راحة",
-        "قسم ستيريو ثلاثي الأبعاد مانع للتسرب",
-        "تمتص على الفور على السطح الجاف والابتعاد عن الريح الحمراء",
-        "فيلكرو ناعم، مكرر"
-      ],
-      "specs": [
-        {
-          "label": "المادة",
-          "value": "مسامي غير منسوج + نواة فورية"
-        },
-        {
-          "label": "السيناريوهات القابلة للتطبيق",
-          "value": "الرعاية اليومية/الليلية للرضع والأطفال الصغار"
-        },
-        {
-          "label": "مصادقة",
-          "value": "ISO 9001 (مثال)"
-        }
-      ]
-    },
     "de": {
       "name": "Babywindeln",
       "tagline": "Atmungsaktiv und trocken, um die empfindliche Haut Ihres Babys zu schützen",
@@ -127,53 +27,28 @@
         }
       ]
     },
-    "fr": {
-      "name": "couches bébé",
-      "tagline": "Respirant et sec pour protéger la peau délicate de votre bébé",
-      "description": "Les couches pour bébé utilisent une structure respirante ultra-mince et des bords tridimensionnels étanches, combinés à une couche de surface sèche par aspiration instantanée, afin que le bébé puisse rester à l'écart des pets rouges, des activités plus confortables et dormir paisiblement toute la nuit.",
+    "ru": {
+      "name": "детские подгузники",
+      "tagline": "Дышащий и сухой материал для защиты нежной кожи вашего ребенка",
+      "description": "Детские подгузники используют ультратонкую дышащую структуру и трехмерные герметичные края в сочетании с мгновенным всасывающим сухим поверхностным слоем, чтобы ребенок мог держаться подальше от красных пердежей, более комфортных занятий и спокойно спать всю ночь.",
       "features": [
-        "Ultra-minces et respirantes, les activités pour bébé sont plus confortables",
-        "Cloison 3D stéréo étanche",
-        "Aspirez instantanément sur la surface sèche et restez à l'écart des pets rouges",
-        "Velcro souple, répéter"
+        "Ультратонкие и дышащие, более удобные занятия для малышей",
+        "3D стерео герметичная перегородка",
+        "Мгновенно сосите сухую поверхность и держитесь подальше от красных пердежей",
+        "Мягкая липучка, повторить"
       ],
       "specs": [
         {
-          "label": "Matériau",
-          "value": "Non tissé respirant + Noyau instantané"
+          "label": "Материал",
+          "value": "Дышащий нетканый материал + Instant Core"
         },
         {
-          "label": "Scénarios applicables",
-          "value": "Soins quotidiens/nocturnes pour les nourrissons et les tout-petits"
+          "label": "Возможности использования",
+          "value": "Ежедневный/ночной уход за младенцами и малышами"
         },
         {
-          "label": "Facteur d'authentification",
-          "value": "ISO 9001 (exemple)"
-        }
-      ]
-    },
-    "ja": {
-      "name": "赤ちゃん用おむつ",
-      "tagline": "赤ちゃんの繊細な肌を保護するための通気性と乾燥性",
-      "description": "赤ちゃんのおむつは、超薄型の通気性構造と3 D立体防漏エッジを採用し、瞬時に吸引乾燥した表面層を組み合わせることで、赤いおならから離れ、より快適な活動を行い、一晩中安心して眠ることができます。",
-      "features": [
-        "超薄型で通気性のある、より快適なベビーアクティビティ",
-        "3 Dステレオ防漏仕切り",
-        "すぐに乾燥した表面に吸い込み、赤いおならに近づかないでください",
-        "ソフトベルクロ、リピート"
-      ],
-      "specs": [
-        {
-          "label": "材質",
-          "value": "通気性不織布+インスタントコア"
-        },
-        {
-          "label": "該当するシナリオ",
-          "value": "乳幼児の日常／夜間ケア"
-        },
-        {
-          "label": "認証",
-          "value": "ISO 9001 （例）"
+          "label": "аттестации",
+          "value": "ISO 9001 (пример)"
         }
       ]
     },
@@ -202,30 +77,186 @@
         }
       ]
     },
-    "ru": {
-      "name": "детские подгузники",
-      "tagline": "Дышащий и сухой материал для защиты нежной кожи вашего ребенка",
-      "description": "Детские подгузники используют ультратонкую дышащую структуру и трехмерные герметичные края в сочетании с мгновенным всасывающим сухим поверхностным слоем, чтобы ребенок мог держаться подальше от красных пердежей, более комфортных занятий и спокойно спать всю ночь.",
+    "en": {
+      "name": "Agricultural Nonwoven Fabric",
+      "tagline": "Anti-aging, antibacterial and mold-proof, flame retardant, breathable, heat-insulating, moisture-retaining, and environmentally friendly.",
+      "description": " Agricultural non-woven fabrics are generally made by hot-pressing polypropylene filament fibers. They exhibit good breathability, thermal insulation, moisture retention, and a certain degree of light transmittance. Depending on their thickness, mesh size, color, and other specifications, they can be used as thermal insulation and moisture retention covering materials, shading materials, isolation and cushioning materials, packaging materials, and so on.",
       "features": [
-        "Ультратонкие и дышащие, более удобные занятия для малышей",
-        "3D стерео герметичная перегородка",
-        "Мгновенно сосите сухую поверхность и держитесь подальше от красных пердежей",
-        "Мягкая липучка, повторить"
+        "It is highly resilient, resistant to sunlight, and has a significant grass-controlling effect.",
+        "It is breathable, promoting soil aeration and improving soil compaction.",
+        "Good water permeability, ventilation, moisture retention, nutrient retention, time-saving, labor-saving, breathable, allowing rainwater and water-fertilizer to penetrate directly through the ground cover into the soil.",
+        "Long-lasting moisturizing, keeping the soil moist, reducing the need for artificial watering.",
+        "Increase the utilization rate of fertilizer, enhance nutrient absorption by crops, and achieve the goal of increasing production and income.",
+        "It must have a certain insulation effect.",
+        "Degradable materials do not cause white pollution. They pose no harm to crops. They are opaque yet moisture-retaining and maintain a constant temperature, facilitating the rapid proliferation of probiotics such as microorganism organic fertilizers applied in the fields."
       ],
       "specs": [
         {
-          "label": "Материал",
-          "value": "Дышащий нетканый материал + Instant Core"
+          "label": "Material",
+          "value": "Breathable non-woven + quick-absorb core",
+          "spec": {
+            "label": "WEIGHT (GSM)",
+            "value": "15-100"
+          }
         },
         {
-          "label": "Возможности использования",
-          "value": "Ежедневный/ночной уход за младенцами и малышами"
+          "label": "Application",
+          "value": "Daily / Overnight infant care",
+          "spec": {
+            "label": "WIDTH (CM)",
+            "value": "15-320"
+          }
         },
         {
-          "label": "аттестации",
-          "value": "ISO 9001 (пример)"
+          "label": "Certification",
+          "value": "ISO 9001 (sample)",
+          "spec": {
+            "label": "COLOR",
+            "value": "OEM FREE"
+          }
+        }
+      ]
+    },
+    "fr": {
+      "name": "couches bébé",
+      "tagline": "Respirant et sec pour protéger la peau délicate de votre bébé",
+      "description": "Les couches pour bébé utilisent une structure respirante ultra-mince et des bords tridimensionnels étanches, combinés à une couche de surface sèche par aspiration instantanée, afin que le bébé puisse rester à l'écart des pets rouges, des activités plus confortables et dormir paisiblement toute la nuit.",
+      "features": [
+        "Ultra-minces et respirantes, les activités pour bébé sont plus confortables",
+        "Cloison 3D stéréo étanche",
+        "Aspirez instantanément sur la surface sèche et restez à l'écart des pets rouges",
+        "Velcro souple, répéter"
+      ],
+      "specs": [
+        {
+          "label": "Matériau",
+          "value": "Non tissé respirant + Noyau instantané"
+        },
+        {
+          "label": "Scénarios applicables",
+          "value": "Soins quotidiens/nocturnes pour les nourrissons et les tout-petits"
+        },
+        {
+          "label": "Facteur d'authentification",
+          "value": "ISO 9001 (exemple)"
+        }
+      ]
+    },
+    "es": {
+      "name": "pañales para bebés",
+      "tagline": "Transpirable y seco para proteger la delicada piel de tu bebé",
+      "description": "Los pañales para bebés utilizan una estructura transpirable ultrafina y bordes tridimensionales 3D a prueba de fugas, combinados con una capa superficial seca por succión instantánea, para que el bebé pueda mantenerse alejado de los pedos rojos, realizar actividades más cómodas y dormir tranquilamente toda la noche.",
+      "features": [
+        "Actividades ultradelgadas y transpirables para bebés más cómodas",
+        "Partición estéreo 3D a prueba de fugas",
+        "Chupa al instante la superficie seca y aléjate de los pedos rojos",
+        "Velcro suave, repetir"
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "No tejido transpirable + Núcleo instantáneo"
+        },
+        {
+          "label": "Escenarios aplicables",
+          "value": "Cuidado diario/nocturno para bebés y niños pequeños"
+        },
+        {
+          "label": "Autenticación",
+          "value": "ISO 9001 (ejemplo)"
+        }
+      ]
+    },
+    "zh": {
+      "name": "农用无纺布",
+      "tagline": "抗老化，抗菌霉变，阻燃，透气保温保湿，绿色环保。",
+      "description": "        农用无纺布一般为聚丙烯长丝纤维热压而成。它具有良好的透气性、保温性、保湿性和一定的透光性。依其薄厚、网眼大小、颜色等规格不同，可分别用作保温保湿覆盖材料、遮阳材料、隔离垫底材料、包装材料等。",
+      "features": [
+        "韧性强、耐日晒，防草效果显著。",
+        "透气好，促进土壤疏松，改善土壤板结。",
+        "透水性好，通风，保湿，保肥，省时，省工，透气，雨水，水肥直接透过地布渗透到土壤。",
+        "长效保湿，保持土壤湿润，减少人工浇水。",
+        "增加肥料利用率，作物吸收养分增加，达到增产增收的目的。",
+        "具有一定要的保温效果。",
+        "可降解材料，不会造成白色污染。对作物没有任何危害。不透光又保湿恒温，对田园施用微生菌有机肥等益生菌有快速繁殖繁育功能。"
+      ],
+      "specs": [
+        {
+          "label": "材质",
+          "value": "透气无纺布 + 瞬吸芯体",
+          "spec": {
+            "label": "克重（GSM）",
+            "value": "12-100"
+          }
+        },
+        {
+          "label": "适用场景",
+          "value": "婴幼儿日常 / 夜间护理",
+          "spec": {
+            "label": "幅宽（CM）",
+            "value": "15-320"
+          }
+        },
+        {
+          "label": "认证",
+          "value": "ISO 9001（示例）",
+          "spec": {
+            "label": "颜色",
+            "value": "所有颜色均可定制"
+          }
+        }
+      ]
+    },
+    "ar": {
+      "name": "حفاضات أطفال",
+      "tagline": "مسامية وجافة لحماية بشرة طفلك الرقيقة",
+      "description": "تستخدم حفاضات الأطفال بنية رقيقة للغاية ومسامية وحواف ثلاثية الأبعاد مانعة للتسرب، جنبًا إلى جنب مع طبقة سطح جافة للشفط الفوري، بحيث يمكن للطفل الابتعاد عن الضراط الأحمر، وأنشطة أكثر راحة، والنوم بسلام طوال الليل.",
+      "features": [
+        "رقيقة للغاية وجيدة التهوية، وأنشطة الأطفال أكثر راحة",
+        "قسم ستيريو ثلاثي الأبعاد مانع للتسرب",
+        "تمتص على الفور على السطح الجاف والابتعاد عن الريح الحمراء",
+        "فيلكرو ناعم، مكرر"
+      ],
+      "specs": [
+        {
+          "label": "المادة",
+          "value": "مسامي غير منسوج + نواة فورية"
+        },
+        {
+          "label": "السيناريوهات القابلة للتطبيق",
+          "value": "الرعاية اليومية/الليلية للرضع والأطفال الصغار"
+        },
+        {
+          "label": "مصادقة",
+          "value": "ISO 9001 (مثال)"
+        }
+      ]
+    },
+    "ja": {
+      "name": "赤ちゃん用おむつ",
+      "tagline": "赤ちゃんの繊細な肌を保護するための通気性と乾燥性",
+      "description": "赤ちゃんのおむつは、超薄型の通気性構造と3 D立体防漏エッジを採用し、瞬時に吸引乾燥した表面層を組み合わせることで、赤いおならから離れ、より快適な活動を行い、一晩中安心して眠ることができます。",
+      "features": [
+        "超薄型で通気性のある、より快適なベビーアクティビティ",
+        "3 Dステレオ防漏仕切り",
+        "すぐに乾燥した表面に吸い込み、赤いおならに近づかないでください",
+        "ソフトベルクロ、リピート"
+      ],
+      "specs": [
+        {
+          "label": "材質",
+          "value": "通気性不織布+インスタントコア"
+        },
+        {
+          "label": "該当するシナリオ",
+          "value": "乳幼児の日常／夜間ケア"
+        },
+        {
+          "label": "認証",
+          "value": "ISO 9001 （例）"
         }
       ]
     }
-  }
+  },
+  "image": "/images/products/o1cn01qntlp821k1jvrdmrl_-988576965-0-cib.jpg"
 }
