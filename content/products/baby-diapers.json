@@ -3,77 +3,122 @@
   "category": "Agricultural Nonwoven Fabric",
   "i18n": {
     "de": {
-      "name": "Babywindeln",
-      "tagline": "Atmungsaktiv und trocken, um die empfindliche Haut Ihres Babys zu schützen",
-      "description": "Babywindeln verwenden eine ultradünne, atmungsaktive Struktur und 3D dreidimensionale, auslaufsichere Kanten, kombiniert mit einer sofort saugenden, trockenen Oberflächenschicht, damit das Baby sich von den roten Fürzen fernhalten, bequemere Aktivitäten ausüben und die ganze Nacht ruhig schlafen kann.",
+      "name": "Landwirtschaftliche Vliesstoffe",
+      "tagline": "Anti-Aging, antibakterieller Schimmel, flammhemmend, atmungsaktiv, thermisch und feuchtigkeitsspendend, grün und umweltfreundlich.",
+      "description": "Landwirtschaftliche Vliesstoffe werden in der Regel durch Heißpressen von Polypropylen-Filamentfasern hergestellt. Es hat eine gute Atmungsaktivität, Wärmeisolierung, Feuchtigkeitsspeicherung und eine gewisse Lichtdurchlässigkeit. Abhängig von seiner dünnen Dicke, Maschengröße, Farbe und anderen Spezifikationen kann es als wärme- und feuchtigkeitsisolierendes Abdeckmaterial, Sonnenschutzmaterial, Isolierpad-Bodenmaterial, Verpackungsmaterial usw. verwendet werden.",
       "features": [
-        "Ultradünn und atmungsaktiv, Babyaktivitäten komfortabler",
-        "Leckdichte 3D-Stereo-Trennwand",
-        "Saugen Sie sofort an der trockenen Oberfläche und halten Sie sich von den roten Fürzen fern",
-        "Weicher Klettverschluss, Wiederholen"
+        "Starke Zähigkeit, Beständigkeit gegen Sonnenlicht und bemerkenswerte grasfeste Wirkung.",
+        "Gute Luftdurchlässigkeit fördert lose Böden und verbessert die Bodenverdichtung.",
+        "Gute Wasserdurchlässigkeit, Belüftung, Befeuchtung, Düngung, Zeitersparnis, Arbeitsersparnis, Luftdurchlässigkeit, Regenwasser, Wasser und Dünger dringen durch das Tuch direkt in den Boden ein.",
+        "Die langanhaltende Feuchtigkeitsversorgung hält den Boden feucht und reduziert die künstliche Bewässerung.",
+        "Erhöhen Sie die Ausnutzungsrate von Düngemitteln, erhöhen Sie die Aufnahme von Nährstoffen durch Pflanzen und erreichen Sie den Zweck, Ertrag und Einkommen zu steigern.",
+        "Es hat eine gewisse Isolationswirkung.",
+        "Abbaubares Material ohne weiße Verschmutzung. Keine Schädigung der Kulturpflanzen. Es ist opak, feuchtigkeitsspendend und thermostatisch und hat eine schnelle Ausbreitungsfunktion für Probiotika wie mikrobiellen organischen Dünger, der in der Vergangenheit angewendet wurde."
       ],
       "specs": [
         {
           "label": "Material",
-          "value": "Atmungsaktives Non-Woven + Instant Core"
+          "value": "Atmungsaktives Non-Woven + Instant Core",
+          "spec": {
+            "label": "Grammgewicht (GSM)",
+            "value": "12-100"
+          }
         },
         {
           "label": "Anwendbare Gelegenheiten",
-          "value": "Tägliche/Nachtbetreuung für Säuglinge und Kleinkinder"
+          "value": "Tägliche/Nachtbetreuung für Säuglinge und Kleinkinder",
+          "spec": {
+            "label": "Breite (cm)",
+            "value": "15-320"
+          }
         },
         {
           "label": "APOSTILLE",
-          "value": "ISO 9001 (Beispiel)"
+          "value": "ISO 9001 (Beispiel)",
+          "spec": {
+            "label": "Farbe",
+            "value": "Alle Farben können angepasst werden"
+          }
         }
       ]
     },
     "ru": {
-      "name": "детские подгузники",
-      "tagline": "Дышащий и сухой материал для защиты нежной кожи вашего ребенка",
-      "description": "Детские подгузники используют ультратонкую дышащую структуру и трехмерные герметичные края в сочетании с мгновенным всасывающим сухим поверхностным слоем, чтобы ребенок мог держаться подальше от красных пердежей, более комфортных занятий и спокойно спать всю ночь.",
+      "name": "Сельскохозяйственные нетканые материалы",
+      "tagline": "Антивозрастная, антибактериальная роса, огнестойкая, дышащая, термическая и увлажняющая, зеленая и экологически чистая.",
+      "description": "Сельскохозяйственные нетканые материалы, как правило, изготавливаются путем горячего прессования волокон полипропиленовой нити. Обладает хорошей воздухопроницаемостью, теплоизоляцией, удержанием влаги и определенным коэффициентом пропускания света. В зависимости от его тонкой толщины, размера сетки, цвета и других характеристик он может использоваться в качестве теплоизоляционного и влагоизоляционного материала, материала солнцезащитного козырька, материала дна изоляционной прокладки, упаковочного материала и т. д.",
       "features": [
-        "Ультратонкие и дышащие, более удобные занятия для малышей",
-        "3D стерео герметичная перегородка",
-        "Мгновенно сосите сухую поверхность и держитесь подальше от красных пердежей",
-        "Мягкая липучка, повторить"
+        "Сильная вязкость, устойчивость к солнечному свету и замечательный эффект защиты от трав.",
+        "Хорошая воздухопроницаемость способствует рыхлой почве и улучшает уплотнение почвы.",
+        "Хорошая водопроницаемость, вентиляция, увлажнение, удобрение, экономия времени, труда, воздухопроницаемость, дождевая вода, вода и удобрения проникают непосредственно в почву через ткань.",
+        "Длительное увлажнение сохраняет почву влажной и уменьшает искусственный полив.",
+        "Увеличить коэффициент использования удобрений, увеличить поглощение питательных веществ сельскохозяйственными культурами и достичь цели повышения урожайности и доходов.",
+        "Обладает определенным изоляционным эффектом.",
+        "Разлагаемый материал без белого загрязнения. Не вредит посевам. Он непрозрачный, увлажняющий и термостатический и обладает функцией быстрого размножения для пробиотиков, таких как микробные органические удобрения, применявшиеся в прошлом."
       ],
       "specs": [
         {
           "label": "Материал",
-          "value": "Дышащий нетканый материал + Instant Core"
+          "value": "Дышащий нетканый материал + Instant Core",
+          "spec": {
+            "label": "Вес в граммах (GSM)",
+            "value": "12-100"
+          }
         },
         {
           "label": "Возможности использования",
-          "value": "Ежедневный/ночной уход за младенцами и малышами"
+          "value": "Ежедневный/ночной уход за младенцами и малышами",
+          "spec": {
+            "label": "Ширина (см)",
+            "value": "15-320"
+          }
         },
         {
           "label": "аттестации",
-          "value": "ISO 9001 (пример)"
+          "value": "ISO 9001 (пример)",
+          "spec": {
+            "label": "Цвет",
+            "value": "Все цвета можно настроить"
+          }
         }
       ]
     },
     "ko": {
-      "name": "아기 기저귀",
-      "tagline": "아기의 연약한 피부를 보호하는 통기성 및 건조성",
-      "description": "아기 기저귀는 매우 얇은 통기성 구조와 3D 입체 누출 방지 가장자리, 즉각적인 흡입 건조 표면 층을 사용하여 아기가 붉은 방귀에서 벗어나 더 편안한 활동을하고 밤새 평화롭게 잘 수 있습니다.",
+      "name": "농업용 부직포",
+      "tagline": "노화 방지, 항균 곰팡이, 난연성, 통기성, 보온 및 보습, 녹색 및 환경 친화적.",
+      "description": "농업용 부직포는 일반적으로 열간 압착 폴리프로필렌 필라멘트 섬유로 만들어집니다. 통기성, 단열, 습기 유지 및 특정 광 투과율이 우수합니다. 얇은 두께, 메쉬 크기, 색상 및 기타 사양에 따라 단열재 및 습기 차단재, 차양재, 격리 패드 바닥재, 포장재 등으로 사용할 수 있습니다.",
       "features": [
-        "통기성이 뛰어나고 얇은 아기 활동이 더욱 편안합니다.",
-        "3D 스테레오 누출 방지 파티션",
-        "건조한 표면을 즉시 빨아들이고 붉은 방귀에서 멀리 떨어지십시오.",
-        "부드러운 벨크로, 반복"
+        "강한 인성, 햇빛에 대한 저항성, 놀라운 잔디 방지 효과.",
+        "좋은 공기 투과성은 느슨한 토양을 촉진하고 토양 압축을 개선합니다.",
+        "우수한 투수성, 환기, 보습, 수정, 시간 절약, 노동 절약, 공기 투과성, 빗물, 물 및 비료는 천을 통해 토양으로 직접 침투합니다.",
+        "오래 지속되는 보습은 토양을 촉촉하게 유지하고 인공적인 물을 줄여줍니다.",
+        "비료의 활용률을 높이고 작물에 의한 영양소의 흡수를 증가시키며 수확량과 소득을 증가시키는 목적을 달성한다.",
+        "특정 단열 효과가 있습니다.",
+        "흰색 오염 없이 분해 가능한 물질. 농작물에 해를 끼치지 않습니다. 불투명, 보습, 항온항습 기능이 있으며, 과거에 적용된 미생물 유기 비료와 같은 프로바이오틱스의 신속한 증식 기능을 가지고 있습니다."
       ],
       "specs": [
         {
           "label": "재료",
-          "value": "통기성 부직포 + 인스턴트 코어"
+          "value": "통기성 부직포 + 인스턴트 코어",
+          "spec": {
+            "label": "그램 중량 (GSM)",
+            "value": "12-100"
+          }
         },
         {
           "label": "사용 장소",
-          "value": "영유아를 위한 일일/야간 관리"
+          "value": "영유아를 위한 일일/야간 관리",
+          "spec": {
+            "label": "너비 (CM)",
+            "value": "15-320"
+          }
         },
         {
           "label": "인증",
-          "value": "ISO 9001 (예시)"
+          "value": "ISO 9001 (예시)",
+          "spec": {
+            "label": "색",
+            "value": "모든 색상을 사용자 정의할 수 있습니다"
+          }
         }
       ]
     },
@@ -118,52 +163,82 @@
       ]
     },
     "fr": {
-      "name": "couches bébé",
-      "tagline": "Respirant et sec pour protéger la peau délicate de votre bébé",
-      "description": "Les couches pour bébé utilisent une structure respirante ultra-mince et des bords tridimensionnels étanches, combinés à une couche de surface sèche par aspiration instantanée, afin que le bébé puisse rester à l'écart des pets rouges, des activités plus confortables et dormir paisiblement toute la nuit.",
+      "name": "Non-tissés agricoles",
+      "tagline": "Anti-âge, moisissure antibactérienne, ignifuge, respirant, thermique et hydratant, vert et respectueux de l'environnement.",
+      "description": "Les non-tissés agricoles sont généralement fabriqués par pressage à chaud de fibres de filaments de polypropylène. Il a une bonne respirabilité, une isolation thermique, une rétention d'humidité et une certaine transmission de la lumière. En fonction de son épaisseur fine, de sa taille de maille, de sa couleur et d'autres spécifications, il peut être utilisé comme matériau de revêtement d'isolation thermique et d'humidité, matériau de pare-soleil, matériau de fond de coussin isolant, matériau d'emballage, etc.",
       "features": [
-        "Ultra-minces et respirantes, les activités pour bébé sont plus confortables",
-        "Cloison 3D stéréo étanche",
-        "Aspirez instantanément sur la surface sèche et restez à l'écart des pets rouges",
-        "Velcro souple, répéter"
+        "Forte ténacité, résistance au soleil et effet imperméable à l'herbe remarquable.",
+        "Une bonne perméabilité à l'air favorise les sols meubles et améliore le compactage des sols.",
+        "Une bonne perméabilité à l'eau, la ventilation, l'hydratation, la fertilisation, le gain de temps, le gain de main-d' œuvre, la perméabilité à l'air, l'eau de pluie, l'eau et les engrais pénètrent directement dans le sol à travers le tissu.",
+        "L'hydratation longue durée maintient le sol humide et réduit l'arrosage artificiel.",
+        "Augmenter le taux d'utilisation des engrais, augmenter l'absorption des nutriments par les cultures et atteindre l'objectif d'augmentation du rendement et des revenus.",
+        "Il a un certain effet isolant.",
+        "Matériau dégradable sans contamination blanche. Aucun dommage aux cultures. Il est opaque, hydratant et thermostatique, et a une fonction de propagation rapide pour les probiotiques tels que les engrais organiques microbiens appliqués dans le passé."
       ],
       "specs": [
         {
           "label": "Matériau",
-          "value": "Non tissé respirant + Noyau instantané"
+          "value": "Non tissé respirant + Noyau instantané",
+          "spec": {
+            "label": "Poids en grammes (GSM)",
+            "value": "12-100"
+          }
         },
         {
           "label": "Scénarios applicables",
-          "value": "Soins quotidiens/nocturnes pour les nourrissons et les tout-petits"
+          "value": "Soins quotidiens/nocturnes pour les nourrissons et les tout-petits",
+          "spec": {
+            "label": "Largeur (CM)",
+            "value": "15-320"
+          }
         },
         {
           "label": "Facteur d'authentification",
-          "value": "ISO 9001 (exemple)"
+          "value": "ISO 9001 (exemple)",
+          "spec": {
+            "label": "<g id=\"Bold\">Couleur </g>",
+            "value": "Toutes les couleurs peuvent être personnalisées"
+          }
         }
       ]
     },
     "es": {
-      "name": "pañales para bebés",
-      "tagline": "Transpirable y seco para proteger la delicada piel de tu bebé",
-      "description": "Los pañales para bebés utilizan una estructura transpirable ultrafina y bordes tridimensionales 3D a prueba de fugas, combinados con una capa superficial seca por succión instantánea, para que el bebé pueda mantenerse alejado de los pedos rojos, realizar actividades más cómodas y dormir tranquilamente toda la noche.",
+      "name": "Telas no tejidas agrícolas",
+      "tagline": "Antiedad, moho antibacteriano, ignífugo, transpirable, térmico e hidratante, ecológico y respetuoso con el medio ambiente.",
+      "description": "Las telas no tejidas agrícolas generalmente se fabrican prensando en caliente fibras de filamentos de polipropileno. Tiene buena transpirabilidad, aislamiento térmico, retención de humedad y cierta transmitancia de luz. Dependiendo de su grosor delgado, tamaño de malla, color y otras especificaciones, se puede utilizar como material de recubrimiento de aislamiento térmico y de humedad, material de parasol, material inferior de almohadilla de aislamiento, material de embalaje, etc.",
       "features": [
-        "Actividades ultradelgadas y transpirables para bebés más cómodas",
-        "Partición estéreo 3D a prueba de fugas",
-        "Chupa al instante la superficie seca y aléjate de los pedos rojos",
-        "Velcro suave, repetir"
+        "Fuerte dureza, resistencia a la luz solar y notable efecto a prueba de hierba.",
+        "La buena permeabilidad al aire promueve el suelo suelto y mejora la compactación del suelo.",
+        "Buena permeabilidad al agua, ventilación, hidratación, fertilización, ahorro de tiempo, ahorro de mano de obra, permeabilidad al aire, agua de lluvia, agua y fertilizante penetran directamente en el suelo a través del paño.",
+        "La hidratación de larga duración mantiene el suelo húmedo y reduce el riego artificial.",
+        "Aumentar la tasa de utilización de fertilizantes, aumentar la absorción de nutrientes por los cultivos y lograr el propósito de aumentar el rendimiento y los ingresos.",
+        "Tiene un cierto efecto aislante.",
+        "Material degradable sin contaminación blanca. No perjudica a los cultivos. Es opaco, hidratante y termostático, y tiene una función de propagación rápida de probióticos como el fertilizante orgánico microbiano aplicado en el pasado."
       ],
       "specs": [
         {
           "label": "Material",
-          "value": "No tejido transpirable + Núcleo instantáneo"
+          "value": "No tejido transpirable + Núcleo instantáneo",
+          "spec": {
+            "label": "Peso en gramos (GSM)",
+            "value": "12-100"
+          }
         },
         {
           "label": "Escenarios aplicables",
-          "value": "Cuidado diario/nocturno para bebés y niños pequeños"
+          "value": "Cuidado diario/nocturno para bebés y niños pequeños",
+          "spec": {
+            "label": "Ancho (CM)",
+            "value": "15-320"
+          }
         },
         {
           "label": "Autenticación",
-          "value": "ISO 9001 (ejemplo)"
+          "value": "ISO 9001 (ejemplo)",
+          "spec": {
+            "label": "Color",
+            "value": "Todos los colores se pueden personalizar"
+          }
         }
       ]
     },
@@ -208,52 +283,82 @@
       ]
     },
     "ar": {
-      "name": "حفاضات أطفال",
-      "tagline": "مسامية وجافة لحماية بشرة طفلك الرقيقة",
-      "description": "تستخدم حفاضات الأطفال بنية رقيقة للغاية ومسامية وحواف ثلاثية الأبعاد مانعة للتسرب، جنبًا إلى جنب مع طبقة سطح جافة للشفط الفوري، بحيث يمكن للطفل الابتعاد عن الضراط الأحمر، وأنشطة أكثر راحة، والنوم بسلام طوال الليل.",
+      "name": "منسوجات زراعية غير منسوجة",
+      "tagline": "مضاد للشيخوخة، ومضاد للبكتيريا، ومثبط للهب، وجيد التهوية، وحراري ومرطب، وأخضر وصديق للبيئة.",
+      "description": "تصنع الأقمشة الزراعية غير المنسوجة بشكل عام من ألياف البولي بروبلين ذات الضغط الساخن. يتمتع بإمكانية تهوية جيدة وعزل حراري واحتفاظ بالرطوبة ونفاذية ضوء معينة. اعتمادًا على سماكتها الرقيقة وحجمها الشبكي ولونها ومواصفاتها الأخرى، يمكن استخدامها كمواد عازلة للحرارة والرطوبة، ومواد مظلة، ومواد قاع وسادة العزل، ومواد التعبئة والتغليف، إلخ.",
       "features": [
-        "رقيقة للغاية وجيدة التهوية، وأنشطة الأطفال أكثر راحة",
-        "قسم ستيريو ثلاثي الأبعاد مانع للتسرب",
-        "تمتص على الفور على السطح الجاف والابتعاد عن الريح الحمراء",
-        "فيلكرو ناعم، مكرر"
+        "صلابة قوية ومقاومة لأشعة الشمس وتأثير رائع مقاوم للعشب.",
+        "تعزز نفاذية الهواء الجيدة التربة الرخوة وتحسن ضغط التربة.",
+        "نفاذية المياه الجيدة، التهوية، الترطيب، التسميد، توفير الوقت، توفير العمالة، نفاذية الهواء، مياه الأمطار، المياه والأسمدة تخترق التربة مباشرة من خلال القماش.",
+        "يحافظ الترطيب طويل الأمد على رطوبة التربة ويقلل من الري الاصطناعي.",
+        "زيادة معدل استخدام الأسمدة، وزيادة امتصاص المحاصيل للمغذيات، وتحقيق الغرض من زيادة الغلة والدخل.",
+        "له تأثير عزل معين.",
+        "المواد القابلة للتحلل دون تلوث أبيض. لا ضرر للمحاصيل. إنه معتم ومرطب وثرموستاتي، وله وظيفة انتشار سريع للبروبيوتيك مثل الأسمدة العضوية الميكروبية المستخدمة في الماضي."
       ],
       "specs": [
         {
           "label": "المادة",
-          "value": "مسامي غير منسوج + نواة فورية"
+          "value": "مسامي غير منسوج + نواة فورية",
+          "spec": {
+            "label": "وزن الجرام (جي إس إم)",
+            "value": "12-100"
+          }
         },
         {
           "label": "السيناريوهات القابلة للتطبيق",
-          "value": "الرعاية اليومية/الليلية للرضع والأطفال الصغار"
+          "value": "الرعاية اليومية/الليلية للرضع والأطفال الصغار",
+          "spec": {
+            "label": "العرض (سم)",
+            "value": "15-320"
+          }
         },
         {
           "label": "مصادقة",
-          "value": "ISO 9001 (مثال)"
+          "value": "ISO 9001 (مثال)",
+          "spec": {
+            "label": "لون",
+            "value": "يمكن تخصيص جميع الألوان"
+          }
         }
       ]
     },
     "ja": {
-      "name": "赤ちゃん用おむつ",
-      "tagline": "赤ちゃんの繊細な肌を保護するための通気性と乾燥性",
-      "description": "赤ちゃんのおむつは、超薄型の通気性構造と3 D立体防漏エッジを採用し、瞬時に吸引乾燥した表面層を組み合わせることで、赤いおならから離れ、より快適な活動を行い、一晩中安心して眠ることができます。",
+      "name": "農業用不織布",
+      "tagline": "アンチエイジング、抗菌カビ、難燃性、通気性、熱と保湿性、グリーンで環境に優しい。",
+      "description": "農業用不織布は、一般に、ポリプロピレンフィラメント繊維をホットプレスすることによって作られる。通気性、断熱性、保湿性、一定の光透過率を備えています。薄い厚さ、メッシュサイズ、色などの仕様に応じて、断熱・防湿被覆材、サンシェード材、アイソレーションパッド下部材、梱包材などに使用できます。",
       "features": [
-        "超薄型で通気性のある、より快適なベビーアクティビティ",
-        "3 Dステレオ防漏仕切り",
-        "すぐに乾燥した表面に吸い込み、赤いおならに近づかないでください",
-        "ソフトベルクロ、リピート"
+        "強い靭性、日光への耐性、顕著な防草効果。",
+        "良好な空気透過性は、緩んだ土壌を促進し、土壌の圧縮を改善します。",
+        "透水性、換気性、保湿性、施肥性、時間の節約性、省力性、透気性、雨水、水、肥料が布を介して土壌に直接浸透します。",
+        "長持ちする保湿は、土壌を湿らせ、人工的な散水を減らします。",
+        "肥料の利用率を高め、作物による栄養素の吸収を増やし、収量と収入を増やす目的を達成する。",
+        "一定の断熱効果があります。",
+        "白色汚染のない分解性材料。作物に害はありません。不透明で保湿性、サーモスタット性があり、過去に施用された微生物有機肥料などのプロバイオティクスの迅速な増殖機能を備えています。"
       ],
       "specs": [
         {
           "label": "材質",
-          "value": "通気性不織布+インスタントコア"
+          "value": "通気性不織布+インスタントコア",
+          "spec": {
+            "label": "グラム重量（ GSM ）",
+            "value": "12 -100"
+          }
         },
         {
           "label": "該当するシナリオ",
-          "value": "乳幼児の日常／夜間ケア"
+          "value": "乳幼児の日常／夜間ケア",
+          "spec": {
+            "label": "幅（ CM ）",
+            "value": "15 -320"
+          }
         },
         {
           "label": "認証",
-          "value": "ISO 9001 （例）"
+          "value": "ISO 9001 （例）",
+          "spec": {
+            "label": "色",
+            "value": "すべての色をカスタマイズ可能"
+          }
         }
       ]
     }
