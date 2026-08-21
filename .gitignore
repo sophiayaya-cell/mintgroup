@@ -9,6 +9,9 @@ dist/
 .vite/
 .vite_bak/
 
+# wrangler tmp / deploy cache
+.wrangler/
+
 # logs
 *.log
 npm-debug.log*
