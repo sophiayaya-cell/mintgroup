@@ -10,7 +10,7 @@ export default defineConfig({
   site: 'https://www.mint-gp.com',
   i18n: {
     defaultLocale: 'zh',
-    locales: ['zh', 'en', 'es', 'ar', 'de', 'fr', 'ja', 'ko', 'ru'],
+    locales: ['zh', 'en', 'es', 'ar', 'de', 'fr', 'ja', 'ko', 'ru', 'vi', 'pt'],
     routing: {
       prefixDefaultLocale: true,
     },
@@ -22,6 +22,7 @@ export default defineConfig({
         locales: {
           zh: 'zh', en: 'en', es: 'es', ar: 'ar',
           de: 'de', fr: 'fr', ja: 'ja', ko: 'ko', ru: 'ru',
+          vi: 'vi', pt: 'pt',
         },
       },
     }),

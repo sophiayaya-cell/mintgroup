@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactInfo from '../../components/ContactInfo.astro';
+import { UI } from '../../i18n/ui';
+const t = UI.pt;
+---
+<BaseLayout locale="pt" title={t.contactTitle}>
+  <section>
+    <div class="container" style="max-width:680px;">
+      <h2 class="section-title">{t.contactTitle}</h2>
+      <ContactInfo locale="pt" />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,6 +1,6 @@
 import type { Locale } from './ui';
 
-// 询盘表单（InquiryForm）的多语种文案，覆盖全部 9 个语种。
+// 询盘表单（InquiryForm）的多语种文案，覆盖全部 11 个语种。
 // 新增语言时在此同步扩展即可。
 export const FORM: Record<
   Locale,
@@ -224,5 +224,49 @@ export const FORM: Record<
     quantityPlaceholder: 'напр. 1×40HQ / 50 000 шт',
     messagePlaceholder: 'Расскажите о ваших потребностях, сертификации, сроках и т.д.',
     countryPlaceholder: 'Выберите страну / регион',
+  },
+  vi: {
+    title: 'Gửi yêu cầu báo giá',
+    subtitle: 'Điền vào biểu mẫu bên dưới, đội ngũ của chúng tôi sẽ phản hồi trong vòng 1 ngày làm việc.',
+    name: 'Họ và tên',
+    company: 'Tên công ty',
+    email: 'Email',
+    country: 'Quốc gia / Khu vực',
+    product: 'Sản phẩm quan tâm',
+    productGeneral: 'Tư vấn chung (chưa chọn sản phẩm cụ thể)',
+    quantity: 'Số lượng dự kiến',
+    message: 'Lời nhắn',
+    submit: 'Gửi yêu cầu',
+    sending: 'Đang gửi…',
+    success: 'Yêu cầu đã gửi! Chúng tôi sẽ sớm liên hệ với bạn.',
+    error: 'Gửi thất bại. Vui lòng thử lại hoặc liên hệ với chúng tôi qua thông tin trên.',
+    nameRequired: 'Vui lòng nhập họ tên',
+    emailInvalid: 'Vui lòng nhập địa chỉ email hợp lệ',
+    emailPlaceholder: 'you@company.com',
+    quantityPlaceholder: 'Ví dụ: 1×40HQ / 50.000 sản phẩm',
+    messagePlaceholder: 'Hãy cho chúng tôi biết nhu cầu, yêu cầu chứng nhận, thời gian giao hàng, v.v.',
+    countryPlaceholder: 'Chọn quốc gia / khu vực',
+  },
+  pt: {
+    title: 'Enviar solicitação',
+    subtitle: 'Preencha o formulário abaixo e nossa equipe responderá em até 1 dia útil.',
+    name: 'Nome',
+    company: 'Empresa',
+    email: 'E-mail',
+    country: 'País / Região',
+    product: 'Produto de interesse',
+    productGeneral: 'Consulta geral (sem produto específico)',
+    quantity: 'Quantidade estimada',
+    message: 'Mensagem',
+    submit: 'Enviar solicitação',
+    sending: 'Enviando…',
+    success: 'Solicitação enviada! Entraremos em contato em breve.',
+    error: 'Falha no envio. Tente novamente ou entre em contato conosco pelos dados acima.',
+    nameRequired: 'Por favor, insira seu nome',
+    emailInvalid: 'Por favor, insira um e-mail válido',
+    emailPlaceholder: 'voce@empresa.com',
+    quantityPlaceholder: 'ex. 1×40HQ / 50.000 un.',
+    messagePlaceholder: 'Conte-nos sobre suas necessidades, certificações, prazo, etc.',
+    countryPlaceholder: 'Selecione seu país / região',
   },
 };

@@ -136,6 +136,36 @@
           "para": "Мы будем использовать это как новую отправную точку, продолжать улучшать соответствие и контроль качества, а также обеспечивать более надежную защиту для клиентов и конечных пользователей."
         }
       ]
+    },
+    "vi": {
+      "title": "Đạt chứng nhận hệ thống quản lý chất lượng ISO 13485",
+      "excerpt": "Hệ thống quản lý chất lượng của chúng tôi được công nhận thêm một lần, tăng cường tính tuân thủ của sản phẩm chăm sóc y tế.",
+      "body": [
+        {
+          "para": "Sau khi được kiểm toán bởi một tổ chức bên thứ ba được công nhận, chúng tôi đã chính thức đạt chứng nhận hệ thống quản lý chất lượng ISO 13485 cho thiết bị y tế."
+        },
+        {
+          "para": "Chứng nhận này xác nhận rằng thiết kế, sản xuất và quy trình dịch vụ sản phẩm chăm sóc y tế của chúng tôi tuân thủ hệ thống quản lý chất lượng thống nhất quốc tế."
+        },
+        {
+          "para": "Chúng tôi sẽ lấy đây làm điểm khởi đầu mới, không ngừng hoàn thiện tuân thủ và kiểm soát chất lượng để mang lại sự đảm bảo đáng tin cậy hơn cho khách hàng và người dùng cuối."
+        }
+      ]
+    },
+    "pt": {
+      "title": "Certificada no sistema de gestão da qualidade ISO 13485",
+      "excerpt": "Nosso sistema de gestão da qualidade conquista mais reconhecimento, fortalecendo a conformidade dos produtos de cuidados médicos.",
+      "body": [
+        {
+          "para": "Após auditoria por uma organização terceira acreditada, fomos oficialmente certificados no sistema de gestão da qualidade ISO 13485 para dispositivos médicos."
+        },
+        {
+          "para": "Esta certificação confirma que nossos processos de design, produção e serviço de produtos de cuidados médicos seguem um sistema de gestão da qualidade alinhado internacionalmente."
+        },
+        {
+          "para": "Tomaremos isso como um novo ponto de partida, melhorando continuamente a conformidade e o controle de qualidade para oferecer maior segurança aos clientes e usuários finais."
+        }
+      ]
     }
   }
 }

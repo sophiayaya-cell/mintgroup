@@ -1,8 +1,8 @@
 // 界面文案字典：新增语言只需在此扩展，并同步 astro.config.mjs 的 locales
-export type Locale = 'zh' | 'en' | 'es' | 'ar' | 'de' | 'fr' | 'ja' | 'ko' | 'ru';
+export type Locale = 'zh' | 'en' | 'es' | 'ar' | 'de' | 'fr' | 'ja' | 'ko' | 'ru' | 'vi' | 'pt';
 
 // 全量语种列表（供动态路由 getStaticPaths 使用，保持与上方类型一致）
-export const LOCALES = ['zh', 'en', 'es', 'ar', 'de', 'fr', 'ja', 'ko', 'ru'] as const;
+export const LOCALES = ['zh', 'en', 'es', 'ar', 'de', 'fr', 'ja', 'ko', 'ru', 'vi', 'pt'] as const;
 
 export const UI = {
   zh: {
@@ -301,5 +301,71 @@ export const UI = {
     contactTitle: 'Контакты',
 
     rights: 'Все права защищены.',
+  },
+  vi: {
+    home: 'Trang chủ',
+    about: 'Giới thiệu',
+    products: 'Sản phẩm',
+    contact: 'Liên hệ',
+    switchLabel: '中文',
+    language: 'Ngôn ngữ',
+
+    heroTitle: 'Chăm sóc thuần khiết · Tự nhiên trao gửi',
+    heroSubtitle: 'ZIBO MINT HYGIENE PRODUCTS CO., LTD.<br/>Sản phẩm vệ sinh chất lượng cao',
+    ctaProducts: 'Xem sản phẩm',
+    ctaContact: 'Liên hệ với chúng tôi',
+
+    introTitle: 'Về MINT',
+    introText:
+      'ZIBO MINT HYGIENE PRODUCTS CO., LTD. chuyên nghiên cứu, phát triển và sản xuất các sản phẩm vệ sinh chất lượng cao, theo triết lý "Chăm sóc thuần khiết · Tự nhiên trao gửi", mang đến cho khách hàng toàn cầu những giải pháp an toàn, thân thiện với môi trường và thoải mái.',
+
+    aboutTitle: 'Về chúng tôi',
+    aboutText:
+      'Chúng tôi tích hợp nghiên cứu, phát triển, sản xuất và kiểm soát chất lượng. Sản phẩm của chúng tôi bao gồm chăm sóc y tế, chăm sóc em bé và người lớn. Với hệ thống kiểm soát chất lượng nghiêm ngặt và đổi mới quy trình liên tục, chúng tôi bảo vệ sức khỏe và sự bình an của mỗi người dùng.',
+
+    productsTitle: 'Sản phẩm',
+    product1Name: 'Tấm thấm y tế',
+    product1Desc: 'Mềm mại, thân thiện với da và có độ thấm hút cao, phù hợp cho chăm sóc y tế và gia đình.',
+    product2Name: 'Tã giấy cho trẻ em',
+    product2Desc: 'Thoáng khí và khô ráo, nhẹ nhàng với làn da mỏng manh của bé.',
+    product3Name: 'Sản phẩm hỗ trợ tiểu không tự chủ cho người lớn',
+    product3Desc: 'Vừa vặn thoải mái, mang lại sự an tâm cho người cao tuổi.',
+
+    contactTitle: 'Liên hệ với chúng tôi',
+
+    rights: 'Bảo lưu mọi quyền.',
+  },
+  pt: {
+    home: 'Início',
+    about: 'Sobre',
+    products: 'Produtos',
+    contact: 'Contato',
+    switchLabel: '中文',
+    language: 'Idioma',
+
+    heroTitle: 'Cuidado puro · entregue naturalmente',
+    heroSubtitle: 'ZIBO MINT HYGIENE PRODUCTS CO., LTD.<br/>Produtos de higiene de qualidade',
+    ctaProducts: 'Ver produtos',
+    ctaContact: 'Fale conosco',
+
+    introTitle: 'Sobre a MINT',
+    introText:
+      'A ZIBO MINT HYGIENE PRODUCTS CO., LTD. é especializada em P&D e fabricação de produtos de higiene de alta qualidade, sob a filosofia "Cuidado puro · entregue naturalmente", oferecendo a clientes de todo o mundo soluções seguras, ecológicas e confortáveis.',
+
+    aboutTitle: 'Sobre nós',
+    aboutText:
+      'Integramos P&D, produção e controle de qualidade. Nossos produtos abrangem cuidados médicos, infantis e para adultos. Com um rigoroso sistema de controle de qualidade e inovação contínua, protegemos a saúde e a tranquilidade de cada usuário.',
+
+    productsTitle: 'Produtos',
+    product1Name: 'Toalhas de cuidado médico',
+    product1Desc: 'Macias, hipoalergênicas e altamente absorventes para cuidados médicos e domésticos.',
+    product2Name: 'Fraldas para bebês',
+    product2Desc: 'Respiráveis e secas, gentis com a pele delicada do bebê.',
+    product3Name: 'Produtos para incontinência adulta',
+    product3Desc: 'Ajuste confortável, proporcionando tranquilidade para os idosos.',
+
+    contactTitle: 'Fale conosco',
+
+    rights: 'Todos os direitos reservados.',
   },
 } as const;

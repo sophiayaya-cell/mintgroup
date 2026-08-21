@@ -87,6 +87,50 @@ collections:
                   fields:
                     - { name: label, label: Label, widget: string }
                     - { name: value, label: Value, widget: string }
+          - name: vi
+            label: Tiếng Việt
+            widget: object
+            required: false
+            fields:
+              - { name: name, label: Tên, widget: string }
+              - { name: tagline, label: Khẩu hiệu, widget: string }
+              - { name: description, label: Mô tả chi tiết, widget: text }
+              - name: features
+                label: Đặc điểm
+                widget: list
+                field: { name: item, label: Đặc điểm, widget: string }
+              - name: specs
+                label: Thông số kỹ thuật
+                widget: list
+                field:
+                  name: spec
+                  label: Thông số
+                  widget: object
+                  fields:
+                    - { name: label, label: Tên tham số, widget: string }
+                    - { name: value, label: Giá trị, widget: string }
+          - name: pt
+            label: Português
+            widget: object
+            required: false
+            fields:
+              - { name: name, label: Nome, widget: string }
+              - { name: tagline, label: Slogan, widget: string }
+              - { name: description, label: Descrição detalhada, widget: text }
+              - name: features
+                label: Características
+                widget: list
+                field: { name: item, label: Característica, widget: string }
+              - name: specs
+                label: Especificações
+                widget: list
+                field:
+                  name: spec
+                  label: Especificação
+                  widget: object
+                  fields:
+                    - { name: label, label: Nome do parâmetro, widget: string }
+                    - { name: value, label: Valor, widget: string }
 
   - name: news
     label: 新闻动态 News
@@ -133,6 +177,28 @@ collections:
                 label: Body (one paragraph per line)
                 widget: list
                 field: { name: para, label: Paragraph, widget: text }
+          - name: vi
+            label: Tiếng Việt
+            widget: object
+            required: false
+            fields:
+              - { name: title, label: Tiêu đề, widget: string }
+              - { name: excerpt, label: Tóm tắt, widget: text }
+              - name: body
+                label: Nội dung (mỗi đoạn một dòng)
+                widget: list
+                field: { name: para, label: Đoạn văn, widget: text }
+          - name: pt
+            label: Português
+            widget: object
+            required: false
+            fields:
+              - { name: title, label: Título, widget: string }
+              - { name: excerpt, label: Resumo, widget: text }
+              - name: body
+                label: Corpo (um parágrafo por linha)
+                widget: list
+                field: { name: para, label: Parágrafo, widget: text }
 
   - name: team
     label: 团队成员 Team
@@ -172,3 +238,19 @@ collections:
               - { name: name, label: Name, widget: string }
               - { name: role, label: Role, widget: string }
               - { name: bio, label: Bio, widget: text }
+          - name: vi
+            label: Tiếng Việt
+            widget: object
+            required: false
+            fields:
+              - { name: name, label: Tên, widget: string }
+              - { name: role, label: Chức vụ, widget: string }
+              - { name: bio, label: Tiểu sử, widget: text }
+          - name: pt
+            label: Português
+            widget: object
+            required: false
+            fields:
+              - { name: name, label: Nome, widget: string }
+              - { name: role, label: Cargo, widget: string }
+              - { name: bio, label: Biografia, widget: text }

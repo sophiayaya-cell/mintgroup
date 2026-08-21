@@ -12,6 +12,8 @@ export const CONTACT = {
     ja: '中国山東省淄博市張店区宏程国際広場17号館1604室',
     ko: '중국 산동성 자보시 장뎬구 훙청 국제광장 17동 1604호',
     ru: 'комната 1604, здание 17, пл. Хунчэн Интернэшнл, район Чжандянь, город Цзыбо, провинция Шаньдун, Китай',
+    vi: 'Phòng 1604, Tòa nhà 17, Quảng trường Quốc tế Hongcheng, Quận Zhangdian, Thành phố Zibo, Tỉnh Sơn Đông, Trung Quốc',
+    pt: 'Sala 1604, Edifício 17, Hongcheng International Plaza, Distrito de Zhangdian, Cidade de Zibo, Província de Shandong, China',
   },
   phone: '+86 18053308111',
   email: 'sophia.wang@mint-gp.com',

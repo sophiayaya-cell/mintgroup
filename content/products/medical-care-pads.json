@@ -250,6 +250,80 @@
           "value": "ISO 9001/ISO 13485 （例）"
         }
       ]
+    },
+    "vi": {
+      "name": "Miếng lót chăm sóc y tế",
+      "tagline": "Mềm mại, thân thiện với da và thấm hút cao, cho chăm sóc y tế và tại nhà",
+      "description": "Miếng lót chăm sóc y tế của chúng tôi kết hợp lớp bề mặt không dệt thân thiện với da cùng lõi thấm hút polymer cao cấp, khóa chất lỏng nhanh chóng không trào ngược, mang lại sự bảo vệ an toàn và thoải mái cho phòng khám, chăm sóc tại nhà và phục hồi hậu phẫu thuật.",
+      "features": [
+        "Lõi polymer cao cấp khóa chất lỏng nhanh, không trào ngược",
+        "Lớp bề mặt không dệt thân thiện với da, dịu nhẹ cho da",
+        "Lớp đế thoáng khí giữ da khô ráo và thoáng mát",
+        "Kiểm soát chất lượng chuẩn y tế để bạn yên tâm"
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Vải không dệt mềm + lõi thấm hút polymer",
+          "spec": {
+            "label": "SIZE (CM)",
+            "value": "30x40, 40x50, 40x60, 50x50, 50x60, 60x90, 80x80, 100x120, nhận OEM"
+          }
+        },
+        {
+          "label": "Application",
+          "value": "Phòng khám / Chăm sóc tại nhà / Phục hồi hậu phẫu thuật",
+          "spec": {
+            "label": "MATERIAL",
+            "value": "PP, SMS, Màng PE+PP, Màng PE+SMS, Màng PE+Giấy bột gỗ+PP"
+          }
+        },
+        {
+          "label": "Certification",
+          "value": "ISO 9001 / ISO 13485 (mẫu)",
+          "spec": {
+            "label": "COLOR",
+            "value": "OEM MIỄN PHÍ"
+          }
+        }
+      ]
+    },
+    "pt": {
+      "name": "Protetores de Cuidados Médicos",
+      "tagline": "Macios, suaves à pele e altamente absorventes, para cuidados médicos e domiciliares",
+      "description": "Nossos protetores de cuidados médicos combinam uma manta superior não tecida suave à pele com um núcleo absorvente de polímero de alta capacidade que retém o líquido rapidamente sem refluxo, proporcionando proteção segura e confortável para clínicas, cuidados domiciliares e recuperação pós-operatória.",
+      "features": [
+        "Núcleo de polímero de alta capacidade retém o líquido rapidamente, sem refluxo",
+        "Manta superior não tecida suave à pele, gentil com a pele",
+        "Costas respiráveis mantêm a pele seca e fresca",
+        "Controle de qualidade de grau médico para tranquilidade"
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Não tecido macio + núcleo absorvente de polímero",
+          "spec": {
+            "label": "SIZE (CM)",
+            "value": "30x40, 40x50, 40x60, 50x50, 50x60, 60x90, 80x80, 100x120, aceita OEM"
+          }
+        },
+        {
+          "label": "Application",
+          "value": "Clínicas / Cuidados domiciliares / Recuperação pós-operatória",
+          "spec": {
+            "label": "MATERIAL",
+            "value": "PP, SMS, Filme PE+PP, Filme PE+SMS, Filme PE+Papel de polpa de madeira+PP"
+          }
+        },
+        {
+          "label": "Certification",
+          "value": "ISO 9001 / ISO 13485 (amostra)",
+          "spec": {
+            "label": "COLOR",
+            "value": "OEM GRÁTIS"
+          }
+        }
+      ]
     }
   },
   "image": "/images/products/sms_underpad_high_barrier_medical_underpad_for_surgical.jpg"

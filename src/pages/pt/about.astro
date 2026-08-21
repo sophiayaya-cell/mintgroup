@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { UI } from '../../i18n/ui';
+const t = UI.pt;
+---
+<BaseLayout locale="pt" title="About">
+  <section style="padding:0;">
+    <a class="hero-banner-link" href="/pt/contact/" aria-label="Get a quote">
+      <img
+        src="/images/about-hero.webp"
+        alt="Zibo Pengxu nonwoven fabric products"
+        width="1920"
+        height="1080"
+        style="display:block;width:100%;height:auto;"
+      />
+    </a>
+  </section>
+  <section>
+    <div class="container" style="max-width:760px;">
+      <h2 class="section-title">{t.aboutTitle}</h2>
+      <p style="color:var(--muted);font-size:1.05rem;text-align:center;">{t.aboutText}</p>
+    </div>
+  </section>
+</BaseLayout>

@@ -334,6 +334,80 @@
           }
         }
       ]
+    },
+    "vi": {
+      "name": "Vải không dệt Spunbond",
+      "tagline": "Vải không dệt spunbond lấy hiệu quả chi phí cao làm cốt lõi, kết hợp độ bền tốt, thoáng khí, kháng ăn mòn và có thể cải tiến chức năng, phù hợp dùng cho các sản phẩm dùng một lần và kỹ thuật trong nhiều lĩnh vực.",
+      "description": "Công dụng chính\nY tế và chăm sóc sức khỏe: vải ngoài khẩu trang dùng một lần, vải trang phục bảo hộ, áo phẫu thuật, mũ, bọc giày, ga trải giường y tế, áo cách ly.\nSản phẩm vệ sinh: băng vệ sinh, lớp trên/lớp đáy tã, miếng lót, làm lớp đáy chống thấm hoặc lớp trên thấm hút.\nNgành bao bì: túi mua sắm không dệt, túi cất giữ, bao bì quà tặng, bọc chống bụi.\nXây dựng địa kỹ thuật: vải địa kỹ thuật, gia cố nền đường, chống thấm và cách ly, bảo vệ taluy và thoát nước.\nDệt gia dụng: lót sofa, lót giường, vải chống bụi, ga trải giường và vỏ gối dùng một lần.\nNông nghiệp: vải giữ ấm cách lạnh cho cây trồng, vải ngăn cỏ, vải phủ hạt giống.\nKhác: vật liệu lọc, nội thất ô tô, vải khẩu trang, đồ bảo hộ dùng một lần.",
+      "features": [
+        "Hiệu suất sản xuất cao, chi phí thấp, có thể sản xuất liên tục quy mô lớn và hiệu quả chi phí cao.",
+        "Thoáng khí xuất sắc, nhẹ, kết cấu mềm, độ bền cao, lực kéo tốt hơn vải không dệt spunlace, ít bị rách.",
+        "Khả năng gia công tốt, có thể ép phức hợp, nhuộm và in, cho phép nhiều cải tiến chức năng.",
+        "Ổn định hóa học tốt, kháng axit và kiềm, khó phân hủy. Một số nguyên liệu (PP polypropylene) có thể tái chế."
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Vải không dệt mềm + lõi dung lượng cao",
+          "spec": {
+            "label": "WEIGHT (GSM)",
+            "value": "9-200"
+          }
+        },
+        {
+          "label": "Application",
+          "value": "Chăm sóc người lớn / Viện dưỡng lão / Gia đình",
+          "spec": {
+            "label": "WIDTH (CM)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "Certification",
+          "value": "ISO 9001 / ISO 13485 (mẫu)",
+          "spec": {
+            "label": "COLOR",
+            "value": "OEM MIỄN PHÍ"
+          }
+        }
+      ]
+    },
+    "pt": {
+      "name": "Tecido Não Tecido Spunbond",
+      "tagline": "O tecido não tecido spunbond, com alta relação custo-benefício como núcleo, combina boa resistência, respirabilidade, resistência à corrosão e modificação funcional, sendo adequado para produtos descartáveis e de engenharia em diversos campos.",
+      "description": "Uso principal\nSaúde e cuidados médicos: tecido externo de máscaras descartáveis, tecido de roupas de proteção, jaleco cirúrgico, touca, cobre-sapato, lençol médico, avental de isolamento.\nProdutos de higiene: absorventes higiênicos, manta superior/inferior de fraldas, protetores diários, confeccionando costas repelentes à água ou mantas superiores hidrófilas.\nIndústria de embalagens: sacolas de compras não tecidas, sacos de armazenamento, embalagens de presentes, capas antipoeira.\nConstrução geotécnica: geotêxteis, reforço de sub-leito rodoviário, prevenção de infiltração e isolamento, proteção de talude e drenagem.\nTêxteis residenciais: forro de sofá, forro de cama, capa antipoeira, lençóis e fronhas descartáveis.\nAgricultura: tecido de isolamento e proteção contra frio para culturas, tecido antimatopeira, tecido de cobertura de mudas.\nOutros: materiais de filtro, interiores automotivos, tecidos de máscara, equipamentos de proteção descartáveis.",
+      "features": [
+        "Alta eficiência de produção, baixo custo, capaz de produção contínua em larga escala e alta relação custo-benefício.",
+        "Apresenta excelente respirabilidade, leveza, textura macia, alta resistência e melhor resistência à tração em comparação ao tecido não tecido spunlace, sendo menos propenso a romper.",
+        "Tem bom desempenho de processamento e pode ser composto, tingido e impresso, permitindo várias modificações funcionais.",
+        "Tem boa estabilidade química, é resistente a ácido e álcalis e não é propenso a apodrecer. Algumas de suas matérias-primas (PP polipropileno) são recicláveis."
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Não tecido macio + núcleo de alta capacidade",
+          "spec": {
+            "label": "WEIGHT (GSM)",
+            "value": "9-200"
+          }
+        },
+        {
+          "label": "Application",
+          "value": "Cuidados com adultos / Casas de repouso / Residência",
+          "spec": {
+            "label": "WIDTH (CM)",
+            "value": "10-320"
+          }
+        },
+        {
+          "label": "Certification",
+          "value": "ISO 9001 / ISO 13485 (amostra)",
+          "spec": {
+            "label": "COLOR",
+            "value": "OEM GRÁTIS"
+          }
+        }
+      ]
     }
   },
   "image": "/images/products/jyn011.jpg"

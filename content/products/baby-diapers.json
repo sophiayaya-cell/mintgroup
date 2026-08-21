@@ -361,6 +361,86 @@
           }
         }
       ]
+    },
+    "vi": {
+      "name": "Vải không dệt nông nghiệp",
+      "tagline": "Chống lão hóa, kháng khuẩn và nấm mốc, chống cháy, thoáng khí, cách nhiệt, giữ ẩm và thân thiện với môi trường.",
+      "description": "Vải không dệt nông nghiệp thường được tạo ra bằng cách ép nóng các sợi filament polypropylene. Chúng có độ thoáng khí, cách nhiệt, giữ ẩm tốt và mức truyền sáng nhất định. Tùy theo độ dày, kích thước lưới, màu sắc và các thông số khác, chúng có thể dùng làm vật liệu phủ cách nhiệt giữ ẩm, vật liệu che nắng, vật liệu cách ly đệm, vật liệu đóng gói, v.v.",
+      "features": [
+        "Đàn hồi cao, kháng tia nắng và có tác dụng ngăn cỏ rõ rệt.",
+        "Thoáng khí, thúc đẩy đất tơi xốp và cải thiện sự nén chặt của đất.",
+        "Thấm nước tốt, thông thoáng, giữ ẩm, giữ dinh dưỡng, tiết kiệm thời gian và công sức, cho phép nước mưa và nước phân bón thấm trực tiếp qua lớp phủ xuống đất.",
+        "Giữ ẩm lâu dài, duy trì độ ẩm đất, giảm nhu cầu tưới nhân tạo.",
+        "Tăng tỷ lệ sử dụng phân bón, tăng khả năng hấp thụ dinh dưỡng của cây trồng, đạt mục tiêu tăng năng suất và thu nhập.",
+        "Có nhất định hiệu quả cách nhiệt.",
+        "Vật liệu phân hủy sinh học không gây ô nhiễm trắng, không gây hại cho cây trồng. Không trong suốt nhưng giữ ẩm và duy trì nhiệt độ ổn định, tạo điều kiện cho các lợi khuẩn như phân bón hữu cơ vi sinh bón ngoài đồng sinh sôi nhanh chóng."
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Vải không dệt thoáng khí + lõi thấm hút nhanh",
+          "spec": {
+            "label": "WEIGHT (GSM)",
+            "value": "12-100"
+          }
+        },
+        {
+          "label": "Application",
+          "value": "Chăm sóc trẻ sơ sinh / ban đêm",
+          "spec": {
+            "label": "WIDTH (CM)",
+            "value": "15-320"
+          }
+        },
+        {
+          "label": "Certification",
+          "value": "ISO 9001 (mẫu)",
+          "spec": {
+            "label": "COLOR",
+            "value": "OEM MIỄN PHÍ"
+          }
+        }
+      ]
+    },
+    "pt": {
+      "name": "Tecido Não Tecido Agrícola",
+      "tagline": "Antienvelhecimento, antibacteriano e antimofo, retardante de chama, respirável, isolante térmico, retentor de umidade e ecológico.",
+      "description": "Os tecidos não tecidos agrícolas são geralmente feitos por prensagem a quente de fibras de filamento de polipropileno. Apresentam boa respirabilidade, isolamento térmico, retenção de umidade e certo grau de transmissão de luz. Dependendo da espessura, tamanho da malha, cor e outras especificações, podem ser usados como materiais de cobertura de isolamento térmico e retenção de umidade, materiais de sombreamento, materiais de isolamento e amortecimento, materiais de embalagem, e assim por diante.",
+      "features": [
+        "Altamente resiliente, resistente à luz solar e com efeito significativo de controle de ervas daninhas.",
+        "É respirável, promovendo aeração do solo e melhorando a compactação do solo.",
+        "Boa permeabilidade à água, ventilação, retenção de umidade, retenção de nutrientes, economia de tempo e mão de obra, permitindo que a água da chuva e a água com fertilizante penetrem diretamente através da cobertura no solo.",
+        "Hidratação duradoura, mantendo o solo úmido e reduzindo a necessidade de irrigação artificial.",
+        "Aumenta a taxa de utilização de fertilizantes, melhora a absorção de nutrientes pelas culturas e atinge o objetivo de aumentar a produção e a renda.",
+        "Apresenta certo efeito de isolamento térmico.",
+        "Materiais degradáveis não causam poluição branca. Não causam danos às culturas. São opacos, porém retêm umidade e mantêm temperatura constante, facilitando a rápida proliferação de probióticos como fertilizantes orgânicos microbianos aplicados nos campos."
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Não tecido respirável + núcleo de absorção rápida",
+          "spec": {
+            "label": "WEIGHT (GSM)",
+            "value": "12-100"
+          }
+        },
+        {
+          "label": "Application",
+          "value": "Cuidado diário / noturno de bebês",
+          "spec": {
+            "label": "WIDTH (CM)",
+            "value": "15-320"
+          }
+        },
+        {
+          "label": "Certification",
+          "value": "ISO 9001 (amostra)",
+          "spec": {
+            "label": "COLOR",
+            "value": "OEM GRÁTIS"
+          }
+        }
+      ]
     }
   },
   "image": "/images/products/mmexport1787121261486.jpg"

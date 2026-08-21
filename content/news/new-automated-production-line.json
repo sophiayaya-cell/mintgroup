@@ -136,6 +136,36 @@
           "para": "В будущем мы продолжим инвестировать в интеллектуальное производство, чтобы предоставить клиентам по всему миру более стабильные и безопасные высококачественные средства гигиены."
         }
       ]
+    },
+    "vi": {
+      "title": "Dây chuyền sản xuất tự động mới chính thức đi vào hoạt động",
+      "excerpt": "Dây chuyền sản phẩm vệ sinh tự động mới được đưa vào vận hành, nâng cấp cả năng lực và kiểm soát chất lượng.",
+      "body": [
+        {
+          "para": "Để nâng cao hơn nữa tính nhất quán của sản phẩm và năng lực giao hàng, dây chuyền sản xuất tự động mới được chúng tôi đưa vào vận hành chính thức trong tháng này."
+        },
+        {
+          "para": "Dây chuyền mới tích hợp kiểm tra trực quan trực tuyến và phân loại thông minh, giúp các quy trình chính có thể truy xuất toàn bộ và giảm đáng kể sai sót do con người."
+        },
+        {
+          "para": "Trong tương lai, chúng tôi sẽ tiếp tục đầu tư vào sản xuất thông minh để mang đến những sản phẩm vệ sinh chất lượng cao ổn định và an toàn hơn cho khách hàng toàn cầu."
+        }
+      ]
+    },
+    "pt": {
+      "title": "Nova linha de produção automatizada entra em operação",
+      "excerpt": "Nossa nova linha de produtos de higiene automatizada já está operacional, elevando tanto a capacidade quanto o controle de qualidade.",
+      "body": [
+        {
+          "para": "Para melhorar ainda mais a consistência dos produtos e a capacidade de entrega, nossa nova linha de produção automatizada entrou oficialmente em operação neste mês."
+        },
+        {
+          "para": "A nova linha integra inspeção visual inline e classificação inteligente, tornando os processos-chave totalmente rastreáveis e reduzindo significativamente o erro humano."
+        },
+        {
+          "para": "Daqui para frente, continuaremos investindo em manufatura inteligente para entregar produtos de higiene de alta qualidade, mais estáveis e seguros, aos clientes mundiais."
+        }
+      ]
     }
   }
 }

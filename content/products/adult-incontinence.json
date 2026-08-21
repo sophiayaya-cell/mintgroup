@@ -334,6 +334,84 @@
           }
         }
       ]
+    },
+    "vi": {
+      "name": "Vải không dệt SMS",
+      "tagline": "Chủ yếu dùng làm lớp bảo vệ, lớp cách ly và vật tư tiêu hao y tế",
+      "description": "Vải có độ thoáng khí vừa phải, mềm mại và có thể xử lý kháng ba (kháng cồn, kháng huyết tương, kháng nước). Chủ yếu dùng để may áo phẫu thuật thông thường, áo cách ly, tấm lót và trang phục bảo hộ thông thường.",
+      "features": [
+        "Tính chất cơ học tốt: sợi spunbond giúp vải có độ bền kéo và kháng xé cao, chịu mài mòn, ít xơ vải, bền chắc hơn nhiều so với vải meltblown thuần.",
+        "Khả năng lọc ngăn cản cao: lớp xơ meltblown siêu mịn ở giữa có thể chặn vi khuẩn, bụi, giọt bắn, máu và dịch cơ thể; đạt hiệu suất lọc vi khuẩn cao.",
+        "Thoáng khí và không thấm nước: chất lỏng khó thấm qua nhưng hơi nước có thể thoát ra, bảo vệ mà không gây bức bối.",
+        "Mềm mại, thân thiện với da, không độc, không mùi, phù hợp tiếp xúc trực tiếp với da, chỉ dùng một lần.",
+        "Có thể cải tiến chức năng: xử lý kháng cồn, kháng huyết tương, kháng nước, kháng tĩnh điện, thấm hút, kháng khuẩn và kháng tia UV.",
+        "Chủ yếu dùng một lần, chi phí vừa phải, liên kết ép nhiệt, không dùng keo hóa học."
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Vải không dệt mềm + lõi thấm hút cao",
+          "spec": {
+            "label": "WEIGHT (GSM)",
+            "value": "12-60"
+          }
+        },
+        {
+          "label": "Application",
+          "value": "Chăm sóc người lớn / Viện dưỡng lão / Gia đình",
+          "spec": {
+            "label": "WIDTH (CM)",
+            "value": "TRONG 320"
+          }
+        },
+        {
+          "label": "Certification",
+          "value": "ISO 9001 / ISO 13485 (mẫu)",
+          "spec": {
+            "label": "COLOR",
+            "value": "OEM MIỄN PHÍ"
+          }
+        }
+      ]
+    },
+    "pt": {
+      "name": "Tecido Não Tecido SMS",
+      "tagline": "Usado principalmente para camadas protetoras, camadas de isolamento e consumíveis médicos",
+      "description": "Apresenta respirabilidade moderada e maciez, podendo receber tratamento de três resistências. É usado principalmente para confeccionar jalecos cirúrgicos comuns, aventais de isolamento, protetores e roupas de proteção comuns.",
+      "features": [
+        "Boas propriedades mecânicas: os filamentos spunbond conferem ao tecido alta resistência à tração e ao rasgo, tornando-o resistente à abrasão e menos propenso a soltar fiapos, muito mais forte que o tecido meltblown puro.",
+        "Filtragem de alta barreira: as fibras ultrafinas meltblown intermediárias bloqueiam bactérias, poeira, gotículas, sangue e fluidos corporais; alcançando alta eficiência de filtragem bacteriana.",
+        "Respirável e repelente à água: o líquido tem dificuldade de penetrar, mas o vapor de água passa, protegendo sem sufocar.",
+        "Macio e suave à pele, atóxico e inodoro, adequado para contato direto com a pele, uso descartável apenas.",
+        "Modificação funcional: pode receber tratamentos como resistência a álcool, plasma, água, antiestático, hidrofilia, antibacteriano e resistência UV.",
+        "Principalmente descartável, custo moderado, ligação por calandragem térmica, sem cola química."
+      ],
+      "specs": [
+        {
+          "label": "Material",
+          "value": "Não tecido macio + núcleo de alta capacidade",
+          "spec": {
+            "label": "WEIGHT (GSM)",
+            "value": "12-60"
+          }
+        },
+        {
+          "label": "Application",
+          "value": "Cuidados com adultos / Casas de repouso / Residência",
+          "spec": {
+            "label": "WIDTH (CM)",
+            "value": "DENTRO DE 320"
+          }
+        },
+        {
+          "label": "Certification",
+          "value": "ISO 9001 / ISO 13485 (amostra)",
+          "spec": {
+            "label": "COLOR",
+            "value": "OEM GRÁTIS"
+          }
+        }
+      ]
     }
   },
   "image": "/images/products/jyn023.jpg"
