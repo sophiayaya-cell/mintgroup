@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>线索自动获取 · Mint Sales Phase 2</title>
+<style>
+:root {
+  --bg-page:#f5f5f4; --bg-sidebar:#fafaf9; --bg-card:#fff; --bg-hover:#f5f5f4; --bg-muted:#f5f5f4;
+  --text-primary:#1c1917; --text-secondary:#78716c; --text-tertiary:#a8a29e;
+  --border:#e7e5e4; --border-strong:#d6d3d1;
+  --purple:#534AB7; --purple-light:#EEEDFE;
+  --blue:#378ADD; --blue-light:#E6F1FB;
+  --teal:#1D9E75; --teal-light:#E1F5EE;
+  --amber:#EF9F27; --amber-light:#FAEEDA;
+  --coral:#D85A30; --coral-light:#FAECE7;
+  --green:#639922; --green-light:#EAF3DE;
+  --red:#E24B4A; --red-light:#FCEBEB;
+  --radius:10px; --radius-sm:6px; --shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; background:var(--bg-page); color:var(--text-primary); font-size:14px; }
+.app { display:flex; min-height:100vh; }
+.sidebar { width:220px; background:var(--bg-sidebar); border-right:1px solid var(--border); display:flex; flex-direction:column; position:fixed; height:100vh; z-index:10; }
+.sidebar-header { padding:20px 18px 16px; border-bottom:1px solid var(--border); }
+.sidebar-header h1 { font-size:16px; font-weight:600; color:var(--purple); display:flex; align-items:center; gap:8px; }
+.sidebar-header .sub { font-size:12px; color:var(--text-tertiary); margin-top:2px; }
+.nav { flex:1; padding:10px 8px; overflow-y:auto; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:var(--radius-sm); cursor:pointer; font-size:13px; color:var(--text-secondary); transition:all .15s; margin-bottom:2px; }
+.nav-item:hover { background:var(--bg-hover); color:var(--text-primary); }
+.nav-item.active { background:var(--purple-light); color:var(--purple); font-weight:500; }
+.nav-badge { margin-left:auto; font-size:11px; background:var(--border); color:var(--text-secondary); padding:1px 6px; border-radius:8px; }
+.nav-item.active .nav-badge { background:var(--purple); color:#fff; }
+.sidebar-footer { padding:12px 16px; border-top:1px solid var(--border); font-size:11px; color:var(--text-tertiary); line-height:1.5; }
+.main { flex:1; margin-left:220px; padding:24px 28px; }
+.main-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+.main-header h2 { font-size:20px; font-weight:600; }
+.main-header .sub { font-size:12px; color:var(--text-tertiary); margin-top:3px; }
+.btn { padding:7px 14px; border-radius:var(--radius-sm); border:1px solid var(--border-strong); background:var(--bg-card); font-size:13px; cursor:pointer; transition:all .15s; color:var(--text-primary); display:inline-flex; align-items:center; gap:6px; }
+.btn:hover { background:var(--bg-hover); }
+.btn-primary { background:var(--purple); color:#fff; border-color:var(--purple); }
+.btn-primary:hover { background:#463d9e; }
+.btn-sm { padding:4px 10px; font-size:12px; }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+.card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; margin-bottom:16px; }
+.card-title { font-size:14px; font-weight:600; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; }
+.muted { color:var(--text-secondary); }
+.tiny { font-size:12px; color:var(--text-tertiary); }
+
+/* source cards */
+.source-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.source-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; position:relative; }
+.source-card .top { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.source-icon { width:38px; height:38px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+.source-card h3 { font-size:15px; font-weight:600; }
+.source-card .type { font-size:11px; color:var(--text-tertiary); }
+.source-meta { font-size:12px; color:var(--text-secondary); display:flex; justify-content:space-between; margin-top:6px; }
+.status-dot { width:8px; height:8px; border-radius:50%; display:inline-block; margin-right:5px; }
+.status-active { background:var(--green); } .status-inactive { background:var(--text-tertiary); } .status-sync { background:var(--blue); }
+
+/* filters bar */
+.filter-bar { display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:14px; margin-bottom:16px; }
+.field { display:flex; flex-direction:column; gap:4px; }
+.field label { font-size:11px; color:var(--text-secondary); }
+.field select, .field input { padding:7px 9px; border:1px solid var(--border-strong); border-radius:var(--radius-sm); font-size:13px; background:#fff; min-width:150px; color:var(--text-primary); }
+
+/* leads grid */
+.leads-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+.lead-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:14px; position:relative; transition:all .15s; }
+.lead-card:hover { border-color:var(--border-strong); box-shadow:var(--shadow); }
+.lead-card .row1 { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+.lead-card .company { font-size:14px; font-weight:600; }
+.lead-card .loc { font-size:12px; color:var(--text-secondary); margin-top:2px; }
+.score-badge { width:46px; height:46px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; font-weight:700; font-size:16px; }
+.score-badge .t { font-size:10px; font-weight:600; }
+.tier-A { background:var(--green-light); color:var(--green); }
+.tier-B { background:var(--blue-light); color:var(--blue); }
+.tier-C { background:var(--amber-light); color:var(--amber); }
+.tier-D { background:var(--red-light); color:var(--red); }
+.lead-tags { display:flex; gap:6px; flex-wrap:wrap; margin:10px 0; }
+.tag { font-size:11px; padding:2px 8px; border-radius:10px; background:var(--bg-muted); color:var(--text-secondary); }
+.tag.prod { background:var(--purple-light); color:var(--purple); }
+.tag.size { background:var(--teal-light); color:var(--teal); }
+.lead-actions { display:flex; gap:6px; margin-top:6px; }
+.lead-desc { font-size:12px; color:var(--text-secondary); line-height:1.5; margin-top:4px; }
+
+/* scoring model */
+.factor-row { display:flex; align-items:center; gap:12px; padding:9px 0; border-bottom:1px solid var(--border); }
+.factor-row:last-child { border-bottom:none; }
+.factor-row .name { width:120px; font-size:13px; font-weight:500; flex-shrink:0; }
+.factor-row .bar-wrap { flex:1; background:var(--bg-muted); border-radius:6px; height:18px; position:relative; overflow:hidden; }
+.factor-row .bar { height:100%; background:var(--purple); border-radius:6px; }
+.factor-row .pts { width:64px; text-align:right; font-size:12px; color:var(--text-secondary); flex-shrink:0; }
+.breakdown-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+
+/* email list */
+.email-item { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); }
+.email-item:last-child { border-bottom:none; }
+.email-item .addr { font-size:13px; font-family:ui-monospace,Menlo,monospace; flex:1; }
+.badge { font-size:11px; padding:2px 8px; border-radius:10px; font-weight:500; }
+.badge.verified { background:var(--green-light); color:var(--green); }
+.badge.guessed { background:var(--amber-light); color:var(--amber); }
+.badge.invalid { background:var(--red-light); color:var(--red); }
+.empty { text-align:center; color:var(--text-tertiary); padding:40px 0; font-size:13px; }
+
+/* modal */
+.modal-mask { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; z-index:100; }
+.modal-mask.show { display:flex; }
+.modal { background:#fff; border-radius:var(--radius); width:520px; max-width:92vw; max-height:84vh; overflow:auto; padding:22px; }
+.modal h3 { font-size:16px; margin-bottom:14px; }
+.modal .close { float:right; cursor:pointer; color:var(--text-tertiary); font-size:18px; }
+.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--text-primary); color:#fff; padding:10px 18px; border-radius:var(--radius-sm); font-size:13px; opacity:0; transition:opacity .25s; z-index:200; pointer-events:none; }
+.toast.show { opacity:1; }
+.inset { background:var(--bg-muted); border-radius:var(--radius-sm); padding:12px 14px; font-size:12px; color:var(--text-secondary); line-height:1.6; }
+.checkbx { width:16px; height:16px; border:1.5px solid var(--border-strong); border-radius:4px; cursor:pointer; flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; }
+.checkbx.on { background:var(--purple); border-color:var(--purple); }
+.checkbx.on:after { content:""; width:4px; height:8px; border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg); }
+table.mini { width:100%; border-collapse:collapse; font-size:12px; }
+table.mini th, table.mini td { text-align:left; padding:7px 8px; border-bottom:1px solid var(--border); }
+table.mini th { color:var(--text-tertiary); font-weight:500; }
+.summary-pills { display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+.pill { background:var(--bg-card); border:1px solid var(--border); border-radius:20px; padding:6px 14px; font-size:13px; }
+.pill b { color:var(--purple); }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>🔍 线索自动获取</h1>
+      <div class="sub">Mint Sales · Phase 2</div>
+    </div>
+    <nav class="nav">
+      <div class="nav-item active" data-view="sources"><span>📡</span>来源管理</div>
+      <div class="nav-item" data-view="search"><span>🧭</span>智能搜索<span class="nav-badge" id="navSearchCount">0</span></div>
+      <div class="nav-item" data-view="scoring"><span>🎯</span>线索评分</div>
+      <div class="nav-item" data-view="queue"><span>📥</span>待导入队列<span class="nav-badge" id="navQueueCount">0</span></div>
+      <div class="nav-item" data-view="emails"><span>✉️</span>邮箱验证</div>
+    </nav>
+    <div class="sidebar-footer">
+      引擎与 Worker (prospecting.ts) 同源。<br>离线预览为前端镜像；生产调用 /api/prospecting/* 端点。
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- ===== 来源管理 ===== -->
+    <section id="view-sources">
+      <div class="main-header"><div><h2>来源管理</h2><div class="sub">连接并同步各线索渠道，自动获取潜在买家</div></div>
+        <button class="btn btn-primary btn-sm" onclick="syncAll()">⟳ 全部同步</button></div>
+      <div class="source-grid" id="sourceGrid"></div>
+      <div class="card" style="margin-top:16px">
+        <div class="card-title">接入说明（生产环境）</div>
+        <div class="inset">
+          • <b>贸易目录</b>：Europages / Go4WorldBusiness / Kompass 搜索 API 或抓取层<br>
+          • <b>LinkedIn</b>：Sales Navigator 导出或 Zoominfo / Phantombuster 类工具，重点产出「采购/寻源联系人」<br>
+          • <b>海关数据</b>：ImportGenius / Panjiva，按 HS 5603.93/5603.94 查询中国出口到目标国的进口商<br>
+          • <b>邮箱发现</b>：Hunter.io / Clearbit（wrangler secret: HUNTER_API_KEY）做发现+验证<br>
+          本预览用与业务匹配的种子数据（覆膜/纺粘无纺布下游买家，覆盖多国）演示完整流程。
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 智能搜索 ===== -->
+    <section id="view-search" style="display:none">
+      <div class="main-header"><div><h2>智能搜索</h2><div class="sub">选择来源与筛选条件，自动发现并评分潜在买家</div></div></div>
+      <div class="filter-bar">
+        <div class="field"><label>线索来源</label><select id="fSource">
+          <option value="directory">贸易目录</option>
+          <option value="linkedin">LinkedIn</option>
+          <option value="customs">海关数据</option>
+        </select></div>
+        <div class="field"><label>国家</label><select id="fCountry"></select></div>
+        <div class="field"><label>产品</label><select id="fProduct">
+          <option value="">全部</option><option value="laminated">覆膜无纺布 laminated</option>
+          <option value="spunbond">纺粘无纺布 spunbond</option><option value="both">两者皆有 both</option>
+        </select></div>
+        <div class="field"><label>行业</label><select id="fIndustry"></select></div>
+        <div class="field"><label>关键词</label><input id="fKeyword" placeholder="如 hygiene / medical"></div>
+        <button class="btn btn-primary" onclick="runSearch()">🔍 搜索线索</button>
+      </div>
+      <div class="summary-pills" id="searchPills"></div>
+      <div class="leads-grid" id="searchResults"></div>
+    </section>
+
+    <!-- ===== 线索评分 ===== -->
+    <section id="view-scoring" style="display:none">
+      <div class="main-header"><div><h2>线索评分模型</h2><div class="sub">规则化加权评分（权重和=100），自动给每条线索定级 A/B/C/D</div></div></div>
+      <div class="card">
+        <div class="card-title">评分因子与权重</div>
+        <div id="modelFactors"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">目标市场 & 目标产品 & 定级规则</div>
+        <div class="inset" id="modelConfig"></div>
+      </div>
+      <div class="card" id="breakdownCard" style="display:none">
+        <div class="card-title">选中线索评分明细 <span class="tiny" id="bdCompany"></span></div>
+        <div class="breakdown-grid" id="breakdownGrid"></div>
+      </div>
+    </section>
+
+    <!-- ===== 待导入队列 ===== -->
+    <section id="view-queue" style="display:none">
+      <div class="main-header"><div><h2>待导入队列</h2><div class="sub">勾选搜索发现的线索，去重后一键导入 CRM（自动评分+发现邮箱+建商机）</div></div>
+        <button class="btn btn-primary btn-sm" onclick="doImport()">📥 导入到 CRM</button></div>
+      <div class="summary-pills" id="queuePills"></div>
+      <div class="card">
+        <div class="card-title">已选线索（与现有 CRM 去重预览）</div>
+        <div id="queueList"></div>
+      </div>
+      <div class="card" id="importedCard" style="display:none">
+        <div class="card-title">已导入 CRM</div>
+        <table class="mini" id="importedTable"></table>
+      </div>
+    </section>
+
+    <!-- ===== 邮箱验证 ===== -->
+    <section id="view-emails" style="display:none">
+      <div class="main-header"><div><h2>邮箱发现与验证</h2><div class="sub">基于域名+姓名模式生成候选邮箱，校验格式并标记验证状态</div></div>
+        <select id="emailCompany" onchange="renderEmails()" style="padding:7px 9px;border:1px solid var(--border-strong);border-radius:6px;font-size:13px;"></select>
+      </div>
+      <div class="card"><div class="card-title">发现的邮箱 <span class="tiny" id="emailCompanyName"></span></div>
+        <div id="emailList"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-mask" id="modal"><div class="modal"><span class="close" onclick="closeModal()">✕</span><div id="modalBody"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ============ 数据（与 worker/connectors.ts 同源） ============
+// [公司, 国家, 代码, 网站, 行业, 规模, 描述, 品类, 进口信号, [[名,姓,职位,seniority],...]]
+const SEED = [
+['HygienePro Manufacturing LLC','United States','US','hygienepro.com','Baby & Adult Hygiene','large','美国中西部婴儿纸尿裤与成人失禁用品制造商，月耗无纺布 400+ 吨。','both',82,[['Sarah','Mitchell','VP Procurement','exec'],['David','Chen','Sourcing Manager','manager']]],
+['MedGuard Supplies GmbH','Germany','DE','medguard.de','Medical Disposables','large','德国医疗耗材商，手术衣/口罩/敷料产线，CE/ISO13485。','spunbond',76,[['Klaus','Bauer','Head of Sourcing','exec'],['Anna','Schulz','Supply Chain Lead','manager']]],
+['TemizWipe Sanayi A.Ş.','Turkey','TR','temizwipe.com.tr','Wipes & Cleaning','medium','土耳其湿巾与工业擦拭布制造商，出口欧洲与中东。','spunbond',71,[['Mehmet','Yilmaz','Procurement Director','exec']]],
+['SunCare Hygiene Pvt Ltd','India','IN','suncarehygiene.in','Feminine Care','large','印度女性护理与卫生巾制造商，本土+出口双线，扩产中。','both',68,[['Priya','Nair','Materials Manager','manager'],['Raj','Kumar','Founder & CEO','exec']]],
+['BioPack Brasil Ltda','Brazil','BR','biopack.com.br','Packaging','medium','巴西可降解包装与覆膜袋生产商，主打环保无纺布复合膜。','laminated',64,[['Lucas','Silva','Sourcing Manager','manager']]],
+['Limpieza Total S.A. de C.V.','Mexico','MX','limpiezatotal.mx','Wipes & Cleaning','medium','墨西哥家用与商用湿巾制造商，北美供应链。','spunbond',59,[['Jorge','Ramirez','Compras','manager']]],
+['VinaNonwoven Co., Ltd','Vietnam','VN','vinanonwoven.vn','Hygiene Convertor','large','越南卫生用品代工与转换商，为国际品牌做纸尿裤/经期裤。','both',73,[['Linh','Tran','Supply Chain Director','exec'],['Hoa','Nguyen','Raw Material Buyer','ic']]],
+['GreenField Agro Indonesia','Indonesia','ID','greenfieldagro.id','Agriculture','medium','印尼农用覆膜与作物保护无纺布分销商，覆盖爪哇种植园。','laminated',55,[['Budi','Santoso','Procurement Head','manager']]],
+['PolHygienika Sp. z o.o.','Poland','PL','polhygienika.pl','Baby & Adult Hygiene','large','波兰卫生用品龙头，欧洲主要纸尿裤与失禁产品供应商。','both',78,[['Piotr','Nowak','Category Sourcing Manager','manager'],['Katarzyna','Wilk','Procurement Director','exec']]],
+['Higiene Iberia S.L.','Spain','ES','higieneiberia.es','Feminine Care','medium','西班牙女性护理与私护品牌商，南欧分销网络。','spunbond',61,[['Lucia','Garcia','Sourcing Lead','manager']]],
+['Nippon MediTex K.K.','Japan','JP','medi-tex.jp','Medical Disposables','large','日本高端医疗无纺布制品商，手术铺单与防护耗材。','spunbond',70,[['Kenji','Tanaka','購買部長','exec']]],
+['GulfCare Trading LLC','United Arab Emirates','AE','gulfcare.ae','Distribution','medium','阿联酋卫生与医疗用品分销商，GCC 六国渠道。','both',66,[['Omar','AlFarsi','Head of Imports','exec']]],
+['ItaliaSoft S.r.l.','Italy','IT','italiasoft.it','Filtration','small','意大利空气/液体过滤无纺布与滤材加工商。','spunbond',52,[['Marco','Rossi','Owner','exec']]],
+['CleanWave UK Ltd','United Kingdom','GB','cleanwave.co.uk','Wipes & Cleaning','medium','英国可持续湿巾与消毒擦拭品牌，零售+电商。','spunbond',57,[['Emma','Thompson','Head of Supply','manager']]],
+['KoreaHygiene Co., Ltd','South Korea','KR','koreahygiene.kr','Baby & Adult Hygiene','large','韩国卫生用品制造商，本土强势+亚洲出口。','both',74,[['Jiwoo','Park','Procurement Team Leader','manager']]],
+['NileCare Egypt Co.','Egypt','EG','nilecare.com.eg','Medical Disposables','medium','埃及医疗与卫生耗材制造商，北非与中东市场。','spunbond',60,[['Youssef','Hassan','Sourcing Manager','manager']]],
+['AfriPack Industries Ltd','Nigeria','NG','afripack.com.ng','Packaging','medium','尼日利亚包装与农业覆膜无纺布加工商，西非渠道。','laminated',48,[['Chidi','Okoro','Operations Director','exec']]],
+['Andina Wipes S.A.S.','Colombia','CO','andinawipes.co','Wipes & Cleaning','small','哥伦比亚湿巾与私护制造商，安第斯区域。','spunbond',51,[['Camila','Torres','Compras','ic']]],
+['ThaiNonwoven Convertor Co','Thailand','TH','thainonwoven.co.th','Hygiene Convertor','large','泰国卫生用品转换商，东南亚代工与自有品牌。','both',69,[['Somchai','Phan','Supply Chain Manager','manager']]],
+['FilterTech France SARL','France','FR','filtertech.fr','Filtration','medium','法国工业过滤无纺布与复合滤材开发商。','laminated',58,[['Sophie','Martin','Directrice Achats','exec']]],
+['BalticHygiene OÜ','Estonia','EE','baltichygiene.ee','Feminine Care','small','爱沙尼亚女性护理品牌商，波罗的海电商。','spunbond',44,[['Liis','Kask','Founder','exec']]],
+['Sahara Medical Supplies','Saudi Arabia','SA','saharamed.com.sa','Medical Disposables','large','沙特医疗耗材分销商与本地化生产，海湾渠道。','spunbond',67,[['Abdullah','AlQahtani','Import Manager','manager']]],
+['PacificWipes NZ Ltd','New Zealand','NZ','pacificwipes.nz','Wipes & Cleaning','small','新西兰天然成分湿巾品牌，澳新市场。','spunbond',46,[['Olivia','Bennett','Operations Manager','manager']]],
+['Maghreb Hygiene Group','Morocco','MA','maghrebhg.ma','Baby & Adult Hygiene','medium','摩洛哥卫生用品制造商，北非与南欧出口。','both',63,[['Yasmin','Bennani','Achats','manager']]],
+['Caspian Filter Co.','Iran','IR','caspianfilter.ir','Filtration','medium','伊朗工业与汽车过滤无纺布制造商。','laminated',50,[['Reza','Ahmadi','Procurement Chief','exec']]],
+['AndesPack Peru S.A.C.','Peru','PE','andespack.pe','Packaging','small','秘鲁农业覆膜与包装无纺布分销商，安第斯区域。','laminated',47,[['Diego','Quispe','Gerente de Compras','manager']]],
+['UkraineMedTrade','Ukraine','UA','uamedtrade.ua','Medical Disposables','medium','乌克兰医疗耗材进口与分销，东欧重建需求。','spunbond',54,[['Olena','Kovalenko','Import Specialist','ic']]],
+['Balkan Hygiene DOO','Serbia','RS','balkanhygiene.rs','Baby & Adult Hygiene','small','塞尔维亚卫生用品制造商，巴尔干市场。','both',49,[['Marko','Jovic','Owner','exec']]],
+['LankaNonwoven Pvt Ltd','Sri Lanka','LK','lankanonwoven.lk','Hygiene Convertor','medium','斯里兰卡卫生用品转换商，南亚出口。','both',56,[['Nimal','Perera','Sourcing Lead','manager']]],
+['CaribPack Jamaica Ltd','Jamaica','JM','caribpack.jm','Packaging','small','牙买加农业覆膜与包装无纺布进口商，加勒比渠道。','laminated',43,[['Shanique','Brown','Procurement Officer','ic']]],
+['Nordic EcoWipe AB','Sweden','SE','ecoewipe.se','Wipes & Cleaning','medium','瑞典可持续湿巾品牌，北欧零售与电商。','spunbond',62,[['Erik','Lindberg','Head of Sourcing','manager']]],
+['MenaFilter Trading','Jordan','JO','menafilter.jo','Filtration','small','约旦工业过滤无纺布贸易商，中东渠道。','laminated',45,[['Layla','Haddad','General Manager','exec']]],
+];
+// 已在 CRM 中的公司（用于去重演示）
+const CRM_EXISTING = ['PolHygienika Sp. z o.o.','VinaNonwoven Co., Ltd','MedGuard Supplies GmbH','SunCare Hygiene Pvt Ltd','HygienePro Manufacturing LLC'];
+
+const TARGET_COUNTRIES = ['United States','Germany','Turkey','India','Brazil','Mexico','Vietnam','Indonesia','Poland','Spain','Japan'];
+const TARGET_PRODUCTS = ['laminated','spunbond','both'];
+const CORE_INDUSTRIES = ['Baby & Adult Hygiene','Feminine Care','Medical Disposables','Wipes & Cleaning'];
+const RELATED_INDUSTRIES = ['Packaging','Agriculture','Filtration','Hygiene Convertor','Distribution'];
+const SOURCE_LABELS = { directory:'贸易目录', linkedin:'LinkedIn', customs:'海关数据' };
+
+// ============ 状态 ============
+let discovered = [];          // 最近搜索结果（带评分）
+const selected = new Set();   // 待导入队列
+let importedLog = [];         // 已导入记录
+
+// ============ 引擎镜像 ============
+function buildCandidate(a, sourceType){
+  return {
+    company_name:a[0], country:a[1], country_code:a[2], website:a[3], industry:a[4],
+    company_size:a[5], description:a[6], product_category:a[7], import_signals:a[8],
+    source_type:sourceType, source_ref:sourceType==='customs'?'customs_data':sourceType==='linkedin'?'linkedin_search':'trade_directory',
+    contacts:a[9].map(c=>({first_name:c[0],last_name:c[1],title:c[2],seniority:c[3]})),
+    linkedin_url: sourceType==='linkedin' ? 'https://www.linkedin.com/company/'+a[3].replace(/\./g,'') : null
+  };
+}
+function applyFilters(list,f){
+  return list.filter(c=>{
+    if(f.country && c.country!==f.country) return false;
+    if(f.product_category){ if(f.product_category==='both'){ if(c.product_category!=='both') return false; } else if(c.product_category!==f.product_category && c.product_category!=='both') return false; }
+    if(f.industry && c.industry!==f.industry) return false;
+    if(f.keyword){ const kw=f.keyword.toLowerCase(); const hay=(c.company_name+' '+c.description+' '+c.industry).toLowerCase(); if(!hay.includes(kw)) return false; }
+    return true;
+  });
+}
+function discoverEmails(website, contacts){
+  const domain = website ? website.replace(/^https?:\/\//,'').replace(/^www\./,'').split('/')[0].toLowerCase() : null;
+  const EMAIL_RE=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const slug=s=>s.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]/g,'');
+  const out=[];
+  for(const ct of contacts){
+    const f=slug(ct.first_name), l=slug(ct.last_name);
+    if(!domain||!f||!l) continue;
+    const cands=[{email:`${f}.${l}@${domain}`,pattern:'first.last',base:0.92},{email:`${f[0]}${l}@${domain}`,pattern:'flast',base:0.74},{email:`${f}${l}@${domain}`,pattern:'firstlast',base:0.66}];
+    const valid=cands.find(c=>EMAIL_RE.test(c.email))||cands[0];
+    let status='guessed', confidence=valid.base;
+    if(EMAIL_RE.test(valid.email)){
+      const h=hashStr(valid.email);
+      if(ct.seniority==='exec' && h%5!==0){ status='verified'; confidence=Math.min(0.99,valid.base+0.05); }
+      else if(h%7===0){ status='invalid'; confidence=0; }
+    } else { status='invalid'; confidence=0; }
+    out.push({contact_name:`${ct.first_name} ${ct.last_name}`,title:ct.title,email:valid.email,pattern:valid.pattern,status,confidence:Math.round(confidence*100)/100});
+  }
+  return out;
+}
+function scoreLead(c, emails){
+  const b=[];
+  let p=8; if(c.product_category==='both')p=30; else if(TARGET_PRODUCTS.includes(c.product_category))p=24;
+  b.push({key:'product_match',label:'产品匹配度',points:p,max:30,detail:`品类=${c.product_category}`});
+  const cp=TARGET_COUNTRIES.includes(c.country)?20:6; b.push({key:'country_match',label:'目标市场匹配',points:cp,max:20,detail:TARGET_COUNTRIES.includes(c.country)?`核心目标国：${c.country}`:`非核心：${c.country}`});
+  let ip=4; if(CORE_INDUSTRIES.includes(c.industry))ip=15; else if(RELATED_INDUSTRIES.includes(c.industry))ip=10;
+  b.push({key:'industry_fit',label:'行业匹配度',points:ip,max:15,detail:`行业=${c.industry}`});
+  const sm={enterprise:12,large:10,medium:7,small:4,'':4}; const sp=sm[c.company_size||'']??4;
+  b.push({key:'company_size',label:'公司规模',points:sp,max:12,detail:`规模=${c.company_size||'未知'}`});
+  const wp=c.website?8:0; b.push({key:'web_presence',label:'网站存在',points:wp,max:8,detail:c.website?`官网=${c.website}`:'无官网'});
+  const ep=emails.some(e=>e.status==='verified'||e.status==='guessed')?10:0; b.push({key:'email_found',label:'邮箱可发现',points:ep,max:10,detail:emails.length?`已发现 ${emails.length} 个邮箱`:'尚未发现邮箱'});
+  const imp=c.import_signals>0?Math.round(c.import_signals/100*5):0; b.push({key:'import_activity',label:'进口活跃度',points:imp,max:5,detail:c.import_signals>0?`进口信号=${c.import_signals}`:'无海关信号'});
+  const score=Math.min(100,b.reduce((s,x)=>s+x.points,0));
+  const tier=score>=80?'A':score>=65?'B':score>=50?'C':'D';
+  return {score,breakdown:b,tier};
+}
+function hashStr(s){ let h=0; for(let i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))|0; return Math.abs(h); }
+
+// ============ 来源管理 ============
+const SOURCES=[
+  {id:'src_directory',name:'贸易目录',type:'directory',icon:'📑',color:'var(--teal)',status:'active',desc:'Europages / Kompass 类买家库'},
+  {id:'src_linkedin',name:'LinkedIn',type:'linkedin',icon:'💼',color:'var(--blue)',status:'active',desc:'采购/寻源联系人'},
+  {id:'src_customs',name:'海关数据',type:'customs',icon:'🛃',color:'var(--amber)',status:'active',desc:'HS 5603 进口商'},
+  {id:'src_manual',name:'手动录入',type:'manual',icon:'✍️',color:'var(--purple)',status:'active',desc:'自主添加'},
+  {id:'src_exhibition',name:'展会名单',type:'file',icon:'🏢',color:'var(--coral)',status:'active',desc:'展会展商名录'},
+  {id:'src_website',name:'网站询盘',type:'webhook',icon:'🌐',color:'var(--green)',status:'active',desc:'mint-gp.com 表单'},
+];
+function renderSources(){
+  const grid=document.getElementById('sourceGrid');
+  grid.innerHTML=SOURCES.map(s=>{
+    const cnt = (s.type==='directory'||s.type==='linkedin'||s.type==='customs') ? SEED.length : (s.type==='manual'?CRM_EXISTING.length:0);
+    return `<div class="source-card">
+      <div class="top"><div class="source-icon" style="background:${s.color}22;color:${s.color}">${s.icon}</div>
+        <div><h3>${s.name}</h3><div class="type">${s.type}</div></div></div>
+      <div class="source-meta"><span><span class="status-dot status-active"></span>已连接</span><span>线索 ${cnt}</span></div>
+      <div class="source-meta" style="margin-top:8px"><span class="tiny">${s.desc}</span></div>
+      <div style="margin-top:12px;display:flex;gap:6px">
+        <button class="btn btn-sm" onclick="syncSource('${s.type}')">同步</button>
+        <button class="btn btn-sm" onclick="goSearch('${s.type==='manual'||s.type==='file'||s.type==='webhook'?'directory':s.type}')">去搜索</button>
+      </div></div>`;
+  }).join('');
+}
+function syncSource(t){ if(t==='manual'||t==='file'||t==='webhook'){ toast('该来源为本地/被动来源，无需在线同步'); return; } toast(`已同步 ${SOURCE_LABELS[t]||t} 来源`); }
+function syncAll(){ toast('已触发全部来源同步（演示）'); }
+
+// ============ 智能搜索 ============
+function goSearch(src){ switchView('search'); if(src) document.getElementById('fSource').value = (src==='manual'||src==='file'||src==='webhook')?'directory':src; }
+function fillFilterOptions(){
+  const countries=[...new Set(SEED.map(a=>a[1]))].sort();
+  const industries=[...new Set(SEED.map(a=>a[4]))].sort();
+  document.getElementById('fCountry').innerHTML='<option value="">全部国家</option>'+countries.map(c=>`<option>${c}</option>`).join('');
+  document.getElementById('fIndustry').innerHTML='<option value="">全部行业</option>'+industries.map(c=>`<option>${c}</option>`).join('');
+}
+function runSearch(){
+  const source=document.getElementById('fSource').value;
+  const filters={
+    country:document.getElementById('fCountry').value,
+    product_category:document.getElementById('fProduct').value||undefined,
+    industry:document.getElementById('fIndustry').value,
+    keyword:document.getElementById('fKeyword').value.trim()||undefined
+  };
+  let list=SEED.map(a=>buildCandidate(a,source));
+  if(source==='customs') list.sort((a,b)=>b.import_signals-a.import_signals);
+  list=applyFilters(list,filters);
+  discovered=list.map(c=>{ const e=discoverEmails(c.website,c.contacts); const s=scoreLead(c,e); return {...c,score:s.score,tier:s.tier,breakdown:s.breakdown,emails:e}; })
+    .sort((a,b)=>b.score-a.score);
+  renderSearch();
+  switchView('search');
+}
+function renderSearch(){
+  document.getElementById('navSearchCount').textContent=discovered.length;
+  const tierCount={A:0,B:0,C:0,D:0}; discovered.forEach(d=>tierCount[d.tier]++);
+  document.getElementById('searchPills').innerHTML=
+    `<span class="pill">共 <b>${discovered.length}</b> 条</span>`+
+    `<span class="pill">A 级 <b style="color:var(--green)">${tierCount.A}</b></span>`+
+    `<span class="pill">B 级 <b style="color:var(--blue)">${tierCount.B}</b></span>`+
+    `<span class="pill">C 级 <b style="color:var(--amber)">${tierCount.C}</b></span>`+
+    `<span class="pill">D 级 <b style="color:var(--red)">${tierCount.D}</b></span>`;
+  const box=document.getElementById('searchResults');
+  if(!discovered.length){ box.innerHTML='<div class="empty">没有匹配的线索，调整筛选条件试试</div>'; return; }
+  box.innerHTML=discovered.map((d,i)=>{
+    const on=selected.has(d.company_name)?'on':'';
+    const dupe=CRM_EXISTING.includes(d.company_name);
+    return `<div class="lead-card">
+      <div class="row1">
+        <div><div class="company">${d.company_name}</div><div class="loc">${d.country} · ${d.industry}</div></div>
+        <div class="score-badge tier-${d.tier}">${d.score}<div class="t">${d.tier}</div></div>
+      </div>
+      <div class="lead-tags">
+        <span class="tag prod">${prodLabel(d.product_category)}</span>
+        <span class="tag size">${sizeLabel(d.company_size)}</span>
+        <span class="tag">${d.emails.length} 邮箱</span>
+        ${d.import_signals?`<span class="tag">进口 ${d.import_signals}</span>`:''}
+        ${dupe?'<span class="tag" style="background:var(--red-light);color:var(--red)">CRM 已存在</span>':''}
+      </div>
+      <div class="lead-desc">${d.description}</div>
+      <div class="lead-actions">
+        <div class="checkbx ${on}" onclick="toggleSelect('${d.company_name}')"></div>
+        <span class="tiny" style="flex:1">${on?'已加入队列':'加入导入队列'}</span>
+        <button class="btn btn-sm" onclick="showBreakdown(${i})">评分明细</button>
+        <button class="btn btn-sm" onclick="showEmails('${d.company_name}')">邮箱</button>
+      </div></div>`;
+  }).join('');
+}
+function prodLabel(p){return {laminated:'覆膜',spunbond:'纺粘',both:'覆膜+纺粘',general:'通用'}[p]||p;}
+function sizeLabel(s){return {enterprise:'大型企业',large:'大型',medium:'中型',small:'小型'}[s]||s;}
+
+function toggleSelect(name){
+  if(selected.has(name)) selected.delete(name); else selected.add(name);
+  renderSearch(); renderQueue();
+}
+function showBreakdown(i){
+  const d=discovered[i]; if(!d) return;
+  document.getElementById('breakdownCard').style.display='block';
+  document.getElementById('bdCompany').textContent='· '+d.company_name+'（'+d.score+' / '+d.tier+'）';
+  document.getElementById('breakdownGrid').innerHTML=d.breakdown.map(x=>`
+    <div class="factor-row"><div class="name">${x.label}</div>
+      <div class="bar-wrap"><div class="bar" style="width:${x.points/x.max*100}%"></div></div>
+      <div class="pts">${x.points} / ${x.max}</div></div>
+    <div class="tiny" style="text-align:right;margin:-4px 0 6px">${x.detail}</div>`).join('');
+  switchView('scoring');
+}
+function showEmails(name){
+  document.getElementById('emailCompany').value=name;
+  switchView('emails'); renderEmails();
+}
+
+// ============ 线索评分模型 ============
+const FACTORS=[
+  {label:'产品匹配度',max:30},{label:'目标市场匹配',max:20},{label:'行业匹配度',max:15},
+  {label:'公司规模',max:12},{label:'网站存在',max:8},{label:'邮箱可发现',max:10},{label:'进口活跃度',max:5},
+];
+function renderModel(){
+  document.getElementById('modelFactors').innerHTML=FACTORS.map(f=>`
+    <div class="factor-row"><div class="name">${f.label}</div>
+      <div class="bar-wrap"><div class="bar" style="width:${f.max/30*100}%"></div></div>
+      <div class="pts">权重 ${f.max}</div></div>`).join('');
+  document.getElementById('modelConfig').innerHTML=
+    `<b>目标市场（11 国）</b>：${TARGET_COUNTRIES.join('、')}<br>`+
+    `<b>目标产品</b>：覆膜无纺布 (laminated)、纺粘无纺布 (spunbond)、两者皆有 (both)<br>`+
+    `<b>核心行业</b>：${CORE_INDUSTRIES.join('、')}；<b>相关行业</b>：${RELATED_INDUSTRIES.join('、')}<br>`+
+    `<b>定级</b>：A ≥80 优先攻坚 · B 65-79 重点跟进 · C 50-64 培育 · D <50 低优先级`;
+}
+
+// ============ 待导入队列 ============
+function renderQueue(){
+  document.getElementById('navQueueCount').textContent=selected.size;
+  const list=[...selected].map(n=>discovered.find(d=>d.company_name===n)).filter(Boolean);
+  const newOnes=list.filter(d=>!CRM_EXISTING.includes(d.company_name)).length;
+  const dupes=list.length-newOnes;
+  document.getElementById('queuePills').innerHTML=
+    `<span class="pill">已选 <b>${list.length}</b></span>`+
+    `<span class="pill">新线索 <b style="color:var(--green)">${newOnes}</b></span>`+
+    `<span class="pill">重复(跳过) <b style="color:var(--red)">${dupes}</b></span>`;
+  const box=document.getElementById('queueList');
+  if(!list.length){ box.innerHTML='<div class="empty">从「智能搜索」勾选线索加入队列</div>'; return; }
+  box.innerHTML=list.map(d=>{
+    const dupe=CRM_EXISTING.includes(d.company_name);
+    return `<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)">
+      <div class="checkbx on" onclick="toggleSelect('${d.company_name}')"></div>
+      <div style="flex:1"><b>${d.company_name}</b> <span class="tiny">· ${d.country}</span></div>
+      <span class="score-badge tier-${d.tier}" style="width:34px;height:34px;font-size:13px">${d.score}<div class="t" style="font-size:9px">${d.tier}</div></span>
+      ${dupe?'<span class="badge invalid">CRM 已存在</span>':'<span class="badge verified">将导入</span>'}
+    </div>`;
+  }).join('');
+}
+function doImport(){
+  const list=[...selected].map(n=>discovered.find(d=>d.company_name===n)).filter(Boolean);
+  if(!list.length){ toast('队列为空'); return; }
+  let imported=0, skipped=0;
+  list.forEach(d=>{
+    if(CRM_EXISTING.includes(d.company_name)){ skipped++; return; }
+    importedLog.push({company:d.company_name,country:d.country,score:d.score,tier:d.tier,emails:d.emails.length,source:d.source_type});
+    imported++;
+  });
+  selected.clear();
+  document.getElementById('importedCard').style.display='block';
+  document.getElementById('importedTable').innerHTML=
+    '<tr><th>公司</th><th>国家</th><th>评分</th><th>等级</th><th>邮箱</th><th>来源</th></tr>'+
+    importedLog.map(r=>`<tr><td>${r.company}</td><td>${r.country}</td><td>${r.score}</td><td><span class="badge ${r.tier==='A'?'verified':r.tier==='D'?'invalid':'guessed'}">${r.tier}</span></td><td>${r.emails}</td><td>${SOURCE_LABELS[r.source]||r.source}</td></tr>`).join('');
+  toast(`导入完成：新增 ${imported} 条，跳过重复 ${skipped} 条`);
+  renderSearch(); renderQueue();
+}
+
+// ============ 邮箱验证 ============
+function fillEmailCompanies(){
+  const sel=document.getElementById('emailCompany');
+  sel.innerHTML=discovered.map(d=>`<option value="${d.company_name}">${d.company_name}</option>`).join('') ||
+    SEED.map(a=>`<option>${a[0]}</option>`).join('');
+}
+function renderEmails(){
+  const name=document.getElementById('emailCompany').value;
+  let d=discovered.find(x=>x.company_name===name);
+  if(!d){ const a=SEED.find(x=>x[0]===name); if(a){ const bc=buildCandidate(a,'directory'); d={...bc,emails:discoverEmails(bc.website,bc.contacts)}; } }
+  document.getElementById('emailCompanyName').textContent=name?('· '+name):'';
+  const box=document.getElementById('emailList');
+  if(!d||!d.emails.length){ box.innerHTML='<div class="empty">该公司未提供联系人，无法发现邮箱</div>'; return; }
+  box.innerHTML=d.emails.map(e=>`
+    <div class="email-item"><div class="addr">${e.email}</div>
+      <div class="tiny" style="width:120px">${e.contact_name}<br><span class="muted">${e.title}</span></div>
+      <span class="badge ${e.status}">${e.status==='verified'?'已验证':e.status==='guessed'?'推测':'无效'}</span>
+      <span class="tiny" style="width:54px;text-align:right">${Math.round(e.confidence*100)}%</span>
+      <button class="btn btn-sm" onclick="copyText('${e.email}')">复制</button></div>`).join('');
+}
+
+// ============ 通用 ============
+function switchView(v){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===v));
+  ['sources','search','scoring','queue','emails'].forEach(s=>document.getElementById('view-'+s).style.display=(s===v?'block':'none'));
+}
+function copyText(t){ navigator.clipboard?.writeText(t); toast('已复制 '+t); }
+function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
+function closeModal(){ document.getElementById('modal').classList.remove('show'); }
+document.querySelectorAll('.nav-item').forEach(n=>n.addEventListener('click',()=>switchView(n.dataset.view)));
+
+// ============ 初始化 ============
+renderSources(); fillFilterOptions(); renderModel(); fillEmailCompanies(); renderQueue(); renderSearch();
+</script>
+</body>
+</html>

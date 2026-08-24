@@ -1,0 +1,53 @@
+name = "mintgroup-sales"
+main = "worker/index.ts"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+# ============================================================
+#  路由共存说明（重要）
+#  现有 mintgroup-auth Worker 绑 www.mint-gp.com/api/*，只处理
+#    /api/auth、/api/callback、/api/gh/*、/api/logout
+#  本 Worker 绑 www.mint-gp.com/api/sales/*（更具体的路径模式）。
+#  Cloudflare 路由按"最长前缀匹配"生效，因此：
+#    /api/sales/*  → 本 Worker（mintgroup-sales）
+#    /api/* 其它   → mintgroup-auth
+#  两者互不冲突，可共存于同一 zone(mint-gp.com)。
+#  入口处已把 /api/sales 前缀归一化为 /api 再路由。
+# ============================================================
+routes = [
+  { pattern = "www.mint-gp.com/api/sales/*", zone_name = "mint-gp.com" }
+]
+
+# D1 数据库绑定
+[[d1_databases]]
+binding = "DB"
+database_name = "mint-sales-db"
+database_id = "REPLACE_WITH_YOUR_D1_ID"   # 执行 wrangler d1 create mint-sales-db 后填入
+
+# 定时任务: 每小时检查并发送到期邮件序列步骤
+[triggers]
+crons = ["0 * * * *"]
+
+# 环境变量（非敏感，可直接写；敏感项走 wrangler secret put）
+[vars]
+EMAIL_FROM = "sales@mint-gp.com"
+EMAIL_FROM_NAME = "Mint Sales"
+APP_BASE_URL = "https://www.mint-gp.com"
+# GITHUB_CLIENT_ID 与 mintgroup-auth 用同一个 GitHub OAuth App（Decap CMS 用）
+GITHUB_CLIENT_ID = "REPLACE_WITH_OAUTH_APP_ID"
+
+# 可选: 异步发送队列（避免 cron 单次超时）
+# 启用步骤：1) 取消下方注释  2) wrangler queues create mint-sales-send  3) deploy
+# [[queues]]
+# binding = "SEND_QUEUE"
+# queue = "mint-sales-send"
+
+# ============================================================
+#  敏感密钥（用 wrangler secret put 设置，勿写进本文件）
+#    wrangler secret put RESEND_API_KEY      --name mintgroup-sales   # 邮件发送(Resend)
+#    wrangler secret put SESSION_SECRET      --name mintgroup-sales   # API 鉴权(Bearer token)
+#    wrangler secret put GITHUB_CLIENT_SECRET --name mintgroup-sales   # GitHub OAuth
+#    wrangler secret put HUNTER_API_KEY      --name mintgroup-sales   # 邮箱发现/验证(Phase 2, 可选)
+#
+#  本地开发：在同目录建 .dev.vars（已被 .gitignore 忽略）写入上述键值即可被 wrangler dev 读取。
+# ============================================================

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据分析增强 · Mint Sales Phase 4</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg-page:#f5f5f4; --bg-sidebar:#fafaf9; --bg-card:#fff; --bg-hover:#f5f5f4; --bg-muted:#f5f5f4;
+  --text-primary:#1c1917; --text-secondary:#78716c; --text-tertiary:#a8a29e;
+  --border:#e7e5e4; --border-strong:#d6d3d1;
+  --purple:#534AB7; --purple-light:#EEEDFE;
+  --blue:#378ADD; --blue-light:#E6F1FB;
+  --teal:#1D9E75; --teal-light:#E1F5EE;
+  --amber:#EF9F27; --amber-light:#FAEEDA;
+  --coral:#D85A30; --coral-light:#FAECE7;
+  --green:#639922; --green-light:#EAF3DE;
+  --red:#E24B4A; --red-light:#FCEBEB;
+  --radius:10px; --radius-sm:6px; --shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; background:var(--bg-page); color:var(--text-primary); font-size:14px; }
+.app { display:flex; min-height:100vh; }
+.sidebar { width:220px; background:var(--bg-sidebar); border-right:1px solid var(--border); display:flex; flex-direction:column; position:fixed; height:100vh; z-index:10; }
+.sidebar-header { padding:20px 18px 16px; border-bottom:1px solid var(--border); }
+.sidebar-header h1 { font-size:16px; font-weight:600; color:var(--purple); display:flex; align-items:center; gap:8px; }
+.sidebar-header .sub { font-size:12px; color:var(--text-tertiary); margin-top:2px; }
+.nav { flex:1; padding:10px 8px; overflow-y:auto; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:var(--radius-sm); cursor:pointer; font-size:13px; color:var(--text-secondary); transition:all .15s; margin-bottom:2px; }
+.nav-item:hover { background:var(--bg-hover); color:var(--text-primary); }
+.nav-item.active { background:var(--purple-light); color:var(--purple); font-weight:500; }
+.nav-item .badge { margin-left:auto; font-size:11px; background:var(--border); color:var(--text-secondary); padding:1px 6px; border-radius:8px; }
+.nav-item.active .badge { background:var(--purple); color:#fff; }
+.sidebar-footer { padding:12px 16px; border-top:1px solid var(--border); font-size:11px; color:var(--text-tertiary); line-height:1.5; }
+.main { flex:1; margin-left:220px; padding:24px 28px; }
+.main-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+.main-header h2 { font-size:20px; font-weight:600; }
+.main-header .sub { font-size:12px; color:var(--text-tertiary); margin-top:3px; }
+.btn { padding:7px 14px; border-radius:var(--radius-sm); border:1px solid var(--border-strong); background:var(--bg-card); font-size:13px; cursor:pointer; transition:all .15s; color:var(--text-primary); display:inline-flex; align-items:center; gap:6px; }
+.btn:hover { background:var(--bg-hover); }
+.btn-primary { background:var(--purple); color:#fff; border-color:var(--purple); }
+.btn-primary:hover { background:#463d9e; }
+.btn-sm { padding:4px 10px; font-size:12px; }
+.card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; margin-bottom:16px; }
+.card-title { font-size:14px; font-weight:600; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; }
+.muted { color:var(--text-secondary); }
+.tiny { font-size:12px; color:var(--text-tertiary); }
+.inset { background:var(--bg-muted); border-radius:var(--radius-sm); padding:14px; font-size:13px; line-height:1.7; color:var(--text-secondary); }
+
+/* metric strip */
+.metric-strip { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:16px; }
+.metric { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:14px; }
+.metric .lbl { font-size:11px; color:var(--text-secondary); margin-bottom:5px; }
+.metric .val { font-size:22px; font-weight:600; }
+.metric .sub2 { font-size:11px; color:var(--text-tertiary); margin-top:3px; }
+
+/* controls */
+.controls { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+.pill { padding:5px 12px; border:1px solid var(--border-strong); border-radius:14px; font-size:12px; cursor:pointer; user-select:none; color:var(--text-secondary); background:var(--bg-card); }
+.pill.on { background:var(--purple-light); color:var(--purple); border-color:var(--purple); }
+select.days { padding:6px 9px; border:1px solid var(--border-strong); border-radius:6px; font-size:13px; }
+
+/* chart */
+.chart-box { height:320px; position:relative; }
+
+/* table */
+table.tbl { width:100%; border-collapse:collapse; font-size:13px; }
+table.tbl th, table.tbl td { padding:9px 10px; text-align:right; border-bottom:1px solid var(--border); }
+table.tbl th { color:var(--text-secondary); font-weight:500; font-size:12px; text-align:right; background:var(--bg-muted); }
+table.tbl td.l, table.tbl th.l { text-align:left; }
+table.tbl tr.totals td { font-weight:600; background:var(--bg-muted); }
+.tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; }
+.tag-good { background:var(--green-light); color:var(--green); }
+.tag-bad { background:var(--red-light); color:var(--red); }
+.tag-neutral { background:var(--bg-muted); color:var(--text-secondary); }
+.bar-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.bar-row .src { width:90px; font-size:13px; }
+.bar-track { flex:1; height:22px; background:var(--bg-muted); border-radius:5px; position:relative; overflow:hidden; }
+.bar-fill { height:100%; border-radius:5px; }
+.bar-row .num { width:46px; text-align:right; font-size:12px; color:var(--text-secondary); }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>📊 数据分析</h1>
+      <div class="sub">Mint Sales · Phase 4</div>
+    </div>
+    <nav class="nav">
+      <div class="nav-item active" data-view="trends"><span>📈</span>时间趋势</div>
+      <div class="nav-item" data-view="roi"><span>💰</span>序列 ROI</div>
+      <div class="nav-item" data-view="sources"><span>🧭</span>来源归因</div>
+    </nav>
+    <div class="sidebar-footer">
+      引擎与 Worker (analytics) 同源。<br>离线预览为前端镜像；生产调用 /api/analytics/trends|roi|sources。
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- ===== 时间趋势 ===== -->
+    <section id="view-trends">
+      <div class="main-header"><div><h2>时间趋势</h2><div class="sub">按天聚合的线索 / 邮件 / 商机活动序列（最近 30 天）</div></div></div>
+      <div class="metric-strip" id="trendMetrics"></div>
+      <div class="card">
+        <div class="card-title">活动趋势折线
+          <div class="controls">
+            <select class="days" id="daysSel" onchange="renderTrends()"><option value="7">近 7 天</option><option value="30" selected>近 30 天</option><option value="90">近 90 天</option></select>
+            <span class="tiny">指标：</span>
+            <span class="pill on" data-m="leads" onclick="toggleMetric(this)">线索</span>
+            <span class="pill on" data-m="sent" onclick="toggleMetric(this)">发送</span>
+            <span class="pill on" data-m="opened" onclick="toggleMetric(this)">打开</span>
+            <span class="pill on" data-m="replied" onclick="toggleMetric(this)">回复</span>
+            <span class="pill" data-m="clicked" onclick="toggleMetric(this)">点击</span>
+            <span class="pill" data-m="unsubscribed" onclick="toggleMetric(this)">退订</span>
+            <span class="pill" data-m="opps" onclick="toggleMetric(this)">新商机</span>
+            <span class="pill" data-m="won" onclick="toggleMetric(this)">成交</span>
+          </div>
+        </div>
+        <div class="chart-box"><canvas id="trendChart"></canvas></div>
+      </div>
+    </section>
+
+    <!-- ===== 序列 ROI ===== -->
+    <section id="view-roi" style="display:none">
+      <div class="main-header"><div><h2>序列投入产出 (ROI)</h2><div class="sub">逐邮件序列的成本 / 触达 / 回复 / 归因成交与 ROI（任意触点归因）</div></div></div>
+      <div class="metric-strip" id="roiMetrics"></div>
+      <div class="card">
+        <div class="card-title">逐序列 ROI 明细 <span class="tiny">won 归因于该序列入组账号产生的成交</span></div>
+        <table class="tbl" id="roiTable"></table>
+      </div>
+    </section>
+
+    <!-- ===== 来源归因 ===== -->
+    <section id="view-sources" style="display:none">
+      <div class="main-header"><div><h2>线索来源归因</h2><div class="sub">每个线索来源的总量 / 评分 / 回复 / 成交与转化率</div></div></div>
+      <div class="card">
+        <div class="card-title">各来源线索量</div>
+        <div class="chart-box" style="height:260px"><canvas id="sourceChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">来源转化漏斗</div>
+        <table class="tbl" id="sourceTable"></table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+// ============ 镜像数据（与 worker analytics 输出同构） ============
+const METRIC_META = {
+  leads:{label:'新线索',color:'#534AB7'},
+  sent:{label:'邮件发送',color:'#378ADD'},
+  opened:{label:'打开',color:'#1D9E75'},
+  clicked:{label:'点击',color:'#EF9F27'},
+  replied:{label:'回复',color:'#D85A30'},
+  unsubscribed:{label:'退订',color:'#a8a29e'},
+  opps:{label:'新商机',color:'#7F77DD'},
+  won:{label:'成交',color:'#639922'},
+};
+
+// 生成近 N 天的趋势种子（确定性伪随机，与业务量级匹配）
+function genTrends(days){
+  const today=new Date();
+  const arr=[];
+  let seed=42;
+  const rnd=()=>(seed=(seed*9301+49297)%233280)/233280;
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(today.getTime()-i*86400000).toISOString().slice(0,10);
+    const wk=new Date(d).getUTCDay();
+    const weekend=(wk===0||wk===6)?0.35:1; // 周末活动衰减
+    arr.push({
+      date:d,
+      leads: Math.round((1+rnd()*2.5)*weekend),
+      sent:  Math.round((1+rnd()*2.2)*weekend),
+      opened:Math.round((rnd()*2)*weekend),
+      clicked:Math.round((rnd()*1.2)*weekend),
+      replied: rnd()>0.6?1:0,
+      unsubscribed: rnd()>0.85?1:0,
+      opps: rnd()>0.7?1:0,
+      won: rnd()>0.92?1:0,
+    });
+  }
+  return arr;
+}
+
+// ROI 种子（3 个序列）
+const SEED_ROI = [
+  {id:'cmp_eu',name:'欧洲覆膜无纺布开发',status:'active',cost:120,enrolled:18,sent:54,opened:31,clicked:12,replied:6,won_count:2,won_value:48000},
+  {id:'cmp_sea',name:'东南亚纺粘买家触达',status:'active',cost:80,enrolled:12,sent:36,opened:20,clicked:7,replied:3,won_count:1,won_value:15500},
+  {id:'cmp_me',name:'中东覆膜试样序列',status:'draft',cost:60,enrolled:8,sent:16,opened:9,clicked:4,replied:1,won_count:0,won_value:0},
+].map(c=>({
+  ...c,
+  open_rate: c.sent>0?+((c.opened/c.sent)*100).toFixed(1):0,
+  reply_rate: c.sent>0?+((c.replied/c.sent)*100).toFixed(1):0,
+  roi: c.cost>0?+(c.won_value/c.cost).toFixed(2):null,
+  profit:+((c.won_value||0)-c.cost).toFixed(2),
+}));
+
+// 来源归因种子
+const SEED_SOURCES = [
+  {source:'customs',label:'海关数据',total:14,avg_score:82,replied:2,won_count:1,won_value:23500},
+  {source:'linkedin',label:'LinkedIn',total:12,avg_score:78,replied:3,won_count:1,won_value:18000},
+  {source:'directory',label:'贸易目录',total:18,avg_score:71,replied:4,won_count:1,won_value:22000},
+  {source:'exhibition',label:'展会名单',total:10,avg_score:66,replied:1,won_count:0,won_value:0},
+  {source:'website',label:'网站询盘',total:8,avg_score:60,replied:1,won_count:0,won_value:0},
+  {source:'manual',label:'手动录入',total:4,avg_score:55,replied:0,won_count:0,won_value:0},
+].map(s=>({
+  ...s,
+  reply_rate: s.total>0?+((s.replied/s.total)*100).toFixed(1):0,
+  conversion_rate: s.total>0?+((s.won_count/s.total)*100).toFixed(1):0,
+})).sort((a,b)=>b.total-a.total);
+
+// ============ 渲染：时间趋势 ============
+let trendChart=null;
+let activeMetrics=['leads','sent','opened','replied'];
+
+function toggleMetric(el){
+  const m=el.dataset.m;
+  el.classList.toggle('on');
+  const i=activeMetrics.indexOf(m);
+  if(i>=0) activeMetrics.splice(i,1); else activeMetrics.push(m);
+  renderTrends();
+}
+
+function renderTrends(){
+  const days=parseInt(document.getElementById('daysSel').value,10);
+  const series=genTrends(days);
+  const labels=series.map(s=>s.date.slice(5)); // MM-DD
+
+  // 顶部汇总
+  const sum=(k)=>series.reduce((a,s)=>a+(s[k]||0),0);
+  const strip=[
+    {lbl:'新线索',val:sum('leads'),c:'var(--purple)'},
+    {lbl:'邮件发送',val:sum('sent'),c:'var(--blue)'},
+    {lbl:'打开',val:sum('opened'),c:'var(--teal)'},
+    {lbl:'回复',val:sum('replied'),c:'var(--coral)'},
+    {lbl:'成交',val:sum('won'),c:'var(--green)'},
+  ];
+  document.getElementById('trendMetrics').innerHTML=strip.map(m=>`
+    <div class="metric"><div class="lbl">${m.lbl}</div><div class="val" style="color:${m.c}">${m.val}</div><div class="sub2">${days} 天合计</div></div>
+  `).join('');
+
+  const datasets=activeMetrics.map(m=>({
+    label:METRIC_META[m].label,
+    data:series.map(s=>s[m]||0),
+    borderColor:METRIC_META[m].color,
+    backgroundColor:METRIC_META[m].color+'22',
+    tension:0.35, fill:false, borderWidth:2, pointRadius:2,
+  }));
+  const ctx=document.getElementById('trendChart').getContext('2d');
+  if(trendChart) trendChart.destroy();
+  trendChart=new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      scales:{
+        y:{beginAtZero:true,grid:{color:'#eee'},ticks:{precision:0}},
+        x:{grid:{display:false},ticks:{maxTicksLimit:12}},
+      },
+      plugins:{legend:{labels:{font:{size:12}}}},
+    },
+  });
+}
+
+// ============ 渲染：ROI ============
+function fmtMoney(n){ return '$'+(n||0).toLocaleString('en-US'); }
+function roiTag(r){
+  if(r===null) return '<span class="tag tag-neutral">无成本</span>';
+  if(r>=3) return `<span class="tag tag-good">${r}×</span>`;
+  if(r>=1) return `<span class="tag tag-neutral">${r}×</span>`;
+  return `<span class="tag tag-bad">${r}×</span>`;
+}
+
+function renderRoi(){
+  const data=SEED_ROI;
+  // 汇总
+  const t=data.reduce((a,d)=>({
+    cost:a.cost+d.cost,sent:a.sent+d.sent,opened:a.opened+d.opened,
+    replied:a.replied+d.replied,won_count:a.won_count+d.won_count,won_value:a.won_value+d.won_value,
+  }),{cost:0,sent:0,opened:0,replied:0,won_count:0,won_value:0});
+  const tRoi=t.cost>0?+(t.won_value/t.cost).toFixed(2):null;
+  document.getElementById('roiMetrics').innerHTML=[
+    {lbl:'总投入',val:fmtMoney(t.cost),c:'var(--coral)'},
+    {lbl:'邮件发送',val:t.sent,c:'var(--blue)'},
+    {lbl:'回复',val:t.replied,c:'var(--amber)'},
+    {lbl:'归因成交额',val:fmtMoney(t.won_value),c:'var(--green)'},
+    {lbl:'整体 ROI',val:tRoi!==null?tRoi+'×':'—',c:'var(--purple)'},
+  ].map(m=>`<div class="metric"><div class="lbl">${m.lbl}</div><div class="val" style="color:${m.c}">${m.val}</div></div>`).join('');
+
+  const rows=data.map(d=>`
+    <tr>
+      <td class="l">${d.name}</td>
+      <td><span class="tag ${d.status==='active'?'tag-good':'tag-neutral'}">${d.status}</span></td>
+      <td>${fmtMoney(d.cost)}</td>
+      <td>${d.enrolled}</td>
+      <td>${d.sent}</td>
+      <td>${d.opened} <span class="tiny">(${d.open_rate}%)</span></td>
+      <td>${d.replied} <span class="tiny">(${d.reply_rate}%)</span></td>
+      <td>${d.won_count}</td>
+      <td style="color:var(--green);font-weight:600">${fmtMoney(d.won_value)}</td>
+      <td>${roiTag(d.roi)}</td>
+      <td style="color:${d.profit>=0?'var(--green)':'var(--red)'}">${fmtMoney(d.profit)}</td>
+    </tr>`).join('');
+  document.getElementById('roiTable').innerHTML=`
+    <thead><tr>
+      <th class="l">序列</th><th>状态</th><th>成本</th><th>入组</th><th>发送</th><th>打开</th><th>回复</th><th>成交数</th><th>成交额</th><th>ROI</th><th>净利</th>
+    </tr></thead>
+    <tbody>${rows}
+    <tr class="totals">
+      <td class="l">合计</td><td></td><td>${fmtMoney(t.cost)}</td><td></td><td>${t.sent}</td><td>${t.opened}</td><td>${t.replied}</td><td>${t.won_count}</td><td style="color:var(--green)">${fmtMoney(t.won_value)}</td><td>${roiTag(tRoi)}</td><td style="color:${(t.won_value-t.cost)>=0?'var(--green)':'var(--red)'}">${fmtMoney(t.won_value-t.cost)}</td>
+    </tr></tbody>`;
+}
+
+// ============ 渲染：来源归因 ============
+let sourceChart=null;
+const SRC_COLORS=['#534AB7','#378ADD','#1D9E75','#EF9F27','#D85A30','#a8a29e'];
+function renderSources(){
+  const data=SEED_SOURCES;
+  // 条形图（按线索量）
+  const ctx=document.getElementById('sourceChart').getContext('2d');
+  if(sourceChart) sourceChart.destroy();
+  sourceChart=new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:data.map(s=>s.label),
+      datasets:[{
+        label:'线索量',
+        data:data.map(s=>s.total),
+        backgroundColor:data.map((_,i)=>SRC_COLORS[i%SRC_COLORS.length]),
+        borderRadius:5,
+      }],
+    },
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{beginAtZero:true,grid:{color:'#eee'},ticks:{precision:0}},y:{grid:{display:false}}},
+    },
+  });
+
+  const rows=data.map(s=>`
+    <tr>
+      <td class="l">${s.label} <span class="tiny">${s.source}</span></td>
+      <td>${s.total}</td>
+      <td>${s.avg_score}</td>
+      <td>${s.replied}</td>
+      <td>${s.reply_rate}%</td>
+      <td>${s.won_count}</td>
+      <td style="color:var(--green)">${fmtMoney(s.won_value)}</td>
+      <td>${s.conversion_rate}%</td>
+    </tr>`).join('');
+  document.getElementById('sourceTable').innerHTML=`
+    <thead><tr>
+      <th class="l">来源</th><th>线索</th><th>均分</th><th>回复</th><th>回复率</th><th>成交数</th><th>成交额</th><th>转化率</th>
+    </tr></thead><tbody>${rows}</tbody>`;
+}
+
+// ============ 导航 ============
+function switchView(name){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===name));
+  ['trends','roi','sources'].forEach(v=>{
+    document.getElementById('view-'+v).style.display=(v===name?'block':'none');
+  });
+  if(name==='trends') renderTrends();
+  if(name==='roi') renderRoi();
+  if(name==='sources') renderSources();
+}
+document.querySelectorAll('.nav-item').forEach(n=>n.addEventListener('click',()=>switchView(n.dataset.view)));
+
+// --- Init ---
+renderTrends();
+</script>
+</body>
+</html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>外联自动化 · Mint Sales Phase 3</title>
+<style>
+:root {
+  --bg-page:#f5f5f4; --bg-sidebar:#fafaf9; --bg-card:#fff; --bg-hover:#f5f5f4; --bg-muted:#f5f5f4;
+  --text-primary:#1c1917; --text-secondary:#78716c; --text-tertiary:#a8a29e;
+  --border:#e7e5e4; --border-strong:#d6d3d1;
+  --purple:#534AB7; --purple-light:#EEEDFE;
+  --blue:#378ADD; --blue-light:#E6F1FB;
+  --teal:#1D9E75; --teal-light:#E1F5EE;
+  --amber:#EF9F27; --amber-light:#FAEEDA;
+  --coral:#D85A30; --coral-light:#FAECE7;
+  --green:#639922; --green-light:#EAF3DE;
+  --red:#E24B4A; --red-light:#FCEBEB;
+  --radius:10px; --radius-sm:6px; --shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; background:var(--bg-page); color:var(--text-primary); font-size:14px; }
+.app { display:flex; min-height:100vh; }
+.sidebar { width:220px; background:var(--bg-sidebar); border-right:1px solid var(--border); display:flex; flex-direction:column; position:fixed; height:100vh; z-index:10; }
+.sidebar-header { padding:20px 18px 16px; border-bottom:1px solid var(--border); }
+.sidebar-header h1 { font-size:16px; font-weight:600; color:var(--purple); display:flex; align-items:center; gap:8px; }
+.sidebar-header .sub { font-size:12px; color:var(--text-tertiary); margin-top:2px; }
+.nav { flex:1; padding:10px 8px; overflow-y:auto; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:var(--radius-sm); cursor:pointer; font-size:13px; color:var(--text-secondary); transition:all .15s; margin-bottom:2px; }
+.nav-item:hover { background:var(--bg-hover); color:var(--text-primary); }
+.nav-item.active { background:var(--purple-light); color:var(--purple); font-weight:500; }
+.sidebar-footer { padding:12px 16px; border-top:1px solid var(--border); font-size:11px; color:var(--text-tertiary); line-height:1.5; }
+.main { flex:1; margin-left:220px; padding:24px 28px; }
+.main-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; gap:14px; flex-wrap:wrap; }
+.main-header h2 { font-size:20px; font-weight:600; }
+.main-header .sub { font-size:12px; color:var(--text-tertiary); margin-top:3px; }
+.btn { padding:7px 14px; border-radius:var(--radius-sm); border:1px solid var(--border-strong); background:var(--bg-card); font-size:13px; cursor:pointer; transition:all .15s; color:var(--text-primary); display:inline-flex; align-items:center; gap:6px; }
+.btn:hover { background:var(--bg-hover); }
+.btn-primary { background:var(--purple); color:#fff; border-color:var(--purple); }
+.btn-primary:hover { background:#463d9e; }
+.btn-sm { padding:4px 10px; font-size:12px; }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+.card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; margin-bottom:16px; }
+.card-title { font-size:14px; font-weight:600; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; }
+.muted { color:var(--text-secondary); }
+.tiny { font-size:12px; color:var(--text-tertiary); }
+
+/* metrics */
+.metric-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:12px; margin-bottom:16px; }
+.metric { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:14px; text-align:center; }
+.metric .v { font-size:24px; font-weight:700; }
+.metric .l { font-size:12px; color:var(--text-secondary); margin-top:4px; }
+.metric.sent .v{color:var(--blue);} .metric.open .v{color:var(--teal);} .metric.click .v{color:var(--purple);}
+.metric.reply .v{color:var(--green);} .metric.unsub .v{color:var(--red);} .metric.rate .v{color:var(--amber);}
+
+/* campaign cards */
+.camp-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.camp-card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; cursor:pointer; transition:all .15s; border-top:3px solid var(--purple); }
+.camp-card:hover { box-shadow:var(--shadow); }
+.camp-card.active { border-color:var(--purple); box-shadow:0 0 0 2px var(--purple-light); }
+.camp-card h3 { font-size:15px; font-weight:600; margin-bottom:6px; }
+.camp-card .meta { font-size:12px; color:var(--text-secondary); }
+.badge { font-size:11px; padding:2px 8px; border-radius:10px; font-weight:500; }
+.badge.active { background:var(--green-light); color:var(--green); }
+.badge.draft { background:var(--bg-muted); color:var(--text-secondary); }
+.badge.completed { background:var(--blue-light); color:var(--blue); }
+
+/* steps editor */
+.step-row { border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px; margin-bottom:10px; background:var(--bg-muted); }
+.step-row .head { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.step-num { width:24px; height:24px; border-radius:50%; background:var(--purple); color:#fff; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; }
+.field { display:flex; flex-direction:column; gap:4px; margin-bottom:8px; }
+.field label { font-size:11px; color:var(--text-secondary); }
+.field input, .field textarea, .field select { padding:7px 9px; border:1px solid var(--border-strong); border-radius:var(--radius-sm); font-size:13px; background:#fff; width:100%; color:var(--text-primary); font-family:inherit; }
+.field textarea { min-height:84px; resize:vertical; }
+.var-chips { display:flex; gap:6px; flex-wrap:wrap; margin:6px 0; }
+.var-chip { font-size:11px; padding:2px 8px; border-radius:10px; background:var(--purple-light); color:var(--purple); cursor:pointer; }
+.var-chip:hover { background:var(--purple); color:#fff; }
+
+/* preview */
+.preview-box { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:16px; font-size:13px; line-height:1.6; }
+.preview-box .pv-subj { font-weight:600; margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+.preview-box a { color:var(--blue); }
+
+/* filters */
+.filter-bar { display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:14px; margin-bottom:16px; }
+.choice-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.choice { font-size:12px; padding:6px 10px; border:1px solid var(--border-strong); border-radius:var(--radius-sm); cursor:pointer; background:#fff; }
+.choice.on { background:var(--purple-light); border-color:var(--purple); color:var(--purple); }
+
+/* tables */
+table.mini { width:100%; border-collapse:collapse; font-size:12px; }
+table.mini th, table.mini td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--border); }
+table.mini th { color:var(--text-tertiary); font-weight:500; background:var(--bg-muted); }
+table.mini tr:hover td { background:var(--bg-hover); }
+
+/* bars */
+.bar-row { display:flex; align-items:center; gap:10px; padding:7px 0; }
+.bar-row .lbl { width:120px; font-size:12px; flex-shrink:0; }
+.bar-track { flex:1; background:var(--bg-muted); border-radius:6px; height:20px; position:relative; overflow:hidden; }
+.bar-fill { height:100%; border-radius:6px; }
+.bar-val { width:120px; text-align:right; font-size:12px; color:var(--text-secondary); flex-shrink:0; }
+.ev-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:4px; }
+.events-line { font-size:12px; color:var(--text-secondary); }
+
+/* modal */
+.modal-mask { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; z-index:100; }
+.modal-mask.show { display:flex; }
+.modal { background:#fff; border-radius:var(--radius); width:560px; max-width:92vw; max-height:84vh; overflow:auto; padding:22px; }
+.modal h3 { font-size:16px; margin-bottom:14px; }
+.modal .close { float:right; cursor:pointer; color:var(--text-tertiary); font-size:18px; }
+.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--text-primary); color:#fff; padding:10px 18px; border-radius:var(--radius-sm); font-size:13px; opacity:0; transition:opacity .25s; z-index:200; pointer-events:none; }
+.toast.show { opacity:1; }
+.inset { background:var(--bg-muted); border-radius:var(--radius-sm); padding:12px 14px; font-size:12px; color:var(--text-secondary); line-height:1.6; }
+.split { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media(max-width:1100px){ .metric-grid{grid-template-columns:repeat(3,1fr);} .camp-grid{grid-template-columns:1fr;} .split{grid-template-columns:1fr;} .choice-grid{grid-template-columns:repeat(2,1fr);} }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>📨 外联自动化</h1>
+      <div class="sub">Mint Sales · Phase 3</div>
+    </div>
+    <nav class="nav">
+      <div class="nav-item active" data-view="builder"><span>🧩</span>序列构建器</div>
+      <div class="nav-item" data-view="enroll"><span>🚀</span>入组启动</div>
+      <div class="nav-item" data-view="tracking"><span>📊</span>追踪看板</div>
+      <div class="nav-item" data-view="variables"><span>🔤</span>模板变量</div>
+      <div class="nav-item" data-view="unsub"><span>🚫</span>退订管理<span class="nav-badge" id="navUnsub">0</span></div>
+    </nav>
+    <div class="sidebar-footer">
+      引擎与 Worker (outreach.ts) 同源。<br>离线预览为前端镜像；生产调用 /api/campaigns/* 与 /api/tracking/* 端点。
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- ===== 序列构建器 ===== -->
+    <section id="view-builder">
+      <div class="main-header">
+        <div><h2>序列构建器</h2><div class="sub">设计多步邮件序列，含个性化变量与追踪</div></div>
+        <select id="builderCampaign" class="btn" style="width:auto"></select>
+      </div>
+      <div class="card">
+        <div class="card-title">序列设置</div>
+        <div class="split">
+          <div>
+            <div class="field"><label>序列名称</label><input id="cName" placeholder="例如：覆膜无纺布 Q4 开发"></div>
+            <div class="field"><label>主推产品</label><input id="cProduct" placeholder="laminated nonwoven / 覆膜无纺布"></div>
+          </div>
+          <div>
+            <div class="field"><label>目标国家(逗号分隔)</label><input id="cCountries" placeholder="USA, Germany, Japan"></div>
+            <div class="field"><label>状态</label>
+              <select id="cStatus"><option value="draft">草稿</option><option value="active">进行中</option><option value="completed">已结束</option></select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">邮件步骤
+          <button class="btn btn-sm btn-primary" onclick="addStep()">+ 添加步骤</button>
+        </div>
+        <div id="stepsEditor"></div>
+      </div>
+      <div class="split">
+        <div class="card">
+          <div class="card-title">实时预览 <span class="tiny">（用样例联系人渲染第 1 步）</span></div>
+          <div class="var-chips" id="builderVarChips"></div>
+          <div class="preview-box" id="builderPreview"><span class="muted">编辑步骤后自动预览…</span></div>
+        </div>
+        <div class="card">
+          <div class="card-title">可用模板变量</div>
+          <div class="inset" id="varLegend"></div>
+        </div>
+      </div>
+      <div style="text-align:right"><button class="btn btn-primary" onclick="saveCampaign()">💾 保存序列</button></div>
+    </section>
+
+    <!-- ===== 入组启动 ===== -->
+    <section id="view-enroll" style="display:none">
+      <div class="main-header">
+        <div><h2>入组启动</h2><div class="sub">按产品 / 国家 / 评分筛选匹配联系人，自动入组并激活序列</div></div>
+        <select id="enrollCampaign" class="btn" style="width:auto"></select>
+      </div>
+      <div class="filter-bar">
+        <div class="field"><label>产品/行业关键词</label><input id="fProduct" placeholder="hygiene / medical / wipes" style="min-width:200px"></div>
+        <div class="field"><label>最低评分</label><input id="fMinScore" type="number" value="55" style="min-width:90px"></div>
+        <div class="field" style="flex:1;min-width:280px"><label>目标国家（可多选）</label>
+          <div class="choice-grid" id="countryChoices"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">匹配预览 <span class="tiny" id="matchCount"></span></div>
+        <div id="matchList"></div>
+      </div>
+      <div style="text-align:right">
+        <button class="btn" onclick="selectAllMatches()">全选匹配</button>
+        <button class="btn btn-primary" onclick="activateSequence()">🚀 激活序列并发送第 1 步</button>
+      </div>
+    </section>
+
+    <!-- ===== 追踪看板 ===== -->
+    <section id="view-tracking" style="display:none">
+      <div class="main-header">
+        <div><h2>追踪看板</h2><div class="sub">发送 / 打开 / 点击 / 回复 / 退订与分步转化</div></div>
+        <select id="trackCampaign" class="btn" style="width:auto"></select>
+      </div>
+      <div class="metric-grid" id="metricGrid"></div>
+      <div class="card">
+        <div class="card-title">分步转化（每步 发送 / 打开 / 点击）</div>
+        <div id="stepBars"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">联系人事件明细</div>
+        <div style="overflow:auto"><table class="mini" id="eventsTable"></table></div>
+      </div>
+    </section>
+
+    <!-- ===== 模板变量 ===== -->
+    <section id="view-variables" style="display:none">
+      <div class="main-header"><div><h2>模板变量测试器</h2><div class="sub">编写带 {{变量}} 的文案，填入上下文查看渲染结果</div></div></div>
+      <div class="split">
+        <div class="card">
+          <div class="card-title">模板（支持 {{变量}} 与 {{变量|默认值}}）</div>
+          <div class="field"><label>主题</label><input id="tplSubject" value="合作机会：{{company}} 的 {{product}} 供应"></div>
+          <div class="field"><label>正文</label><textarea id="tplBody">尊敬的 {{full_name|客户}}，
+
+我是 Zibo Mint Hygiene 的 {{sender_name}}。我们专注于 {{product}}（HS {{hs_code}}），已为 {{country}} 多家企业稳定供货。
+
+看到 {{company}} 在 {{industry}} 领域的发展，希望探讨合作可能。附件为我们的产品规格，期待回复。
+
+{{unsubscribe_url}}</textarea></div>
+          <div class="var-chips" id="tplVarChips"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">上下文 JSON</div>
+          <div class="field"><textarea id="tplContext" style="min-height:200px;font-family:ui-monospace,Menlo,monospace">{
+  "full_name": "John Smith",
+  "company": "HygienePro Inc",
+  "country": "USA",
+  "industry": "母婴护理",
+  "product": "laminated nonwoven",
+  "hs_code": "5603.93",
+  "sender_name": "Mint Sales Team"
+}</textarea></div>
+          <div class="card-title" style="margin-top:8px">渲染结果</div>
+          <div class="preview-box" id="tplOutput"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 退订管理 ===== -->
+    <section id="view-unsub" style="display:none">
+      <div class="main-header"><div><h2>退订管理</h2><div class="sub">查看已退订联系人，合规恢复订阅</div></div></div>
+      <div class="card">
+        <div class="card-title">已退订联系人 <span class="tiny" id="unsubCount"></span></div>
+        <div style="overflow:auto"><table class="mini" id="unsubTable"></table></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-mask" id="modal"><div class="modal"><span class="close" onclick="closeModal()">✕</span><div id="modalBody"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+//  数据层 (离线种子；生产由 D1 提供)
+// ============================================================
+const APP_BASE = 'https://www.mint-gp.com';
+
+const CAMPAIGNS = [
+  { id:'cmp_lam', name:'覆膜无纺布 Q4 开发', product:'laminated nonwoven', countries:'USA,Germany,Japan,Mexico', status:'active' },
+  { id:'cmp_spin', name:'纺粘新客触达', product:'spunbond nonwoven', countries:'Turkey,Vietnam,Poland,Brazil', status:'active' },
+  { id:'cmp_rep', name:'老客户复购', product:'nonwoven', countries:'USA,Germany', status:'draft' },
+];
+
+const STEPS = {
+  cmp_lam: [
+    { order:1, delay:0, subject:'合作机会：{{company}} 的覆膜无纺布供应', body:'尊敬的 {{full_name|客户}}，\n\n我是 Zibo Mint Hygiene 的 {{sender_name}}。我们专业生产覆膜无纺布（HS {{hs_code}}），月产能 800 吨，已稳定供货给 {{country}} 多家卫生用品企业。\n\n看到 {{company}} 在 {{industry}} 领域的发展，希望探讨合作。附件为产品规格。\n\n{{unsubscribe_url}}' },
+    { order:2, delay:3, subject:'跟进：覆膜无纺布样品与报价', body:'{{full_name|客户}} 您好，\n\n补充一下：我们可提供 <a href="https://www.mint-gp.com/samples">免费样品</a> 与按 HS {{hs_code}} 的定制克重（20-80gsm）。方便的话我安排寄样。\n\n{{unsubscribe_url}}' },
+    { order:3, delay:7, subject:'最后跟进：期待与 {{company}} 合作', body:'{{full_name|客户}} 您好，\n\n若时间合适，我们可安排一次 15 分钟视频会议，介绍产线与客户案例。期待您的回复。\n\n{{unsubscribe_url}}' },
+  ],
+  cmp_spin: [
+    { order:1, delay:0, subject:'纺粘无纺布产能对接 {{company}}', body:'尊敬的 {{full_name|客户}}，\n\nZibo Mint Hygiene 的纺粘无纺布（SSS 结构）广用于 {{industry}}，欢迎了解我们的 <a href="https://www.mint-gp.com/products">产品目录</a>。\n\n{{unsubscribe_url}}' },
+    { order:2, delay:4, subject:'样品与 MOQ 说明', body:'{{full_name|客户}} 您好，纺粘无纺布最小起订量 1 吨，交期 15 天。需要我发送规格书吗？\n\n{{unsubscribe_url}}' },
+  ],
+  cmp_rep: [
+    { order:1, delay:0, subject:'感谢合作 — {{company}} 续单优惠', body:'{{full_name|客户}} 您好，感谢过往支持！本季度老客户享 5% 复购折扣，欢迎回复续单。\n\n{{unsubscribe_url}}' },
+  ],
+};
+
+// 联系人种子（覆膜/纺粘下游买家，覆盖多国）
+const CONTACTS = [
+  { id:'ct1', account:'HygienePro Inc', country:'USA', industry:'母婴护理', score:91, email:'john.smith@hygienepro.com', full_name:'John Smith', first_name:'John', last_name:'Smith', unsub:false },
+  { id:'ct2', account:'MediCare GmbH', country:'Germany', industry:'医疗耗材', score:88, email:'anna@medicare.de', full_name:'Anna Becker', first_name:'Anna', last_name:'Becker', unsub:false },
+  { id:'ct3', account:'Sakura Wipes', country:'Japan', industry:'擦拭布', score:84, email:'tanaka@sakura.jp', full_name:'Ken Tanaka', first_name:'Ken', last_name:'Tanaka', unsub:false },
+  { id:'ct4', account:'CleanMex', country:'Mexico', industry:'清洁用品', score:76, email:'luis@cleanmex.mx', full_name:'Luis Garcia', first_name:'Luis', last_name:'Garcia', unsub:false },
+  { id:'ct5', account:'TurkHyg', country:'Turkey', industry:'卫生用品', score:82, email:'ayse@turkhyg.com.tr', full_name:'Ayse Yilmaz', first_name:'Ayse', last_name:'Yilmaz', unsub:false },
+  { id:'ct6', account:'VinaNonwoven', country:'Vietnam', industry:'包装', score:70, email:'minh@vinanw.vn', full_name:'Minh Nguyen', first_name:'Minh', last_name:'Nguyen', unsub:false },
+  { id:'ct7', account:'PolPack', country:'Poland', industry:'农业覆盖', score:68, email:'piotr@polpack.pl', full_name:'Piotr Nowak', first_name:'Piotr', last_name:'Nowak', unsub:false },
+  { id:'ct8', account:'BrasilTex', country:'Brazil', industry:'过滤材料', score:73, email:'carla@brasiltex.com.br', full_name:'Carla Souza', first_name:'Carla', last_name:'Souza', unsub:false },
+  { id:'ct9', account:'EuroWipe', country:'Germany', industry:'工业擦拭', score:79, email:'mark@eurowipe.de', full_name:'Mark Weber', first_name:'Mark', last_name:'Weber', unsub:false },
+  { id:'ct10', account:'Nippon Filter', country:'Japan', industry:'过滤', score:86, email:'sato@nipponfilter.jp', full_name:'Yuki Sato', first_name:'Yuki', last_name:'Sato', unsub:false },
+  { id:'ct11', account:'USAMed', country:'USA', industry:'医疗', score:90, email:'emily@usamed.com', full_name:'Emily Davis', first_name:'Emily', last_name:'Davis', unsub:false },
+  { id:'ct12', account:'MexiPack', country:'Mexico', industry:'包装', score:64, email:'jorge@mexipack.mx', full_name:'Jorge Ruiz', first_name:'Jorge', last_name:'Ruiz', unsub:true },
+];
+
+// 入组关系 + 事件（用种子 RNG 生成，稳定可复现）
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+
+const ENROLLMENTS = [];
+const EVENTS = [];
+let _eid = 0;
+function ev(enr, contact, step, type){ EVENTS.push({ id:'ev'+(++_eid), enrollment_id:enr, contact_id:contact, step_id:step, event_type:type }); }
+CAMPAIGNS.forEach(c => {
+  const steps = STEPS[c.id];
+  const rng = mulberry32(c.id.length * 7 + 13);
+  CONTACTS.filter(ct => !ct.unsub && (c.id!=='cmp_rep' || ct.score>=85) && (c.id==='cmp_rep' ? ['USA','Germany'].includes(ct.country) : true)).forEach(ct => {
+    const enr = 'enr_'+c.id+'_'+ct.id;
+    ENROLLMENTS.push({ id:enr, campaign_id:c.id, contact_id:ct.id, account:ct.account, country:ct.country, full_name:ct.full_name, email:ct.email });
+    steps.forEach((s, i) => {
+      ev(enr, ct.id, c.id+'_s'+s.order, 'sent');
+      const r = rng();
+      if (r > 0.30) ev(enr, ct.id, c.id+'_s'+s.order, 'opened');
+      if (r > 0.62) ev(enr, ct.id, c.id+'_s'+s.order, 'clicked');
+      if (r > 0.90 && i===0) ev(enr, ct.id, c.id+'_s'+s.order, 'replied');
+    });
+  });
+});
+// 预置 1 个退订事件
+const unsubEnr = ENROLLMENTS[3];
+if (unsubEnr) ev(unsubEnr.id, unsubEnr.contact_id, unsubEnr.campaign_id+'_s1', 'unsubscribed');
+
+// ============================================================
+//  引擎镜像 (与 outreach.ts 一致)
+// ============================================================
+function renderTemplate(template, ctx){
+  if(!template) return '';
+  return template.replace(/\{\{\s*([\w]+)\s*(?:\|\s*([^}]+?))?\s*\}\}/g, (_m, key, fb) => {
+    const v = ctx[key];
+    if(v!==undefined && v!==null && String(v).trim()!=='') return String(v);
+    if(fb!==undefined && fb.trim()!=='') return fb.trim();
+    return '';
+  });
+}
+function buildContext(acct, contact){
+  const full = contact.full_name || ((contact.first_name||'')+' '+(contact.last_name||'')).trim();
+  return {
+    first_name: contact.first_name||'', last_name: contact.last_name||'',
+    full_name: full, company: acct, company_name: acct,
+    country: contact.country||'', industry: contact.industry||'',
+    product: contact.industry||'', product_category: contact.industry||'',
+    hs_code:'5603.93', website:'', owner:'Mint Sales',
+    sender_name:'Mint Sales Team', sender_company:'Zibo Mint Hygiene',
+    unsubscribe_url: APP_BASE+'/api/unsubscribe?e=DEMO&c='+(contact.id||'')+'&email='+encodeURIComponent(contact.email||'')
+  };
+}
+function buildTrackingUrls(e,s,c,email){
+  const b=APP_BASE.replace(/\/$/,'');
+  return {
+    open:`${b}/api/tracking/open?e=${e}&s=${s}&c=${c}`,
+    click:(u)=>`${b}/api/tracking/click?e=${e}&s=${s}&c=${c}&url=${encodeURIComponent(u)}`,
+    unsubscribe:`${b}/api/unsubscribe?e=${e}&s=${s}&c=${c}&email=${encodeURIComponent(email)}`
+  };
+}
+function wrapLinks(html, clickBuilder){
+  return html.replace(/<a\s+([^>]*?)href=(["'])(.*?)\2([^>]*)>/gi, (_m,pre,_q,href,post)=>{
+    if(!/^https?:\/\//i.test(href)) return _m;
+    return `<a ${pre}href="${clickBuilder(href)}"${post}>`;
+  });
+}
+
+// ============================================================
+//  状态 & 渲染
+// ============================================================
+const state = { campaign: CAMPAIGNS[0].id, view:'builder', draftSteps: null, selectedMatches: new Set() };
+
+function camp(id){ return CAMPAIGNS.find(c=>c.id===id); }
+function init(){
+  // 下拉
+  ['builderCampaign','enrollCampaign','trackCampaign'].forEach(sid=>{
+    const sel=document.getElementById(sid);
+    sel.innerHTML = CAMPAIGNS.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+    sel.value = state.campaign;
+    sel.onchange = ()=>{ state.campaign = sel.value; refreshAll(); };
+  });
+  buildVarChips('builderVarChips'); buildVarChips('tplVarChips');
+  renderVarLegend();
+  buildCountryChoices();
+  refreshAll();
+  renderEventsTable();
+  renderUnsub();
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    n.onclick=()=>{ document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active')); n.classList.add('active');
+      document.querySelectorAll('main section').forEach(s=>s.style.display='none');
+      document.getElementById('view-'+n.dataset.view).style.display='block';
+      state.view=n.dataset.view; if(n.dataset.view==='tracking') renderTracking(); };
+  });
+  document.getElementById('tplSubject').oninput=renderTpl;
+  document.getElementById('tplBody').oninput=renderTpl;
+  document.getElementById('tplContext').oninput=renderTpl;
+  renderTpl();
+}
+function refreshAll(){
+  if(state.view==='builder') renderBuilder();
+  if(state.view==='enroll') renderEnroll();
+  if(state.view==='tracking') renderTracking();
+  document.getElementById('navUnsub').textContent = CONTACTS.filter(c=>c.unsub).length;
+}
+function buildVarChips(id){
+  const vars=['{{full_name}}','{{company}}','{{country}}','{{industry}}','{{product}}','{{hs_code}}','{{unsubscribe_url}}'];
+  document.getElementById(id).innerHTML = vars.map(v=>`<span class="var-chip" onclick="insertVar('${id}','${v}')">${v}</span>`).join('');
+}
+function insertVar(chipId, v){
+  const map={builderVarChips:'builderPreview', tplVarChips:'tplBody'};
+  const ta=document.getElementById(map[chipId]||'tplBody');
+  ta.value = (ta.value||'') + ' ' + v;
+  if(map[chipId]==='tplBody') renderTpl();
+}
+function renderVarLegend(){
+  document.getElementById('varLegend').innerHTML =
+    '{{full_name}} 联系人姓名 (缺省"客户")<br>{{company}} 公司名<br>{{country}} 国家<br>'+
+    '{{industry}} 行业<br>{{product}} 产品类别<br>{{hs_code}} HS 编码 (默认 5603.93)<br>'+
+    '{{sender_name}} 发件人<br>{{unsubscribe_url}} 退订链接 (自动注入页脚)';
+}
+
+// --- 构建器 ---
+function renderBuilder(){
+  const c = camp(state.campaign);
+  document.getElementById('cName').value=c.name;
+  document.getElementById('cProduct').value=c.product;
+  document.getElementById('cCountries').value=c.countries;
+  document.getElementById('cStatus').value=c.status;
+  if(!state.draftSteps) state.draftSteps = JSON.parse(JSON.stringify(STEPS[c.id]||[]));
+  renderStepsEditor();
+  renderBuilderPreview();
+}
+function renderStepsEditor(){
+  const wrap=document.getElementById('stepsEditor');
+  wrap.innerHTML = state.draftSteps.map((s,i)=>`
+    <div class="step-row">
+      <div class="head"><span class="step-num">${s.order}</span><b>第 ${s.order} 步</b>
+        <span class="muted tiny">延迟 ${s.delay} 天</span>
+        <button class="btn btn-sm" style="margin-left:auto" onclick="removeStep(${i})">删除</button></div>
+      <div class="field"><label>延迟天数（距上一步）</label><input type="number" value="${s.delay}" onchange="updateStep(${i},'delay',this.value)"></div>
+      <div class="field"><label>主题</label><input value="${esc(s.subject)}" onchange="updateStep(${i},'subject',this.value)"></div>
+      <div class="field"><label>正文</label><textarea onchange="updateStep(${i},'body',this.value)">${esc(s.body)}</textarea></div>
+    </div>`).join('');
+}
+function updateStep(i,key,val){ state.draftSteps[i][key]= (key==='delay')?Number(val):val; renderBuilderPreview(); }
+function addStep(){ const n=state.draftSteps.length+1; state.draftSteps.push({order:n,delay:3,subject:'',body:''}); renderStepsEditor(); renderBuilderPreview(); }
+function removeStep(i){ state.draftSteps.splice(i,1); state.draftSteps.forEach((s,k)=>s.order=k+1); renderStepsEditor(); renderBuilderPreview(); }
+function renderBuilderPreview(){
+  const c=document.getElementById('cName').value;
+  const sample=CONTACTS[0];
+  const ctx=buildContext(c||'示例公司', sample);
+  const s=state.draftSteps[0]||{subject:'',body:''};
+  const subject=renderTemplate(s.subject, ctx);
+  const bodyRaw=renderTemplate(s.body, ctx);
+  const t=buildTrackingUrls('DEMO','DEMO',sample.id,sample.email);
+  const bodyHtml=wrapLinks(bodyRaw.replace(/\n/g,'<br>'), t.click).replace('{{unsubscribe_url}}', t.unsubscribe);
+  document.getElementById('builderPreview').innerHTML =
+    `<div class="pv-subj">${esc(subject)||'(未填写主题)'}</div><div>${bodyHtml}</div>`;
+}
+function saveCampaign(){
+  const c=camp(state.campaign);
+  c.name=document.getElementById('cName').value;
+  c.product=document.getElementById('cProduct').value;
+  c.countries=document.getElementById('cCountries').value;
+  c.status=document.getElementById('cStatus').value;
+  STEPS[c.id]=JSON.parse(JSON.stringify(state.draftSteps));
+  state.draftSteps=null;
+  toast('序列「'+c.name+'」已保存（演示：写入本地状态）');
+}
+
+// --- 入组启动 ---
+function buildCountryChoices(){
+  const countries=[...new Set(CONTACTS.map(c=>c.country))].sort();
+  document.getElementById('countryChoices').innerHTML = countries.map(co=>
+    `<div class="choice" data-co="${co}" onclick="toggleCountry(this)">${co}</div>`).join('');
+}
+function toggleCountry(el){ el.classList.toggle('on'); renderEnroll(); }
+function getFilters(){
+  const sel=document.getElementById('countryChoices');
+  const countries=[...sel.querySelectorAll('.choice.on')].map(e=>e.dataset.co);
+  return {
+    product:document.getElementById('fProduct').value.trim().toLowerCase(),
+    min_score:Number(document.getElementById('fMinScore').value||0),
+    countries
+  };
+}
+function matchedContacts(){
+  const f=getFilters();
+  return CONTACTS.filter(ct=>{
+    if(ct.unsub) return false;
+    if(f.min_score && ct.score<f.min_score) return false;
+    if(f.countries.length && !f.countries.includes(ct.country)) return false;
+    if(f.product && !(ct.industry.toLowerCase().includes(f.product) || ct.account.toLowerCase().includes(f.product))) return false;
+    return true;
+  });
+}
+function renderEnroll(){
+  const list=matchedContacts();
+  document.getElementById('matchCount').textContent = '共 '+list.length+' 位匹配';
+  document.getElementById('matchList').innerHTML = list.length? `<table class="mini"><thead><tr><th></th><th>联系人</th><th>公司</th><th>国家</th><th>行业</th><th>评分</th></tr></thead><tbody>`+
+    list.map(ct=>`<tr><td><input type="checkbox" ${state.selectedMatches.has(ct.id)?'checked':''} onchange="toggleMatch('${ct.id}',this.checked)"></td><td>${esc(ct.full_name)}</td><td>${esc(ct.account)}</td><td>${ct.country}</td><td>${ct.industry}</td><td>${ct.score}</td></tr>`).join('')+
+    `</tbody></table>` : '<div class="empty">无匹配联系人，请放宽筛选条件</div>';
+}
+function toggleMatch(id,on){ if(on) state.selectedMatches.add(id); else state.selectedMatches.delete(id); }
+function selectAllMatches(){ matchedContacts().forEach(ct=>state.selectedMatches.add(ct.id)); renderEnroll(); }
+function activateSequence(){
+  const c=camp(state.campaign);
+  const target = state.selectedMatches.size? CONTACTS.filter(ct=>state.selectedMatches.has(ct.id)) : matchedContacts();
+  let enrolled=0;
+  target.forEach(ct=>{
+    if(ct.unsub) return;
+    if(ENROLLMENTS.find(e=>e.campaign_id===c.id && e.contact_id===ct.id)) return;
+    const enr='enr_'+c.id+'_'+ct.id+'_'+Date.now();
+    ENROLLMENTS.push({id:enr,campaign_id:c.id,contact_id:ct.id,account:ct.account,country:ct.country,full_name:ct.full_name,email:ct.email});
+    // 模拟立即发送第 1 步
+    const s1=c.id+'_s1'; ev(enr, ct.id, s1, 'sent');
+    if(Math.random()>0.4) ev(enr, ct.id, s1, 'opened');
+    enrolled++;
+  });
+  c.status='active';
+  toast(`已激活「${c.name}」：入组 ${enrolled} 人，第 1 步已发送`);
+  renderTracking();
+  document.querySelector('.nav-item[data-view="tracking"]').click();
+}
+
+// --- 追踪看板 ---
+function analytics(campaignId){
+  const enrs=ENROLLMENTS.filter(e=>e.campaign_id===campaignId);
+  const enrIds=new Set(enrs.map(e=>e.id));
+  const evs=EVENTS.filter(e=>enrIds.has(e.enrollment_id));
+  const count=(t)=> new Set(evs.filter(e=>e.event_type===t).map(e=>e.contact_id)).size;
+  const sent=count('sent'), opened=count('opened'), clicked=count('clicked'), replied=count('replied'), unsub=count('unsubscribed');
+  // 分步
+  const steps=STEPS[campaignId]||[];
+  const perStep=steps.map(s=>{
+    const sid=campaignId+'_s'+s.order;
+    const se=EVENTS.filter(e=>e.step_id===sid && enrIds.has(e.enrollment_id));
+    const sc=(t)=>se.filter(e=>e.event_type===t).length;
+    const sSent=sc('sent');
+    return { order:s.order, subject:s.subject, sent:sSent, opened:sc('opened'), clicked:sc('clicked'),
+      open_rate: sSent?Math.round(sc('opened')/sSent*100):0, click_rate: sSent?Math.round(sc('clicked')/sSent*100):0 };
+  });
+  return { enrolled:enrs.length, sent, opened, clicked, replied, unsub,
+    open_rate: sent?Math.round(opened/sent*100):0, click_rate: sent?Math.round(clicked/sent*100):0,
+    reply_rate: sent?Math.round(replied/sent*100):0, unsub_rate: sent?Math.round(unsub/sent*100):0, perStep };
+}
+function renderTracking(){
+  const a=analytics(state.campaign);
+  document.getElementById('metricGrid').innerHTML = `
+    <div class="metric sent"><div class="v">${a.sent}</div><div class="l">已发送</div></div>
+    <div class="metric open"><div class="v">${a.opened}</div><div class="l">已打开 (${a.open_rate}%)</div></div>
+    <div class="metric click"><div class="v">${a.clicked}</div><div class="l">已点击 (${a.click_rate}%)</div></div>
+    <div class="metric reply"><div class="v">${a.replied}</div><div class="l">已回复 (${a.reply_rate}%)</div></div>
+    <div class="metric unsub"><div class="v">${a.unsub}</div><div class="l">退订 (${a.unsub_rate}%)</div></div>
+    <div class="metric rate"><div class="v">${a.enrolled}</div><div class="l">入组人数</div></div>`;
+  document.getElementById('stepBars').innerHTML = a.perStep.map(s=>`
+    <div class="bar-row"><div class="lbl">第 ${s.order} 步</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${Math.min(100,s.sent?100:0)}%;background:var(--blue)"></div>
+      </div><div class="bar-val">发送 ${s.sent}</div></div>
+    <div class="bar-row"><div class="lbl">↳ 打开</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${s.open_rate}%;background:var(--teal)"></div></div><div class="bar-val">${s.open_rate}%</div></div>
+    <div class="bar-row"><div class="lbl">↳ 点击</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${s.click_rate}%;background:var(--purple)"></div></div><div class="bar-val">${s.click_rate}%</div></div>
+  `).join('');
+  renderEventsTable();
+}
+function renderEventsTable(){
+  const a=analytics(state.campaign);
+  const rows=ENROLLMENTS.filter(e=>e.campaign_id===state.campaign).map(e=>{
+    const ce=EVENTS.filter(x=>x.enrollment_id===e.id);
+    const has=(t)=>ce.some(x=>x.event_type===t);
+    const dot=(t,color)=> has(t)?`<span class="ev-dot" style="background:${color}"></span>`:'<span class="ev-dot" style="background:#e7e5e4"></span>';
+    return `<tr><td>${esc(e.full_name)}</td><td>${esc(e.account)}</td><td>${e.country}</td>
+      <td class="events-line">${dot('sent','var(--blue)')}发 ${dot('opened','var(--teal)')}开 ${dot('clicked','var(--purple)')}点 ${dot('replied','var(--green)')}复 ${dot('unsubscribed','var(--red)')}退</td></tr>`;
+  }).join('');
+  const tbl=document.getElementById('eventsTable');
+  if(tbl) tbl.innerHTML = `<thead><tr><th>联系人</th><th>公司</th><th>国家</th><th>事件</th></tr></thead><tbody>${rows||'<tr><td colspan=4 class="empty">暂无</td></tr>'}</tbody>`;
+}
+
+// --- 模板测试器 ---
+function renderTpl(){
+  let ctx={};
+  try{ ctx=JSON.parse(document.getElementById('tplContext').value||'{}'); }catch(e){ ctx={}; }
+  const subject=renderTemplate(document.getElementById('tplSubject').value, ctx);
+  const bodyRaw=renderTemplate(document.getElementById('tplBody').value, ctx);
+  const t=buildTrackingUrls('DEMO','DEMO','DEMO','demo@x.com');
+  const bodyHtml=wrapLinks(bodyRaw.replace(/\n/g,'<br>'), t.click).replace('{{unsubscribe_url}}', t.unsubscribe);
+  document.getElementById('tplOutput').innerHTML = `<div class="pv-subj">${esc(subject)}</div><div>${bodyHtml}</div>`;
+}
+
+// --- 退订管理 ---
+function renderUnsub(){
+  const list=CONTACTS.filter(c=>c.unsub);
+  document.getElementById('unsubCount').textContent='共 '+list.length+' 人';
+  document.getElementById('unsubTable').innerHTML = `<thead><tr><th>联系人</th><th>邮箱</th><th>公司</th><th>退订时间</th><th></th></tr></thead><tbody>`+
+    list.map(ct=>`<tr><td>${esc(ct.full_name)}</td><td>${esc(ct.email)}</td><td>${esc(ct.account)}</td><td class="muted">演示数据</td>
+      <td><button class="btn btn-sm" onclick="restoreSub('${ct.id}')">恢复订阅</button></td></tr>`).join('')+
+    `</tbody>`;
+  document.getElementById('navUnsub').textContent=list.length;
+}
+function restoreSub(id){
+  const ct=CONTACTS.find(c=>c.id===id); if(ct){ ct.unsub=false;
+    // 移除其退订事件
+    for(let i=EVENTS.length-1;i>=0;i--){ if(EVENTS[i].event_type==='unsubscribed' && EVENTS[i].contact_id===id) EVENTS.splice(i,1); }
+    toast('已恢复 '+ct.full_name+' 的订阅'); renderUnsub(); if(state.view==='tracking') renderTracking(); }
+}
+
+// --- 工具 ---
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
+function closeModal(){ document.getElementById('modal').classList.remove('show'); }
+
+init();
+</script>
+</body>
+</html>
