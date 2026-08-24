@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>线索发现与评分 · Mint Sales</title>
+<style>
+:root {
+  --bg-page:#f5f5f4; --bg-sidebar:#fafaf9; --bg-card:#fff; --bg-hover:#f5f5f4; --bg-muted:#f5f5f4;
+  --text-primary:#1c1917; --text-secondary:#78716c; --text-tertiary:#a8a29e;
+  --border:#e7e5e4; --border-strong:#d6d3d1;
+  --purple:#534AB7; --purple-light:#EEEDFE;
+  --blue:#378ADD; --blue-light:#E6F1FB;
+  --teal:#1D9E75; --teal-light:#E1F5EE;
+  --amber:#EF9F27; --amber-light:#FAEEDA;
+  --coral:#D85A30; --coral-light:#FAECE7;
+  --green:#639922; --green-light:#EAF3DE;
+  --red:#E24B4A; --red-light:#FCEBEB;
+  --radius:10px; --radius-sm:6px; --shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; background:var(--bg-page); color:var(--text-primary); font-size:14px; }
+.app { display:flex; min-height:100vh; }
+.sidebar { width:220px; background:var(--bg-sidebar); border-right:1px solid var(--border); display:flex; flex-direction:column; position:fixed; height:100vh; z-index:10; }
+.sidebar-header { padding:20px 18px 16px; border-bottom:1px solid var(--border); }
+.sidebar-header h1 { font-size:16px; font-weight:600; color:var(--purple); display:flex; align-items:center; gap:8px; }
+.sidebar-header .sub { font-size:12px; color:var(--text-tertiary); margin-top:2px; }
+.nav { flex:1; padding:10px 8px; overflow-y:auto; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:var(--radius-sm); cursor:pointer; font-size:13px; color:var(--text-secondary); transition:all .15s; margin-bottom:2px; text-decoration:none; }
+.nav-item:hover { background:var(--bg-hover); color:var(--text-primary); }
+.nav-item.active { background:var(--purple-light); color:var(--purple); font-weight:500; }
+.sidebar-footer { padding:12px 16px; border-top:1px solid var(--border); font-size:11px; color:var(--text-tertiary); line-height:1.5; }
+.main { flex:1; margin-left:220px; padding:24px 28px; }
+.main-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+.main-header h2 { font-size:20px; font-weight:600; }
+.main-header .sub { font-size:12px; color:var(--text-tertiary); margin-top:3px; }
+.btn { padding:7px 14px; border-radius:var(--radius-sm); border:1px solid var(--border-strong); background:var(--bg-card); font-size:13px; cursor:pointer; transition:all .15s; color:var(--text-primary); display:inline-flex; align-items:center; gap:6px; }
+.btn:hover { background:var(--bg-hover); }
+.btn-primary { background:var(--purple); color:#fff; border-color:var(--purple); }
+.btn-primary:hover { background:#463d9e; }
+.btn-sm { padding:4px 10px; font-size:12px; }
+.card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; margin-bottom:16px; }
+.card-title { font-size:14px; font-weight:600; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; }
+.muted { color:var(--text-secondary); }
+.tiny { font-size:12px; color:var(--text-tertiary); }
+.inset { background:var(--bg-muted); border-radius:var(--radius-sm); padding:14px; font-size:13px; line-height:1.7; color:var(--text-secondary); }
+.metric-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
+.metric { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:14px; }
+.metric .lbl { font-size:11px; color:var(--text-secondary); margin-bottom:5px; }
+.metric .val { font-size:22px; font-weight:600; }
+.metric .sub2 { font-size:11px; color:var(--text-tertiary); margin-top:3px; }
+.controls { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+.pill { padding:5px 12px; border:1px solid var(--border-strong); border-radius:14px; font-size:12px; cursor:pointer; user-select:none; color:var(--text-secondary); background:var(--bg-card); }
+.pill.on { background:var(--purple-light); color:var(--purple); border-color:var(--purple); }
+select.ctrl { padding:6px 9px; border:1px solid var(--border-strong); border-radius:6px; font-size:13px; }
+input.ctrl { padding:6px 9px; border:1px solid var(--border-strong); border-radius:6px; font-size:13px; }
+table.tbl { width:100%; border-collapse:collapse; font-size:13px; }
+table.tbl th, table.tbl td { padding:9px 10px; text-align:right; border-bottom:1px solid var(--border); }
+table.tbl th { color:var(--text-secondary); font-weight:500; font-size:12px; text-align:right; background:var(--bg-muted); }
+table.tbl td.l, table.tbl th.l { text-align:left; }
+table.tbl tr:hover td { background:var(--bg-hover); }
+.tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; }
+.tag-A { background:var(--purple-light); color:var(--purple); font-weight:600; }
+.tag-B { background:var(--blue-light); color:var(--blue); font-weight:600; }
+.tag-C { background:var(--amber-light); color:var(--amber); }
+.tag-D { background:var(--bg-muted); color:var(--text-secondary); }
+.src { font-size:11px; color:var(--text-tertiary); }
+.modal-mask { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; z-index:50; }
+.modal-mask.show { display:flex; }
+.modal { background:var(--bg-card); border-radius:var(--radius); width:460px; max-width:92vw; padding:22px; box-shadow:0 8px 30px rgba(0,0,0,.18); }
+.modal h3 { font-size:16px; margin-bottom:16px; }
+.field { margin-bottom:12px; }
+.field label { display:block; font-size:12px; color:var(--text-secondary); margin-bottom:4px; }
+.field input, .field select { width:100%; padding:8px 10px; border:1px solid var(--border-strong); border-radius:6px; font-size:13px; }
+.modal-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:8px; }
+.err { color:var(--red); font-size:12px; margin-top:8px; }
+.loading { text-align:center; padding:30px; color:var(--text-tertiary); }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>◆ Mint Sales</h1>
+      <div class="sub">外贸销售系统</div>
+    </div>
+    <nav class="nav">
+      <a class="nav-item" href="./analytics.html">📊 数据分析</a>
+      <a class="nav-item active" href="./prospecting.html">🔍 线索发现</a>
+      <a class="nav-item" href="./outreach.html">✉️ 外联序列</a>
+    </nav>
+    <div class="sidebar-footer">
+      数据来源：mintgroup-sales (D1)<br>实时接口 · 只读 + 写入
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="main-header">
+      <div>
+        <h2>线索发现与评分</h2>
+        <div class="sub">按评分分级管理潜在客户，支持国家 / 来源筛选与新建线索</div>
+      </div>
+      <button class="btn btn-primary" id="newBtn">+ 新建线索</button>
+    </div>
+
+    <div class="metric-strip" id="metricStrip">
+      <div class="metric"><div class="lbl">线索总数</div><div class="val" id="mTotal">–</div><div class="sub2">accounts</div></div>
+      <div class="metric"><div class="lbl">A 级（≥80）</div><div class="val" id="mA" style="color:var(--purple)">–</div><div class="sub2">优先攻坚</div></div>
+      <div class="metric"><div class="lbl">B 级（65-79）</div><div class="val" id="mB" style="color:var(--blue)">–</div><div class="sub2">重点跟进</div></div>
+      <div class="metric"><div class="lbl">平均评分</div><div class="val" id="mAvg">–</div><div class="sub2">全库均值</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">筛选</div>
+      <div class="controls">
+        <input class="ctrl" id="qInput" placeholder="搜索公司 / 联系人 / 邮箱" style="width:220px">
+        <select class="ctrl" id="countrySel"><option value="">全部国家</option></select>
+        <select class="ctrl" id="sourceSel"><option value="">全部来源</option></select>
+        <span class="pill" data-tier="" id="tierAll">全部</span>
+        <span class="pill" data-tier="A" id="tierA">A 级</span>
+        <span class="pill" data-tier="B" id="tierB">B 级</span>
+        <span class="pill" data-tier="C" id="tierC">C 级</span>
+        <span class="pill" data-tier="D" id="tierD">D 级</span>
+        <button class="btn btn-sm" id="refreshBtn">刷新</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">线索列表 <span class="tiny" id="countHint"></span></div>
+      <div id="listBox"><div class="loading">加载中…</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">评分模型说明</div>
+      <div class="inset" id="modelBox">加载中…</div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-mask" id="modal">
+  <div class="modal">
+    <h3>新建线索</h3>
+    <div class="field"><label>公司名称 *</label><input id="f_company" placeholder="如 Acme Hygiene GmbH"></div>
+    <div class="field"><label>国家</label><input id="f_country" placeholder="如 Germany"></div>
+    <div class="field"><label>国家代码</label><input id="f_code" placeholder="如 DE"></div>
+    <div class="field"><label>行业</label><input id="f_industry" placeholder="如 hygiene"></div>
+    <div class="field"><label>网站</label><input id="f_website" placeholder="https://..."></div>
+    <div class="field"><label>线索评分 (0-100)</label><input id="f_score" type="number" min="0" max="100" value="60"></div>
+    <div class="field"><label>来源</label>
+      <select id="f_source">
+        <option value="src_manual">手动录入</option>
+        <option value="src_directory">贸易目录</option>
+        <option value="src_linkedin">LinkedIn</option>
+        <option value="src_customs">海关数据</option>
+        <option value="src_exhibition">展会名单</option>
+        <option value="src_website">网站询盘</option>
+      </select>
+    </div>
+    <div class="err" id="formErr"></div>
+    <div class="modal-actions">
+      <button class="btn" id="cancelBtn">取消</button>
+      <button class="btn btn-primary" id="saveBtn">保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API='/api/sales';
+const KEY='6c9aa264c91c7a0c5a9847c59e48271536dda8806cdf1b0ebbcc724e38ec7e80';
+const SRC_LABELS={src_manual:'手动录入',src_directory:'贸易目录',src_linkedin:'LinkedIn',src_customs:'海关数据',src_exhibition:'展会名单',src_website:'网站询盘'};
+const tierOf=s=>{s=Number(s)||0; if(s>=80)return'A'; if(s>=65)return'B'; if(s>=50)return'C'; return'D';};
+
+let state={q:'',country:'',source:'',tier:''};
+
+async function api(path,opts={}){
+  const r=await fetch(API+path,{...opts,headers:{'x-api-key':KEY,'Content-Type':'application/json',...opts.headers}});
+  if(!r.ok){ const t=await r.text(); throw new Error('HTTP '+r.status+' '+t.slice(0,120)); }
+  return r.json();
+}
+
+function buildList(accounts){
+  if(!accounts.length){ return '<div class="loading">暂无线索，点击右上角「新建线索」添加</div>'; }
+  const rows=accounts.map(a=>{
+    const t=tierOf(a.lead_score);
+    const src=SRC_LABELS[a.source]||a.source||'–';
+    return `<tr>
+      <td class="l"><strong>${esc(a.company_name)}</strong><div class="src">${a.website?esc(a.website):''}</div></td>
+      <td class="l">${esc(a.country||'–')}</td>
+      <td class="l"><span class="src">${src}</span></td>
+      <td><span class="tag tag-${t}">${t}</span></td>
+      <td><strong>${a.lead_score||0}</strong></td>
+      <td class="l muted">${a.industry||'–'}</td>
+      <td class="l">${(a.created_at||'').slice(0,10)}</td>
+    </tr>`;
+  }).join('');
+  return `<table class="tbl"><thead><tr>
+    <th class="l">公司</th><th class="l">国家</th><th class="l">来源</th>
+    <th>分级</th><th>评分</th><th class="l">行业</th><th class="l">创建</th>
+  </tr></thead><tbody>${rows}</tbody></table>`;
+}
+
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+async function render(){
+  const box=document.getElementById('listBox');
+  box.innerHTML='<div class="loading">加载中…</div>';
+  try{
+    let path='/accounts?limit=200';
+    if(state.country) path+='&country='+encodeURIComponent(state.country);
+    if(state.source) path+='&source='+encodeURIComponent(state.source);
+    if(state.q) path+='&q='+encodeURIComponent(state.q);
+    const {data}=await api(path);
+    let list=data||[];
+    if(state.tier) list=list.filter(a=>tierOf(a.lead_score)===state.tier);
+
+    // 指标
+    const scored=list.filter(a=>a.lead_score!=null);
+    const avg=scored.length?Math.round(scored.reduce((s,a)=>s+(Number(a.lead_score)||0),0)/scored.length):0;
+    document.getElementById('mTotal').textContent=list.length;
+    document.getElementById('mA').textContent=list.filter(a=>tierOf(a.lead_score)==='A').length;
+    document.getElementById('mB').textContent=list.filter(a=>tierOf(a.lead_score)==='B').length;
+    document.getElementById('mAvg').textContent=avg;
+    document.getElementById('countHint').textContent=`共 ${list.length} 条`;
+    box.innerHTML=buildList(list);
+  }catch(e){
+    box.innerHTML='<div class="err">加载失败：'+esc(e.message)+'</div>';
+  }
+}
+
+async function loadFilters(){
+  try{
+    const {data}=await api('/accounts?limit=200');
+    const countries=[...new Set((data||[]).map(a=>a.country).filter(Boolean))].sort();
+    const sources=[...new Set((data||[]).map(a=>a.source).filter(Boolean))];
+    const cSel=document.getElementById('countrySel');
+    countries.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;cSel.appendChild(o);});
+    const sSel=document.getElementById('sourceSel');
+    sources.forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=SRC_LABELS[s]||s;sSel.appendChild(o);});
+  }catch(e){/* 忽略筛选加载失败 */}
+}
+
+async function loadModel(){
+  try{
+    const m=await api('/prospecting/scoring-model');
+    const weights=(m.weights||[]).map(w=>`${w.label}（${w.max}分）`).join('、');
+    const tiers=Object.entries(m.tiers||{}).map(([k,v])=>`${k}级：${v}`).join('　');
+    document.getElementById('modelBox').innerHTML=
+      `<strong>评分维度：</strong>${weights}<br>`+
+      `<strong>目标市场：</strong>${(m.target_countries||[]).join('、')}<br>`+
+      `<strong>目标产品：</strong>${(m.target_products||[]).join('、')}<br>`+
+      `<strong>分级标准：</strong>${tiers}`;
+  }catch(e){
+    document.getElementById('modelBox').innerHTML='<span class="err">模型说明加载失败</span>';
+  }
+}
+
+// 事件
+document.getElementById('qInput').addEventListener('input',e=>{state.q=e.target.value; render();});
+document.getElementById('countrySel').addEventListener('change',e=>{state.country=e.target.value; render();});
+document.getElementById('sourceSel').addEventListener('change',e=>{state.source=e.target.value; render();});
+document.querySelectorAll('.pill[data-tier]').forEach(p=>{
+  p.addEventListener('click',()=>{
+    document.querySelectorAll('.pill[data-tier]').forEach(x=>x.classList.remove('on'));
+    p.classList.add('on'); state.tier=p.dataset.tier; render();
+  });
+});
+document.getElementById('refreshBtn').addEventListener('click',render);
+
+// 新建线索 modal
+const modal=document.getElementById('modal');
+document.getElementById('newBtn').addEventListener('click',()=>{document.getElementById('formErr').textContent='';modal.classList.add('show');});
+document.getElementById('cancelBtn').addEventListener('click',()=>modal.classList.remove('show'));
+document.getElementById('saveBtn').addEventListener('click',async()=>{
+  const company=document.getElementById('f_company').value.trim();
+  if(!company){document.getElementById('formErr').textContent='公司名称必填';return;}
+  const body={
+    company_name:company,
+    country:document.getElementById('f_country').value.trim()||null,
+    country_code:document.getElementById('f_code').value.trim()||null,
+    industry:document.getElementById('f_industry').value.trim()||null,
+    website:document.getElementById('f_website').value.trim()||null,
+    lead_score:Number(document.getElementById('f_score').value)||0,
+    source:document.getElementById('f_source').value
+  };
+  try{
+    await api('/accounts',{method:'POST',body:JSON.stringify(body)});
+    modal.classList.remove('show');
+    await render(); await loadFilters();
+  }catch(e){ document.getElementById('formErr').textContent='保存失败：'+e.message; }
+});
+
+// init
+render(); loadFilters(); loadModel();
+</script>
+</body>
+</html>

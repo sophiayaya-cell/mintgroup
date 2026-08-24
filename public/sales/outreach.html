@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>外联序列与邮件追踪 · Mint Sales</title>
+<style>
+:root {
+  --bg-page:#f5f5f4; --bg-sidebar:#fafaf9; --bg-card:#fff; --bg-hover:#f5f5f4; --bg-muted:#f5f5f4;
+  --text-primary:#1c1917; --text-secondary:#78716c; --text-tertiary:#a8a29e;
+  --border:#e7e5e4; --border-strong:#d6d3d1;
+  --purple:#534AB7; --purple-light:#EEEDFE;
+  --blue:#378ADD; --blue-light:#E6F1FB;
+  --teal:#1D9E75; --teal-light:#E1F5EE;
+  --amber:#EF9F27; --amber-light:#FAEEDA;
+  --coral:#D85A30; --coral-light:#FAECE7;
+  --green:#639922; --green-light:#EAF3DE;
+  --red:#E24B4A; --red-light:#FCEBEB;
+  --radius:10px; --radius-sm:6px; --shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; background:var(--bg-page); color:var(--text-primary); font-size:14px; }
+.app { display:flex; min-height:100vh; }
+.sidebar { width:220px; background:var(--bg-sidebar); border-right:1px solid var(--border); display:flex; flex-direction:column; position:fixed; height:100vh; z-index:10; }
+.sidebar-header { padding:20px 18px 16px; border-bottom:1px solid var(--border); }
+.sidebar-header h1 { font-size:16px; font-weight:600; color:var(--purple); display:flex; align-items:center; gap:8px; }
+.sidebar-header .sub { font-size:12px; color:var(--text-tertiary); margin-top:2px; }
+.nav { flex:1; padding:10px 8px; overflow-y:auto; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:var(--radius-sm); cursor:pointer; font-size:13px; color:var(--text-secondary); transition:all .15s; margin-bottom:2px; text-decoration:none; }
+.nav-item:hover { background:var(--bg-hover); color:var(--text-primary); }
+.nav-item.active { background:var(--purple-light); color:var(--purple); font-weight:500; }
+.sidebar-footer { padding:12px 16px; border-top:1px solid var(--border); font-size:11px; color:var(--text-tertiary); line-height:1.5; }
+.main { flex:1; margin-left:220px; padding:24px 28px; }
+.main-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+.main-header h2 { font-size:20px; font-weight:600; }
+.main-header .sub { font-size:12px; color:var(--text-tertiary); margin-top:3px; }
+.btn { padding:7px 14px; border-radius:var(--radius-sm); border:1px solid var(--border-strong); background:var(--bg-card); font-size:13px; cursor:pointer; transition:all .15s; color:var(--text-primary); display:inline-flex; align-items:center; gap:6px; }
+.btn:hover { background:var(--bg-hover); }
+.btn-primary { background:var(--purple); color:#fff; border-color:var(--purple); }
+.btn-primary:hover { background:#463d9e; }
+.btn-sm { padding:4px 10px; font-size:12px; }
+.card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; margin-bottom:16px; }
+.card-title { font-size:14px; font-weight:600; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; }
+.muted { color:var(--text-secondary); }
+.tiny { font-size:12px; color:var(--text-tertiary); }
+.inset { background:var(--bg-muted); border-radius:var(--radius-sm); padding:14px; font-size:13px; line-height:1.7; color:var(--text-secondary); }
+.metric-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
+.metric { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius); padding:14px; }
+.metric .lbl { font-size:11px; color:var(--text-secondary); margin-bottom:5px; }
+.metric .val { font-size:22px; font-weight:600; }
+.metric .sub2 { font-size:11px; color:var(--text-tertiary); margin-top:3px; }
+.card-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:16px; }
+@media(max-width:900px){.card-grid{grid-template-columns:1fr;}}
+.seq { border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; margin-bottom:12px; background:var(--bg-card); }
+.seq-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.seq-name { font-weight:600; font-size:14px; }
+.seq-stats { font-size:12px; color:var(--text-secondary); display:flex; gap:12px; flex-wrap:wrap; margin-top:6px; }
+.seq-steps { margin-top:8px; border-top:1px dashed var(--border); padding-top:8px; }
+.step { font-size:12px; color:var(--text-secondary); padding:3px 0; display:flex; gap:8px; }
+.step .n { background:var(--purple-light); color:var(--purple); border-radius:50%; width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; flex-shrink:0; }
+.tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; }
+.tag-active { background:var(--green-light); color:var(--green); }
+.tag-draft { background:var(--bg-muted); color:var(--text-secondary); }
+.tag-paused { background:var(--amber-light); color:var(--amber); }
+table.tbl { width:100%; border-collapse:collapse; font-size:13px; }
+table.tbl th, table.tbl td { padding:9px 10px; text-align:right; border-bottom:1px solid var(--border); }
+table.tbl th { color:var(--text-secondary); font-weight:500; font-size:12px; text-align:right; background:var(--bg-muted); }
+table.tbl td.l, table.tbl th.l { text-align:left; }
+table.tbl tr:hover td { background:var(--bg-hover); }
+.stage-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
+.modal-mask { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; z-index:50; }
+.modal-mask.show { display:flex; }
+.modal { background:var(--bg-card); border-radius:var(--radius); width:460px; max-width:92vw; padding:22px; box-shadow:0 8px 30px rgba(0,0,0,.18); }
+.modal h3 { font-size:16px; margin-bottom:16px; }
+.field { margin-bottom:12px; }
+.field label { display:block; font-size:12px; color:var(--text-secondary); margin-bottom:4px; }
+.field input, .field select, .field textarea { width:100%; padding:8px 10px; border:1px solid var(--border-strong); border-radius:6px; font-size:13px; }
+.field textarea { resize:vertical; min-height:60px; }
+.modal-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:8px; }
+.err { color:var(--red); font-size:12px; margin-top:8px; }
+.loading { text-align:center; padding:30px; color:var(--text-tertiary); }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>◆ Mint Sales</h1>
+      <div class="sub">外贸销售系统</div>
+    </div>
+    <nav class="nav">
+      <a class="nav-item" href="./analytics.html">📊 数据分析</a>
+      <a class="nav-item" href="./prospecting.html">🔍 线索发现</a>
+      <a class="nav-item active" href="./outreach.html">✉️ 外联序列</a>
+    </nav>
+    <div class="sidebar-footer">
+      数据来源：mintgroup-sales (D1)<br>实时接口 · 只读 + 写入
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="main-header">
+      <div>
+        <h2>外联序列与邮件追踪</h2>
+        <div class="sub">管理邮件序列、查看商机管道与待办任务</div>
+      </div>
+      <button class="btn btn-primary" id="newBtn">+ 新建序列</button>
+    </div>
+
+    <div class="metric-strip" id="metricStrip">
+      <div class="metric"><div class="lbl">序列总数</div><div class="val" id="mSeq">–</div><div class="sub2">campaigns</div></div>
+      <div class="metric"><div class="lbl">活跃序列</div><div class="val" id="mActive" style="color:var(--green)">–</div><div class="sub2">status=active</div></div>
+      <div class="metric"><div class="lbl">进行中商机</div><div class="val" id="mOpp" style="color:var(--blue)">–</div><div class="sub2">active opps</div></div>
+      <div class="metric"><div class="lbl">待办任务</div><div class="val" id="mTask" style="color:var(--amber)">–</div><div class="sub2">pending</div></div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">邮件序列 <span class="tiny" id="seqHint"></span></div>
+        <div id="seqBox"><div class="loading">加载中…</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">待办任务</div>
+        <div id="taskBox"><div class="loading">加载中…</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">商机管道</div>
+      <div id="oppBox"><div class="loading">加载中…</div></div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-mask" id="modal">
+  <div class="modal">
+    <h3>新建邮件序列</h3>
+    <div class="field"><label>序列名称 *</label><input id="f_name" placeholder="如 EU Spunbond Q3"></div>
+    <div class="field"><label>描述</label><input id="f_desc" placeholder="可选"></div>
+    <div class="field"><label>产品类别</label>
+      <select id="f_cat"><option value="laminated">laminated 覆膜</option><option value="spunbond">spunbond 纺粘</option><option value="both">both 通用</option></select>
+    </div>
+    <div class="field"><label>目标国家（逗号分隔）</label><input id="f_countries" placeholder="Germany,Poland,Spain"></div>
+    <div class="err" id="formErr"></div>
+    <div class="modal-actions">
+      <button class="btn" id="cancelBtn">取消</button>
+      <button class="btn btn-primary" id="saveBtn">保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API='/api/sales';
+const KEY='6c9aa264c91c7a0c5a9847c59e48271536dda8806cdf1b0ebbcc724e38ec7e80';
+const STAGE_COLORS={stage_new:'#378ADD',stage_contacted:'#1D9E75',stage_qualified:'#7F77DD',stage_sample:'#EF9F27',stage_negotiating:'#D85A30',stage_won:'#639922',stage_lost:'#E24B4A'};
+
+async function api(path,opts={}){
+  const r=await fetch(API+path,{...opts,headers:{'x-api-key':KEY,'Content-Type':'application/json',...opts.headers}});
+  if(!r.ok){ const t=await r.text(); throw new Error('HTTP '+r.status+' '+t.slice(0,120)); }
+  return r.json();
+}
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+async function render(){
+  try{
+    const [camps,opps,tasks]=await Promise.all([
+      api('/campaigns'), api('/opportunities'), api('/tasks?status=pending')
+    ]);
+    // 指标
+    const seqs=camps.data||[];
+    document.getElementById('mSeq').textContent=seqs.length;
+    document.getElementById('mActive').textContent=seqs.filter(c=>c.status==='active').length;
+    document.getElementById('mOpp').textContent=(opps.data||[]).length;
+    document.getElementById('mTask').textContent=(tasks.data||[]).length;
+
+    // 序列
+    document.getElementById('seqHint').textContent=`共 ${seqs.length} 个`;
+    document.getElementById('seqBox').innerHTML=seqs.length? seqs.map(c=>{
+      const steps=(c.steps||[]).map(s=>`<div class="step"><span class="n">${s.step_order}</span><span>${esc(s.subject||'(无主题)')}</span></div>`).join('');
+      const tagcls=c.status==='active'?'tag-active':(c.status==='paused'?'tag-paused':'tag-draft');
+      return `<div class="seq">
+        <div class="seq-head"><span class="seq-name">${esc(c.name)}</span><span class="tag ${tagcls}">${esc(c.status)}</span></div>
+        <div class="seq-stats">
+          <span>入组 ${c.total_enrolled||0}</span><span>回复 ${c.total_replied||0}</span><span>成交 ${c.total_won||0}</span>
+          <span>成本 $${(c.cost||0).toLocaleString()}</span>
+        </div>
+        ${steps?`<div class="seq-steps">${steps}</div>`:''}
+      </div>`;
+    }).join('') : '<div class="loading">暂无序列，点击右上角「新建序列」</div>';
+
+    // 待办
+    const tk=tasks.data||[];
+    document.getElementById('taskBox').innerHTML=tk.length? `<table class="tbl"><thead><tr><th class="l">标题</th><th class="l">关联客户</th><th>优先级</th><th>截止</th></tr></thead><tbody>`+
+      tk.map(t=>`<tr><td class="l">${esc(t.title)}</td><td class="l muted">${esc(t.company_name||'–')}</td><td>${esc(t.priority||'–')}</td><td>${esc((t.due_date||'').slice(0,10)||'–')}</td></tr>`).join('')+
+      '</tbody></table>' : '<div class="loading">暂无待办</div>';
+
+    // 商机管道
+    const op=opps.data||[];
+    op.sort((a,b)=>(Number(b.value)||0)-(Number(a.value)||0));
+    document.getElementById('oppBox').innerHTML=op.length? `<table class="tbl"><thead><tr><th class="l">商机</th><th class="l">客户</th><th class="l">阶段</th><th>金额</th><th>概率</th><th class="l">预计成交</th></tr></thead><tbody>`+
+      op.map(o=>`<tr>
+        <td class="l"><strong>${esc(o.title)}</strong></td>
+        <td class="l muted">${esc(o.company_name||'–')}</td>
+        <td class="l"><span class="stage-dot" style="background:${STAGE_COLORS[o.stage_id]||'#ccc'}"></span>${esc(o.stage_name||o.stage_id)}</td>
+        <td><strong>$${(Number(o.value)||0).toLocaleString()}</strong></td>
+        <td>${o.probability||0}%</td>
+        <td class="l muted">${(o.expected_close_date||'').slice(0,10)||'–'}</td>
+      </tr>`).join('')+
+      '</tbody></table>' : '<div class="loading">暂无商机</div>';
+
+  }catch(e){
+    document.getElementById('seqBox').innerHTML='<div class="err">加载失败：'+esc(e.message)+'</div>';
+  }
+}
+
+// 新建序列 modal
+const modal=document.getElementById('modal');
+document.getElementById('newBtn').addEventListener('click',()=>{document.getElementById('formErr').textContent='';modal.classList.add('show');});
+document.getElementById('cancelBtn').addEventListener('click',()=>modal.classList.remove('show'));
+document.getElementById('saveBtn').addEventListener('click',async()=>{
+  const name=document.getElementById('f_name').value.trim();
+  if(!name){document.getElementById('formErr').textContent='序列名称必填';return;}
+  const body={
+    name,
+    description:document.getElementById('f_desc').value.trim()||null,
+    product_category:document.getElementById('f_cat').value,
+    target_countries:document.getElementById('f_countries').value.trim()||null
+  };
+  try{
+    await api('/campaigns',{method:'POST',body:JSON.stringify(body)});
+    modal.classList.remove('show');
+    await render();
+  }catch(e){ document.getElementById('formErr').textContent='保存失败：'+e.message; }
+});
+
+render();
+</script>
+</body>
+</html>
