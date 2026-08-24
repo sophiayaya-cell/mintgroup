@@ -56,6 +56,14 @@ body { font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; backgr
 .seq-name { font-weight:600; font-size:14px; }
 .seq-stats { font-size:12px; color:var(--text-secondary); display:flex; gap:12px; flex-wrap:wrap; margin-top:6px; }
 .seq-steps { margin-top:8px; border-top:1px dashed var(--border); padding-top:8px; }
+.seq-receipt { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.seq-receipt .rc { font-size:11px; padding:2px 7px; border-radius:9px; background:var(--bg-muted); color:var(--text-secondary); }
+.seq-receipt .rc-sent { background:var(--purple-light); color:var(--purple); }
+.seq-receipt .rc-open { background:var(--blue-light); color:var(--blue); }
+.seq-receipt .rc-click { background:var(--teal-light); color:var(--teal); }
+.seq-receipt .rc-reply { background:var(--green-light); color:var(--green); }
+.seq-receipt .rc-unsub { background:var(--red-light); color:var(--red); }
+.seq-receipt.muted { background:transparent; padding:0; }
 .step { font-size:12px; color:var(--text-secondary); padding:3px 0; display:flex; gap:8px; }
 .step .n { background:var(--purple-light); color:var(--purple); border-radius:50%; width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; flex-shrink:0; }
 .tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; }
@@ -110,8 +118,8 @@ table.tbl tr:hover td { background:var(--bg-hover); }
     <div class="metric-strip" id="metricStrip">
       <div class="metric"><div class="lbl">序列总数</div><div class="val" id="mSeq">–</div><div class="sub2">campaigns</div></div>
       <div class="metric"><div class="lbl">活跃序列</div><div class="val" id="mActive" style="color:var(--green)">–</div><div class="sub2">status=active</div></div>
-      <div class="metric"><div class="lbl">进行中商机</div><div class="val" id="mOpp" style="color:var(--blue)">–</div><div class="sub2">active opps</div></div>
-      <div class="metric"><div class="lbl">待办任务</div><div class="val" id="mTask" style="color:var(--amber)">–</div><div class="sub2">pending</div></div>
+      <div class="metric"><div class="lbl">已发送邮件</div><div class="val" id="mSent" style="color:var(--purple)">–</div><div class="sub2">真实送达回执</div></div>
+      <div class="metric"><div class="lbl">已打开</div><div class="val" id="mOpen" style="color:var(--blue)">–</div><div class="sub2">打开率 / 点击率</div></div>
     </div>
 
     <div class="card-grid">
@@ -170,20 +178,44 @@ async function render(){
     const seqs=camps.data||[];
     document.getElementById('mSeq').textContent=seqs.length;
     document.getElementById('mActive').textContent=seqs.filter(c=>c.status==='active').length;
+
+    // 并发拉每个序列的真实发送回执（email_events 聚合）
+    const analyticsList = await Promise.all(seqs.map(c =>
+      api('/campaigns/'+c.id+'/analytics').then(a=>a).catch(()=>({totals:{sent:0,opened:0,clicked:0,replied:0,unsubscribed:0,open_rate:0,click_rate:0,reply_rate:0,unsub_rate:0},per_step:[]}))
+    ));
+    const totalSent = analyticsList.reduce((s,a)=>s+(a.totals?.sent||0),0);
+    const totalOpen = analyticsList.reduce((s,a)=>s+(a.totals?.opened||0),0);
+    const totalClick = analyticsList.reduce((s,a)=>s+(a.totals?.clicked||0),0);
+    document.getElementById('mSent').textContent=totalSent;
+    document.getElementById('mOpen').textContent=totalOpen + (totalSent?` · 点击 ${totalClick}`:'');
     document.getElementById('mOpp').textContent=(opps.data||[]).length;
     document.getElementById('mTask').textContent=(tasks.data||[]).length;
 
     // 序列
     document.getElementById('seqHint').textContent=`共 ${seqs.length} 个`;
-    document.getElementById('seqBox').innerHTML=seqs.length? seqs.map(c=>{
-      const steps=(c.steps||[]).map(s=>`<div class="step"><span class="n">${s.step_order}</span><span>${esc(s.subject||'(无主题)')}</span></div>`).join('');
+    document.getElementById('seqBox').innerHTML=seqs.length? seqs.map((c,i)=>{
+      const an=analyticsList[i]||{totals:{},per_step:[]};
+      const t=an.totals||{};
+      const steps=(c.steps||[]).map(s=>{
+        const ps=(an.per_step||[]).find(p=>p.step_order===s.step_order)||{};
+        const stepSent=ps.sent||0;
+        return `<div class="step"><span class="n">${s.step_order}</span><span>${esc(s.subject||'(无主题)')}</span>${stepSent?`<span class="tiny" style="margin-left:auto;color:var(--text-tertiary)">发${stepSent}·开${ps.opened||0}·点${ps.clicked||0}</span>`:''}</div>`;
+      }).join('');
       const tagcls=c.status==='active'?'tag-active':(c.status==='paused'?'tag-paused':'tag-draft');
+      const receipt = t.sent ? `<div class="seq-receipt">
+          <span class="rc rc-sent">已发 ${t.sent}</span>
+          <span class="rc rc-open">打开 ${t.opened} (${t.open_rate||0}%)</span>
+          <span class="rc rc-click">点击 ${t.clicked} (${t.click_rate||0}%)</span>
+          <span class="rc rc-reply">回复 ${t.replied} (${t.reply_rate||0}%)</span>
+          ${t.unsubscribed?`<span class="rc rc-unsub">退订 ${t.unsubscribed} (${t.unsub_rate||0}%)</span>`:''}
+        </div>` : '<div class="seq-receipt muted tiny">尚无发送记录（Resend 密钥配置后发送即产生回执）</div>';
       return `<div class="seq">
         <div class="seq-head"><span class="seq-name">${esc(c.name)}</span><span class="tag ${tagcls}">${esc(c.status)}</span></div>
         <div class="seq-stats">
           <span>入组 ${c.total_enrolled||0}</span><span>回复 ${c.total_replied||0}</span><span>成交 ${c.total_won||0}</span>
           <span>成本 $${(c.cost||0).toLocaleString()}</span>
         </div>
+        ${receipt}
         ${steps?`<div class="seq-steps">${steps}</div>`:''}
       </div>`;
     }).join('') : '<div class="loading">暂无序列，点击右上角「新建序列」</div>';

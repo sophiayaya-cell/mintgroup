@@ -147,18 +147,26 @@ function slug(s: string): string {
 }
 
 /**
- * 基于域名 + 姓名生成邮箱候选并校验。
- * 生产环境：status 应由 Hunter.io / Clearbit verify API 返回；
- * 无 API key 时进入「模拟验证」分支，按确定性哈希给出 verified/guessed/invalid，
- * 仅用于演示流程，不替代真实校验。
+ * 基于「姓名 + 域名」发现邮箱并做真实 SMTP 校验。
+ *
+ * 真实链路（默认）：调用 StartupHub 免费验证服务
+ *   POST {STARTUPHUB_BASE_URL}/api/discover-email
+ *   body: { firstName, lastName, domain }
+ *   返回 { email, all_valid: [...], checked: [{ email, isValid }] }
+ * 该服务免费、无需 API key，直接做 MX + SMTP 握手校验，给出 deliverable 结论。
+ *
+ * 离线兜底（simulate=true 或 StartupHub 不可达）：按确定性哈希给出
+ *   verified/guessed/invalid，仅用于离线演示，不替代真实校验。
  */
-export function discoverEmails(
+export async function discoverEmails(
   website: string | null,
   contacts: LeadContact[],
-  opts?: { simulate?: boolean },
-): DiscoveredEmail[] {
+  opts?: { simulate?: boolean; startuphubBaseUrl?: string },
+): Promise<DiscoveredEmail[]> {
   const domain = domainOf(website);
-  const simulate = opts?.simulate ?? true;
+  const simulate = opts?.simulate ?? false;
+  const base = opts?.startuphubBaseUrl
+    || 'https://startuphub-validator-service.onrender.com';
   const out: DiscoveredEmail[] = [];
 
   for (const ct of contacts) {
@@ -166,40 +174,67 @@ export function discoverEmails(
     const l = slug(ct.last_name);
     if (!domain || !f || !l) continue;
 
+    // 候选模式（用于兜底 / 展示 pattern）
     const candidates: Array<{ email: string; pattern: string; base: number }> = [
       { email: `${f}.${l}@${domain}`, pattern: 'first.last', base: 0.92 },
       { email: `${f[0]}${l}@${domain}`,  pattern: 'flast',      base: 0.74 },
       { email: `${f}${l}@${domain}`,      pattern: 'firstlast',  base: 0.66 },
     ];
-
-    // 选最强且格式有效的模式
     const valid = candidates.find((c) => EMAIL_RE.test(c.email)) || candidates[0];
 
-    let status: DiscoveredEmail['status'] = 'guessed';
-    let confidence = valid.base;
-    if (EMAIL_RE.test(valid.email)) {
-      if (simulate) {
-        // 确定性模拟：高管更可能验证通过，部分随机无效
+    // 离线兜底分支
+    if (simulate || !domain) {
+      let status: DiscoveredEmail['status'] = 'guessed';
+      let confidence = valid.base;
+      if (EMAIL_RE.test(valid.email)) {
         const h = hashStr(valid.email);
         if (ct.seniority === 'exec' && h % 5 !== 0) { status = 'verified'; confidence = Math.min(0.99, valid.base + 0.05); }
         else if (h % 7 === 0) { status = 'invalid'; confidence = 0; }
         else { status = 'guessed'; confidence = valid.base; }
-      }
-      // TODO(prod): const v = await fetch(`https://api.hunter.io/v2/email-verifier?email=${valid.email}&api_key=${ENV.HUNTER_API_KEY}`);
-      //         status = v.data.result; // deliverable / undeliverable / unknown
-    } else {
-      status = 'invalid';
-      confidence = 0;
+      } else { status = 'invalid'; confidence = 0; }
+      out.push({
+        contact_name: `${ct.first_name} ${ct.last_name}`,
+        title: ct.title, email: valid.email, pattern: valid.pattern,
+        status, confidence: Math.round(confidence * 100) / 100,
+      });
+      continue;
     }
 
-    out.push({
-      contact_name: `${ct.first_name} ${ct.last_name}`,
-      title: ct.title,
-      email: valid.email,
-      pattern: valid.pattern,
-      status,
-      confidence: Math.round(confidence * 100) / 100,
-    });
+    // 真实链路：StartupHub 实时发现 + SMTP 校验
+    try {
+      const res = await fetch(`${base}/api/discover-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstName: ct.first_name, lastName: ct.last_name, domain }),
+      });
+      if (!res.ok) throw new Error(`StartupHub ${res.status}`);
+      const j = (await res.json()) as {
+        email?: string;
+        all_valid?: string[];
+        checked?: Array<{ email: string; isValid: boolean }>;
+      };
+      // 取 StartupHub 返回的已验证邮箱（优先 all_valid 第一个，否则用主 email）
+      const verifiedEmail = (j.all_valid && j.all_valid[0]) || j.email || valid.email;
+      const isVerified = (j.all_valid && j.all_valid.length > 0) || j.checked?.some((c) => c.email === verifiedEmail && c.isValid) || false;
+      // 判定 pattern
+      const matched = candidates.find((c) => c.email === verifiedEmail);
+      const pattern = matched?.pattern || valid.pattern;
+      out.push({
+        contact_name: `${ct.first_name} ${ct.last_name}`,
+        title: ct.title,
+        email: verifiedEmail,
+        pattern,
+        status: isVerified ? 'verified' : 'guessed',
+        confidence: isVerified ? 0.95 : 0.6,
+      });
+    } catch {
+      // StartupHub 不可达 → 降级为兜底（标记 guessed，不阻断导入流程）
+      out.push({
+        contact_name: `${ct.first_name} ${ct.last_name}`,
+        title: ct.title, email: valid.email, pattern: valid.pattern,
+        status: 'guessed', confidence: valid.base,
+      });
+    }
   }
   return out;
 }
@@ -219,7 +254,8 @@ function genId(): string {
 
 export interface ImportEnv {
   DB: D1Database;
-  HUNTER_API_KEY?: string;
+  HUNTER_API_KEY?: string; // 预留：若日后接入 Hunter 可启用
+  STARTUPHUB_BASE_URL?: string; // 可选：覆盖 StartupHub 验证服务端点（默认免费公共服务）
 }
 
 export async function importLeadsEnhanced(
@@ -238,9 +274,9 @@ export async function importLeadsEnhanced(
 
     if (existing) { skipped++; continue; }
 
-    // 邮箱发现
-    const emails = discoverEmails(lead.website, lead.contacts, {
-      simulate: !env.HUNTER_API_KEY,
+    // 邮箱发现（真实链路：StartupHub 免费 SMTP 校验；传入 STARTUPHUB_BASE_URL 可覆盖默认端点）
+    const emails = await discoverEmails(lead.website, lead.contacts, {
+      startuphubBaseUrl: (env as Record<string, unknown>).STARTUPHUB_BASE_URL as string | undefined,
     });
 
     // 评分（用已发现邮箱）
@@ -320,11 +356,14 @@ export async function handleProspectingSearch(request: Request, env: ImportEnv):
   }
   const raw = await CONNECTORS[source](body.filters || {});
   // 搜索阶段先做邮箱发现（用于评分 email_found 因子与预览），再评分排序
-  const scored = raw.map((c) => {
-    const emails = discoverEmails(c.website, c.contacts, { simulate: !env.HUNTER_API_KEY });
+  const scored = await Promise.all(raw.map(async (c) => {
+    const emails = await discoverEmails(c.website, c.contacts, {
+      startuphubBaseUrl: (env as Record<string, unknown>).STARTUPHUB_BASE_URL as string | undefined,
+    });
     const sc = scoreLead(c, emails);
     return { ...c, score: sc.score, tier: sc.tier, breakdown: sc.breakdown, emails };
-  }).sort((a, b) => b.score - a.score);
+  }));
+  scored.sort((a, b) => b.score - a.score);
 
   // 更新来源同步时间
   await env.DB.prepare(
@@ -339,7 +378,9 @@ export async function handleProspectingSearch(request: Request, env: ImportEnv):
 
 export async function handleDiscoverEmails(request: Request): Promise<Response> {
   const body = await request.json() as { website: string | null; contacts: LeadContact[] };
-  const emails = discoverEmails(body.website, body.contacts || [], { simulate: true });
+  // 默认走真实链路；若显式带 simulate=true 则离线兜底
+  const simulate = (body as Record<string, unknown>).simulate === true;
+  const emails = await discoverEmails(body.website, body.contacts || [], { simulate });
   return json({ emails });
 }
 

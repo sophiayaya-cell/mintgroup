@@ -44,10 +44,15 @@ GITHUB_CLIENT_ID = "REPLACE_WITH_OAUTH_APP_ID"
 
 # ============================================================
 #  敏感密钥（用 wrangler secret put 设置，勿写进本文件）
-#    wrangler secret put RESEND_API_KEY      --name mintgroup-sales   # 邮件发送(Resend)
+#    wrangler secret put RESEND_API_KEY      --name mintgroup-sales   # 邮件真实发送(Resend，必填)
 #    wrangler secret put SESSION_SECRET      --name mintgroup-sales   # API 鉴权(Bearer token)
 #    wrangler secret put GITHUB_CLIENT_SECRET --name mintgroup-sales   # GitHub OAuth
-#    wrangler secret put HUNTER_API_KEY      --name mintgroup-sales   # 邮箱发现/验证(Phase 2, 可选)
+#
+#  邮箱发现/验证（Phase 2）已切换为 StartupHub 免费 SMTP 校验服务：
+#    - 默认端点已硬编码在 prospecting.ts（无需 secret、免 API key、免费）
+#    - 若想覆盖端点，可设可选 var（非 secret）：
+#        [vars]  STARTUPHUB_BASE_URL = "https://your-instance/api"
+#    - 旧 HUNTER_API_KEY 已不再使用（保留接口字段仅为向后兼容）
 #
 #  本地开发：在同目录建 .dev.vars（已被 .gitignore 忽略）写入上述键值即可被 wrangler dev 读取。
 # ============================================================

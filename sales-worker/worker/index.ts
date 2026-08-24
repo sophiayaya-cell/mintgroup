@@ -79,6 +79,7 @@ export interface Env {
   SESSION_SECRET: string;
   SALES_API_KEY?: string;
   HUNTER_API_KEY?: string;
+  STARTUPHUB_BASE_URL?: string;
   SEND_QUEUE?: {
     send(message: unknown): Promise<unknown>;
   };
@@ -332,7 +333,32 @@ async function listAccounts(env: Env, url: URL): Promise<Response> {
   params.push(String(limit), String(offset));
 
   const result = await env.DB.prepare(sql).bind(...params).all();
-  return json({ data: result.results, count: result.results.length });
+
+  // 聚合每个账户的邮箱验证状态（来自 contacts.email_status），避免前端 N+1
+  const ids = (result.results as Array<{ id: string }>).map((r) => r.id);
+  let emailStats: Record<string, { verified: number; guessed: number; invalid: number; total: number }> = {};
+  if (ids.length) {
+    const stats = await env.DB.prepare(
+      `SELECT account_id,
+              SUM(CASE WHEN email_status='verified' THEN 1 ELSE 0 END) AS verified,
+              SUM(CASE WHEN email_status='guessed' THEN 1 ELSE 0 END) AS guessed,
+              SUM(CASE WHEN email_status='invalid' THEN 1 ELSE 0 END) AS invalid,
+              COUNT(*) AS total
+       FROM contacts WHERE account_id IN (${ids.map(() => '?').join(',')})
+       GROUP BY account_id`,
+    ).bind(...ids).all();
+    for (const s of stats.results as Array<{ account_id: string; verified: unknown; guessed: unknown; invalid: unknown; total: unknown }>) {
+      emailStats[s.account_id] = {
+        verified: Number(s.verified) || 0,
+        guessed: Number(s.guessed) || 0,
+        invalid: Number(s.invalid) || 0,
+        total: Number(s.total) || 0,
+      };
+    }
+  }
+  const data = (result.results as Array<{ id: string }>).map((r) => ({ ...r, email_stats: emailStats[r.id] || { verified: 0, guessed: 0, invalid: 0, total: 0 } }));
+
+  return json({ data, count: data.length });
 }
 
 async function createAccount(request: Request, env: Env): Promise<Response> {

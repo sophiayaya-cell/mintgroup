@@ -66,7 +66,9 @@ if ($LASTEXITCODE -ne 0) {
 
 # 5. 配置 secrets（逐个交互，回车跳过）
 Write-Host "==> 步骤4/5: 配置密钥 (回车跳过某项)" -ForegroundColor Cyan
-foreach ($key in @("RESEND_API_KEY", "SESSION_SECRET", "GITHUB_CLIENT_SECRET", "HUNTER_API_KEY")) {
+# 注意：HUNTER_API_KEY 已不再需要（邮箱验证改走 StartupHub 免费服务，无需 key）。
+#       RESEND_API_KEY 必填（真实发送）；SESSION_SECRET / GITHUB_CLIENT_SECRET 按需。
+foreach ($key in @("RESEND_API_KEY", "SESSION_SECRET", "GITHUB_CLIENT_SECRET")) {
   $val = Read-Host "  $key"
   if ($val) {
     # wrangler secret put 从 stdin 读取值

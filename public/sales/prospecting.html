@@ -64,6 +64,8 @@ table.tbl tr:hover td { background:var(--bg-hover); }
 .tag-B { background:var(--blue-light); color:var(--blue); font-weight:600; }
 .tag-C { background:var(--amber-light); color:var(--amber); }
 .tag-D { background:var(--bg-muted); color:var(--text-secondary); }
+.tag-ok { background:var(--green-light,#e6f4ea); color:var(--green,#1a7f37); font-weight:600; }
+.tag-bad { background:#fdecea; color:#c5221f; font-weight:600; }
 .src { font-size:11px; color:var(--text-tertiary); }
 .modal-mask { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; z-index:50; }
 .modal-mask.show { display:flex; }
@@ -108,6 +110,7 @@ table.tbl tr:hover td { background:var(--bg-hover); }
       <div class="metric"><div class="lbl">A 级（≥80）</div><div class="val" id="mA" style="color:var(--purple)">–</div><div class="sub2">优先攻坚</div></div>
       <div class="metric"><div class="lbl">B 级（65-79）</div><div class="val" id="mB" style="color:var(--blue)">–</div><div class="sub2">重点跟进</div></div>
       <div class="metric"><div class="lbl">平均评分</div><div class="val" id="mAvg">–</div><div class="sub2">全库均值</div></div>
+      <div class="metric"><div class="lbl">已验证邮箱</div><div class="val" id="mVerified" style="color:var(--green,#1a7f37)">–</div><div class="sub2">StartupHub 实时校验</div></div>
     </div>
 
     <div class="card">
@@ -183,6 +186,10 @@ function buildList(accounts){
   const rows=accounts.map(a=>{
     const t=tierOf(a.lead_score);
     const src=SRC_LABELS[a.source]||a.source||'–';
+    const es=a.email_stats||{verified:0,guessed:0,invalid:0,total:0};
+    const verifiedBadge = es.total
+      ? `<span class="tag tag-ok">${es.verified}✓</span> <span class="muted">${es.guessed}?</span>` + (es.invalid?` <span class="tag tag-bad">${es.invalid}✗</span>`:'')
+      : '<span class="muted">–</span>';
     return `<tr>
       <td class="l"><strong>${esc(a.company_name)}</strong><div class="src">${a.website?esc(a.website):''}</div></td>
       <td class="l">${esc(a.country||'–')}</td>
@@ -190,12 +197,13 @@ function buildList(accounts){
       <td><span class="tag tag-${t}">${t}</span></td>
       <td><strong>${a.lead_score||0}</strong></td>
       <td class="l muted">${a.industry||'–'}</td>
+      <td class="l">${verifiedBadge}</td>
       <td class="l">${(a.created_at||'').slice(0,10)}</td>
     </tr>`;
   }).join('');
   return `<table class="tbl"><thead><tr>
     <th class="l">公司</th><th class="l">国家</th><th class="l">来源</th>
-    <th>分级</th><th>评分</th><th class="l">行业</th><th class="l">创建</th>
+    <th>分级</th><th>评分</th><th class="l">行业</th><th class="l">邮箱验证</th><th class="l">创建</th>
   </tr></thead><tbody>${rows}</tbody></table>`;
 }
 
@@ -220,6 +228,8 @@ async function render(){
     document.getElementById('mA').textContent=list.filter(a=>tierOf(a.lead_score)==='A').length;
     document.getElementById('mB').textContent=list.filter(a=>tierOf(a.lead_score)==='B').length;
     document.getElementById('mAvg').textContent=avg;
+    const verifiedSum=list.reduce((s,a)=>s+((a.email_stats&&a.email_stats.verified)||0),0);
+    document.getElementById('mVerified').textContent=verifiedSum;
     document.getElementById('countHint').textContent=`共 ${list.length} 条`;
     box.innerHTML=buildList(list);
   }catch(e){
