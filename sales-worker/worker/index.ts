@@ -77,6 +77,7 @@ export interface Env {
   GITHUB_CLIENT_ID: string;
   GITHUB_CLIENT_SECRET: string;
   SESSION_SECRET: string;
+  SALES_API_KEY?: string;
   HUNTER_API_KEY?: string;
   SEND_QUEUE?: {
     send(message: unknown): Promise<unknown>;
@@ -105,12 +106,16 @@ function n(v: unknown): unknown {
 
 // --- Auth middleware (简化版，复用 mintgroup-auth 模式) ---
 async function authenticate(request: Request, env: Env): Promise<boolean> {
+  // 方式 1：Bearer token（SESSION_SECRET 或 dev-token）
   const auth = request.headers.get('Authorization');
-  if (!auth || !auth.startsWith('Bearer ')) return false;
-  const token = auth.slice(7);
-  // TODO: 验证 JWT token (复用 mintgroup-auth Worker 的 GitHub OAuth 流程)
-  // 当前开发阶段简化：检查 session secret
-  return token === env.SESSION_SECRET || token === 'dev-token';
+  if (auth && auth.startsWith('Bearer ')) {
+    const token = auth.slice(7);
+    if (token === env.SESSION_SECRET || token === 'dev-token') return true;
+  }
+  // 方式 2：x-api-key（SALES_API_KEY，用于 analytics 只读接口 / 服务端调用）
+  const apiKey = request.headers.get('x-api-key');
+  if (apiKey && env.SALES_API_KEY && apiKey === env.SALES_API_KEY) return true;
+  return false;
 }
 
 // --- Route handler ---
@@ -627,25 +632,18 @@ async function analyticsTrends(env: Env, url: URL): Promise<Response> {
   const days = Math.min(Math.max(parseInt(url.searchParams.get('days') || '30', 10) || 30, 1), 365);
   // 截止日期(UTC)，与 SQLite datetime('now') 存储时区一致，做字符串比较
   const cutoff = new Date(Date.now() - (days - 1) * 86400000).toISOString().slice(0, 10);
-  // 一次性按天聚合所有指标：每行 = (date, metric, count)
-  const rows = await env.DB.prepare(
-    `SELECT date(created_at) AS d, 'leads' AS m, COUNT(*) AS c FROM accounts WHERE created_at >= ? GROUP BY d
-     UNION ALL
-     SELECT date(occurred_at), 'sent', COUNT(*) FROM email_events WHERE event_type='sent' AND occurred_at >= ? GROUP BY date(occurred_at)
-     UNION ALL
-     SELECT date(occurred_at), 'opened', COUNT(*) FROM email_events WHERE event_type='opened' AND occurred_at >= ? GROUP BY date(occurred_at)
-     UNION ALL
-     SELECT date(occurred_at), 'clicked', COUNT(*) FROM email_events WHERE event_type='clicked' AND occurred_at >= ? GROUP BY date(occurred_at)
-     UNION ALL
-     SELECT date(occurred_at), 'replied', COUNT(*) FROM email_events WHERE event_type='replied' AND occurred_at >= ? GROUP BY date(occurred_at)
-     UNION ALL
-     SELECT date(occurred_at), 'unsubscribed', COUNT(*) FROM email_events WHERE event_type='unsubscribed' AND occurred_at >= ? GROUP BY date(occurred_at)
-     UNION ALL
-     SELECT date(created_at), 'opps', COUNT(*) FROM opportunities WHERE created_at >= ? GROUP BY date(created_at)
-     UNION ALL
-     SELECT date(created_at), 'won', COUNT(*) FROM opportunities WHERE stage_id='stage_won' AND created_at >= ? GROUP BY date(created_at)
-     ORDER BY d`
-  ).bind(cutoff, cutoff, cutoff, cutoff, cutoff, cutoff, cutoff, cutoff).all();
+
+  // 各指标独立查询（避免 UNION ALL 过多触发 D1 "too many terms in compound SELECT"）
+  const queries: Array<[string, string, string]> = [
+    ['leads', `SELECT date(created_at) AS d, COUNT(*) AS c FROM accounts WHERE created_at >= ? GROUP BY d`, 'created_at'],
+    ['sent', `SELECT date(occurred_at) AS d, COUNT(*) AS c FROM email_events WHERE event_type='sent' AND occurred_at >= ? GROUP BY d`, 'occurred_at'],
+    ['opened', `SELECT date(occurred_at) AS d, COUNT(*) AS c FROM email_events WHERE event_type='opened' AND occurred_at >= ? GROUP BY d`, 'occurred_at'],
+    ['clicked', `SELECT date(occurred_at) AS d, COUNT(*) AS c FROM email_events WHERE event_type='clicked' AND occurred_at >= ? GROUP BY d`, 'occurred_at'],
+    ['replied', `SELECT date(occurred_at) AS d, COUNT(*) AS c FROM email_events WHERE event_type='replied' AND occurred_at >= ? GROUP BY d`, 'occurred_at'],
+    ['unsubscribed', `SELECT date(occurred_at) AS d, COUNT(*) AS c FROM email_events WHERE event_type='unsubscribed' AND occurred_at >= ? GROUP BY d`, 'occurred_at'],
+    ['opps', `SELECT date(created_at) AS d, COUNT(*) AS c FROM opportunities WHERE created_at >= ? GROUP BY d`, 'created_at'],
+    ['won', `SELECT date(created_at) AS d, COUNT(*) AS c FROM opportunities WHERE stage_id='stage_won' AND created_at >= ? GROUP BY d`, 'created_at'],
+  ];
 
   const metrics = ['leads', 'sent', 'opened', 'clicked', 'replied', 'unsubscribed', 'opps', 'won'] as const;
   const map: Record<string, Record<string, number>> = {};
@@ -655,11 +653,14 @@ async function analyticsTrends(env: Env, url: URL): Promise<Response> {
     const d = new Date(today.getTime() - i * 86400000).toISOString().slice(0, 10);
     map[d] = Object.fromEntries(metrics.map((m) => [m, 0]));
   }
-  for (const r of rows.results as Array<{ d?: string; m?: string; c?: number }>) {
-    if (r.d && map[r.d] && (metrics as readonly string[]).includes(r.m as string)) {
-      map[r.d][r.m as string] = r.c as number;
+
+  for (const [metric, sql] of queries) {
+    const res = await env.DB.prepare(sql).bind(cutoff).all();
+    for (const r of res.results as Array<{ d?: string; c?: number }>) {
+      if (r.d && map[r.d]) map[r.d][metric] = r.c as number;
     }
   }
+
   const series = Object.entries(map)
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([date, vals]) => ({ date, ...vals }));

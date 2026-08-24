@@ -212,6 +212,23 @@ const SEED_SOURCES = [
   conversion_rate: s.total>0?+((s.won_count/s.total)*100).toFixed(1):0,
 })).sort((a,b)=>b.total-a.total);
 
+// ============ 真实 API 接入 ============
+const SALES_API_KEY = '6c9aa264c91c7a0c5a9847c59e48271536dda8806cdf1b0ebbcc724e38ec7e80';
+const API_HEADERS = { 'x-api-key': SALES_API_KEY };
+
+// 各来源 source 键 → 中文标签
+const SRC_LABELS = {
+  src_customs:'海关数据', src_linkedin:'LinkedIn', src_directory:'贸易目录',
+  src_exhibition:'展会名单', src_website:'网站询盘', src_manual:'手动录入',
+  src_referral:'转介绍', src_ads:'广告投放', src_other:'其他',
+};
+
+async function apiGet(path){
+  const r = await fetch(path, { headers: API_HEADERS });
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  return r.json();
+}
+
 // ============ 渲染：时间趋势 ============
 let trendChart=null;
 let activeMetrics=['leads','sent','opened','replied'];
@@ -224,9 +241,16 @@ function toggleMetric(el){
   renderTrends();
 }
 
-function renderTrends(){
+async function renderTrends(){
   const days=parseInt(document.getElementById('daysSel').value,10);
-  const series=genTrends(days);
+  let series;
+  try {
+    const json = await apiGet('/api/sales/analytics/trends?days='+days);
+    series = json.series;
+  } catch(e) {
+    series = genTrends(days); // 兜底：加载失败用镜像数据
+  }
+  if(!series || !series.length) series = genTrends(days);
   const labels=series.map(s=>s.date.slice(5)); // MM-DD
 
   // 顶部汇总
@@ -275,8 +299,15 @@ function roiTag(r){
   return `<span class="tag tag-bad">${r}×</span>`;
 }
 
-function renderRoi(){
-  const data=SEED_ROI;
+async function renderRoi(){
+  let data;
+  try {
+    const json = await apiGet('/api/sales/analytics/roi');
+    data = json.data;
+  } catch(e) {
+    data = SEED_ROI; // 兜底
+  }
+  if(!data || !data.length) data = SEED_ROI;
   // 汇总
   const t=data.reduce((a,d)=>({
     cost:a.cost+d.cost,sent:a.sent+d.sent,opened:a.opened+d.opened,
@@ -318,8 +349,15 @@ function renderRoi(){
 // ============ 渲染：来源归因 ============
 let sourceChart=null;
 const SRC_COLORS=['#534AB7','#378ADD','#1D9E75','#EF9F27','#D85A30','#a8a29e'];
-function renderSources(){
-  const data=SEED_SOURCES;
+async function renderSources(){
+  let data;
+  try {
+    const json = await apiGet('/api/sales/analytics/sources');
+    data = json.data.map(s=>({ ...s, label: SRC_LABELS[s.source] || s.source }));
+  } catch(e) {
+    data = SEED_SOURCES; // 兜底
+  }
+  if(!data || !data.length) data = SEED_SOURCES;
   // 条形图（按线索量）
   const ctx=document.getElementById('sourceChart').getContext('2d');
   if(sourceChart) sourceChart.destroy();

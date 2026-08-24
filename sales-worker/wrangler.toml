@@ -21,8 +21,8 @@ routes = [
 # D1 数据库绑定
 [[d1_databases]]
 binding = "DB"
-database_name = "mint-sales-db"
-database_id = "REPLACE_WITH_YOUR_D1_ID"   # 执行 wrangler d1 create mint-sales-db 后填入
+database_name = "mintgroup-sales"
+database_id = "95615f44-21a2-4996-9268-f5fd629b0e9a"   # 执行 wrangler d1 create mint-sales-db 后填入
 
 # 定时任务: 每小时检查并发送到期邮件序列步骤
 [triggers]
