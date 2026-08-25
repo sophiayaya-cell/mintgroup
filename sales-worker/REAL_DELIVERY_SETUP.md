@@ -161,3 +161,43 @@ curl -X POST https://www.mint-gp.com/api/sales/campaigns/cmp_001/send-now \
 - **Resend 发送 403/401**：key 没设对或域名未验证 → 查 `wrangler secret list --name mintgroup-sales` 确认 RESEND_API_KEY 存在，Resend 控制台 Domain 状态为 Verified。
 - **邮件进垃圾箱**：DKIM/DMARC 未生效 → 用 <https://www.mail-tester.com> 发一封测试信看评分。
 - **StartupHub 超时**：沙箱/Cloudflare 出网被限 → `discoverEmails` 已 catch 降级，不影响导入，只是邮箱状态退化为 `guessed`。
+
+---
+
+## 六、销售工作台前端（`/sales/`）登录与托管
+
+前端页面（总览 / 线索开发 / 外联序列 / 数据分析）位于主站点仓库 `public/sales/`，
+随主站 Git 集成自动部署到 `https://www.mint-gp.com/sales/`，与主站同一源（same-origin）。
+
+### 1. 登录方式：GitHub OAuth（与官网 Decap CMS 同一 OAuth App）
+- 登录入口：`/api/sales/auth` → 跳转 GitHub 授权 → `/api/sales/callback` 换取令牌后，
+  由 Worker 签发一个 HttpOnly 的 `sales_session` 会话 Cookie（HMAC 签名，7 天过期），再 302 回 `/sales/`。
+- 此后页面以**同域 Cookie** 调用 `/api/sales/*`，前端不再硬编码任何 API Key。
+- 退出：`/api/sales/logout` 清除该 Cookie（页面右上角「退出」按钮即调用它）。
+
+### 2. 上线前必做（否则点击登录会失败）
+1. **GitHub OAuth App 增加回调地址**：
+   GitHub → Settings → Developer settings → OAuth Apps → 选 **与 Decap 同一个** App →
+   `Authorization callback URL` 追加一行 `https://www.mint-gp.com/api/sales/callback`
+   （保留原有的 `https://www.mint-gp.com/api/callback`，允许多个回调地址）。
+2. **在 `mintgroup-sales` Worker 上设置密钥**（与 Decap 用相同的 client_id / client_secret）：
+   ```bash
+   # GITHUB_CLIENT_ID 写进 sales-worker/wrangler.toml 的 [vars]（非 secret）
+   # GITHUB_CLIENT_SECRET 用 secret：
+   wrangler secret put GITHUB_CLIENT_SECRET --name mintgroup-sales
+   # 会话签名与 Bearer 鉴权都需要 SESSION_SECRET：
+   wrangler secret put SESSION_SECRET --name mintgroup-sales
+   ```
+   > `GITHUB_CLIENT_ID` 若仍是占位符 `REPLACE_WITH_OAUTH_APP_ID`，`/api/sales/auth` 会直接 500。
+   > 一键脚本 `deploy-all.ps1` 的 Step 3 会提示填入并自动写回 wrangler.toml。
+
+### 3. 本地预览 / 自测
+- 静态打开：`cd public/sales && python -m http.server 8080` → 访问 `http://localhost:8080/`
+  注意本地 `localhost` 与线上 `www.mint-gp.com` 不同源，Cookie 不会带，需先把 Worker 跑起来并改 API 基址测试。
+- 线上访问：`https://www.mint-gp.com/sales/` → 未登录会自动跳 GitHub，登录后看到真实数据。
+
+### 4. 若登录异常，按此排查
+- 点登录直接 500 → `GITHUB_CLIENT_ID` 还是占位符，或 `SESSION_SECRET` 没设。
+- 跳回 `/sales/` 后仍空白/401 → OAuth App 没加 `/api/sales/callback` 回调地址，或 `GITHUB_CLIENT_SECRET` 错。
+- 能登录但页面数据 401 → Worker 没重新 `wrangler deploy`（Cookie 校验逻辑在新代码里）。
+

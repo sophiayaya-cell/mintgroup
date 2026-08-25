@@ -169,14 +169,15 @@ table.tbl tr:hover td { background:var(--bg-hover); }
 
 <script>
 const API='/api/sales';
-const KEY='6c9aa264c91c7a0c5a9847c59e48271536dda8806cdf1b0ebbcc724e38ec7e80';
 const SRC_LABELS={src_manual:'手动录入',src_directory:'贸易目录',src_linkedin:'LinkedIn',src_customs:'海关数据',src_exhibition:'展会名单',src_website:'网站询盘'};
 const tierOf=s=>{s=Number(s)||0; if(s>=80)return'A'; if(s>=65)return'B'; if(s>=50)return'C'; return'D';};
 
 let state={q:'',country:'',source:'',tier:''};
 
+// 登录态由 auth.js 的 GitHub OAuth 会话 Cookie 提供，浏览器自动随同域 /api/sales/* 请求带上，
+// 不再在前端硬编码任何 API Key。
 async function api(path,opts={}){
-  const r=await fetch(API+path,{...opts,headers:{'x-api-key':KEY,'Content-Type':'application/json',...opts.headers}});
+  const r=await fetch(API+path,{...opts,credentials:'same-origin',headers:{'Content-Type':'application/json',...opts.headers}});
   if(!r.ok){ const t=await r.text(); throw new Error('HTTP '+r.status+' '+t.slice(0,120)); }
   return r.json();
 }
@@ -302,5 +303,6 @@ document.getElementById('saveBtn').addEventListener('click',async()=>{
 // init
 render(); loadFilters(); loadModel();
 </script>
+<script src="auth.js"></script>
 </body>
 </html>

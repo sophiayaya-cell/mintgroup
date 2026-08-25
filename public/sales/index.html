@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>销售工作台 · Mint Sales</title>
+<style>
+  :root{ --green:#0f7a4d; --green-d:#0b5e3b; --ink:#1c2b22; --muted:#6b7c72; --bg:#f4f8f5; --card:#fff; --line:#e3ece7; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:linear-gradient(120deg,var(--green),var(--green-d));color:#fff;padding:22px 28px;display:flex;align-items:center;justify-content:space-between}
+  header h1{margin:0;font-size:20px;font-weight:700;letter-spacing:.5px}
+  header .sub{opacity:.85;font-size:13px;margin-top:2px}
+  .wrap{max-width:1000px;margin:28px auto;padding:0 20px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-bottom:28px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .card .num{font-size:32px;font-weight:800;color:var(--green)}
+  .card .lbl{font-size:13px;color:var(--muted);margin-top:4px}
+  .card .sub{font-size:12px;color:var(--muted);margin-top:6px}
+  .links{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  a.tile{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;text-decoration:none;color:var(--ink);transition:.15s;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  a.tile:hover{border-color:var(--green);transform:translateY(-2px)}
+  a.tile h3{margin:0 0 6px;font-size:16px;color:var(--green)}
+  a.tile p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+  .sec-title{font-size:14px;font-weight:700;color:var(--muted);margin:0 0 12px;text-transform:uppercase;letter-spacing:.6px}
+  .err{color:#c0392b;font-size:13px;margin-top:10px}
+  footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>销售工作台</h1>
+    <div class="sub">Mint Group · 自主客户开发与外联系统</div>
+  </div>
+  <div style="font-size:13px;opacity:.9">www.mint-gp.com/sales</div>
+</header>
+
+<div class="wrap">
+  <p class="sec-title">概览（近 30 天 / 当前）</p>
+  <div class="grid" id="metrics">
+    <div class="card"><div class="num" id="m-accounts">…</div><div class="lbl">线索账户</div></div>
+    <div class="card"><div class="num" id="m-verified">…</div><div class="lbl">已验证邮箱</div></div>
+    <div class="card"><div class="num" id="m-campaigns">…</div><div class="lbl">进行中序列</div></div>
+    <div class="card"><div class="num" id="m-sent">…</div><div class="lbl">近 30 天发送</div><div class="sub" id="m-openrate"></div></div>
+  </div>
+
+  <p class="sec-title">功能模块</p>
+  <div class="links">
+    <a class="tile" href="prospecting.html">
+      <h3>线索开发</h3>
+      <p>按来源发现并评分买家，实时校验邮箱，导入到账户库。</p>
+    </a>
+    <a class="tile" href="outreach.html">
+      <h3>外联序列</h3>
+      <p>管理邮件序列、查看发送/打开/点击/回复回执与退订。</p>
+    </a>
+    <a class="tile" href="analytics.html">
+      <h3>数据分析</h3>
+      <p>趋势、漏斗、ROI 与来源归因，辅助优化开发策略。</p>
+    </a>
+  </div>
+  <div id="err" class="err"></div>
+</div>
+
+<footer>登录态由 GitHub OAuth 提供（与官网 Decap CMS 同一应用）。右上角可退出。</footer>
+
+<script>
+async function getJSON(path){
+  const r = await fetch('/api/sales'+path, { credentials:'same-origin' });
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  return r.json();
+}
+async function load(){
+  try{
+    const [acc, camp, trends] = await Promise.all([
+      getJSON('/accounts?limit=1000'),
+      getJSON('/campaigns'),
+      getJSON('/analytics/trends?days=30'),
+    ]);
+    const accounts = (acc.data||[]);
+    document.getElementById('m-accounts').textContent = accounts.length;
+    let verified = 0;
+    for(const a of accounts){ verified += (a.email_stats && a.email_stats.verified) || 0; }
+    document.getElementById('m-verified').textContent = verified;
+    const campaigns = (camp.data||camp||[]);
+    const active = campaigns.filter(c => c.status === 'active').length;
+    document.getElementById('m-campaigns').textContent = active + '/' + campaigns.length;
+    const series = (trends.series||[]);
+    let sent=0, opened=0;
+    for(const d of series){ sent += d.sent||0; opened += d.opened||0; }
+    document.getElementById('m-sent').textContent = sent;
+    if(sent>0){
+      const rate = (opened/sent*100).toFixed(1);
+      document.getElementById('m-openrate').textContent = '打开率 '+rate+'%';
+    }
+  }catch(e){
+    document.getElementById('err').textContent = '加载数据失败：'+e.message+'（若提示未授权，右上角登录后将自动刷新）';
+  }
+}
+load();
+</script>
+<script src="auth.js"></script>
+</body>
+</html>

@@ -105,6 +105,60 @@ function n(v: unknown): unknown {
   return v === undefined ? null : v;
 }
 
+// --- Cookie / 会话辅助（Dashboard GitHub OAuth 用）---
+function getCookie(request: Request, name: string): string | null {
+  const header = request.headers.get('Cookie') || '';
+  for (const c of header.split(';')) {
+    const t = c.trim();
+    if (t.startsWith(name + '=')) {
+      try { return decodeURIComponent(t.slice(name.length + 1)); } catch { return t.slice(name.length + 1); }
+    }
+  }
+  return null;
+}
+
+async function hmacHex(key: string, data: string): Promise<string> {
+  const enc = new TextEncoder();
+  const cryptoKey = await crypto.subtle.importKey(
+    'raw', enc.encode(key), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+  );
+  const sig = await crypto.subtle.sign('HMAC', cryptoKey, enc.encode(data));
+  return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+function b64urlEncode(s: string): string {
+  return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function b64urlDecode(s: string): string {
+  const pad = s.length % 4 === 0 ? '' : '='.repeat(4 - (s.length % 4));
+  return atob(s.replace(/-/g, '+').replace(/_/g, '/'));
+}
+
+// 用 SESSION_SECRET 对会话负载做 HMAC 签名，得到无状态、可自校验的会话令牌
+async function signSession(env: Env, payload: Record<string, unknown>): Promise<string> {
+  const body = b64urlEncode(JSON.stringify({ ...payload, exp: Date.now() + 7 * 86400000 }));
+  const sig = await hmacHex(env.SESSION_SECRET, body);
+  return `${body}.${sig}`;
+}
+
+async function verifySession(env: Env, cookie?: string | null): Promise<Record<string, unknown> | null> {
+  if (!cookie) return null;
+  const idx = cookie.lastIndexOf('.');
+  if (idx < 0) return null;
+  const body = cookie.slice(0, idx);
+  const sig = cookie.slice(idx + 1);
+  const expected = await hmacHex(env.SESSION_SECRET, body);
+  if (sig !== expected) return null;
+  try {
+    const data = JSON.parse(b64urlDecode(body)) as Record<string, unknown>;
+    if (typeof data.exp === 'number' && data.exp < Date.now()) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+
 // --- Auth middleware (简化版，复用 mintgroup-auth 模式) ---
 async function authenticate(request: Request, env: Env): Promise<boolean> {
   // 方式 1：Bearer token（SESSION_SECRET 或 dev-token）
@@ -116,6 +170,9 @@ async function authenticate(request: Request, env: Env): Promise<boolean> {
   // 方式 2：x-api-key（SALES_API_KEY，用于 analytics 只读接口 / 服务端调用）
   const apiKey = request.headers.get('x-api-key');
   if (apiKey && env.SALES_API_KEY && apiKey === env.SALES_API_KEY) return true;
+  // 方式 3：GitHub OAuth 登录后的会话 Cookie（HttpOnly，由 /api/sales/callback 签发）
+  const session = await verifySession(env, getCookie(request, 'sales_session'));
+  if (session) return true;
   return false;
 }
 
@@ -176,6 +233,19 @@ async function handleRequest(request: Request, env: Env): Promise<Response> {
   // 纯参考型只读端点：来源枚举，无敏感数据，公开便于健康检查/验证（无需鉴权 header）
   if (path === '/api/lead-sources' && method === 'GET') {
     return listLeadSources(env);
+  }
+
+  // --- Dashboard GitHub OAuth 登录（与 Decap CMS 共用同一个 GitHub OAuth App）---
+  // 注意：用原始 url.pathname 匹配，因为上面已把 /api/sales 归一化为 /api，
+  // 若用归一化后的 path 会与 mintgroup-auth 的 /api/auth 混淆。
+  if (url.pathname === '/api/sales/auth' && method === 'GET') {
+    return handleSalesAuth(request, env);
+  }
+  if (url.pathname === '/api/sales/callback' && method === 'GET') {
+    return handleSalesCallback(request, env);
+  }
+  if (url.pathname === '/api/sales/logout' && (method === 'GET' || method === 'POST')) {
+    return handleSalesLogout(request, env);
   }
 
   // Auth check for all other endpoints
@@ -1081,6 +1151,85 @@ async function handleManualReply(request: Request, env: Env): Promise<Response> 
   if (!email) return json({ error: 'email required' }, 400);
   const r = await recordReply(env as OutreachEnv, email, body.subject as string, body.text as string);
   return json(r);
+}
+
+// --- Dashboard GitHub OAuth 登录（与 Decap CMS 共用同一个 GitHub OAuth App）---
+// 登录流程：/api/sales/auth（跳 GitHub）→ /api/sales/callback（换 token、签发 sales_session Cookie）→ 302 回 /sales/
+async function handleSalesAuth(request: Request, env: Env): Promise<Response> {
+  if (!env.GITHUB_CLIENT_ID || env.GITHUB_CLIENT_ID === 'REPLACE_WITH_OAUTH_APP_ID' || !env.SESSION_SECRET) {
+    return new Response(
+      'Dashboard 登录未配置：请在 mintgroup-sales Worker 上设置 GITHUB_CLIENT_ID（与 Decap 同一 OAuth App）与 SESSION_SECRET',
+      { status: 500 }
+    );
+  }
+  const url = new URL(request.url);
+  const redirect = url.searchParams.get('redirect') || '/sales/';
+  const state = crypto.randomUUID();
+  const authorize = new URL('https://github.com/login/oauth/authorize');
+  authorize.searchParams.set('client_id', env.GITHUB_CLIENT_ID);
+  authorize.searchParams.set('redirect_uri', `${url.origin}/api/sales/callback`);
+  authorize.searchParams.set('scope', 'read:user'); // 仪表盘只需身份；Decap 在其自身流程里用 repo
+  authorize.searchParams.set('state', state);
+  // 把 state + 回跳地址写入 HttpOnly cookie，回调时校验（防 CSRF）
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: authorize.toString(),
+      'Set-Cookie': `sales_oauth_state=${state}.${encodeURIComponent(redirect)}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=600`,
+    },
+  });
+}
+
+async function handleSalesCallback(request: Request, env: Env): Promise<Response> {
+  const url = new URL(request.url);
+  const code = url.searchParams.get('code');
+  const state = url.searchParams.get('state');
+  const saved = getCookie(request, 'sales_oauth_state');
+  if (!code || !state || !saved || !saved.startsWith(state + '.')) {
+    return new Response('OAuth state 校验失败（疑似 CSRF 或已过期）', { status: 400 });
+  }
+  const redirect = decodeURIComponent(saved.slice(state.length + 1)) || '/sales/';
+  const tokenResp = await fetch('https://github.com/login/oauth/access_token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify({
+      client_id: env.GITHUB_CLIENT_ID,
+      client_secret: env.GITHUB_CLIENT_SECRET,
+      code,
+      redirect_uri: `${url.origin}/api/sales/callback`,
+      state,
+    }),
+  });
+  const data = (await tokenResp.json()) as Record<string, unknown>;
+  const ghToken = data.access_token as string | undefined;
+  if (!ghToken) {
+    return new Response('GitHub 令牌交换失败：' + JSON.stringify(data), { status: 400 });
+  }
+  // 取 GitHub 登录名，仅用于会话展示/绑定（非必需）
+  let login = '';
+  try {
+    const u = await fetch('https://api.github.com/user', {
+      headers: { Authorization: `Bearer ${ghToken}`, 'User-Agent': 'mint-sales' },
+    });
+    const ud = (await u.json()) as Record<string, unknown>;
+    login = (ud.login as string) || '';
+  } catch { /* 忽略，登录名仅展示用 */ }
+
+  const session = await signSession(env, { sub: login || 'github', gh: login });
+  const h = new Headers();
+  h.set('Location', redirect);
+  // 用完即焚：清除 state cookie；签发会话 cookie（7 天）
+  h.append('Set-Cookie', 'sales_oauth_state=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0');
+  h.append('Set-Cookie', `sales_session=${session}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=604800`);
+  return new Response(null, { status: 302, headers: h });
+}
+
+async function handleSalesLogout(_request: Request, _env: Env): Promise<Response> {
+  const h = new Headers();
+  h.set('Content-Type', 'application/json');
+  h.append('Set-Cookie', 'sales_session=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0');
+  h.append('Set-Cookie', 'sales_oauth_state=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0');
+  return new Response(JSON.stringify({ ok: true }), { status: 200, headers: h });
 }
 
 // --- Export ---

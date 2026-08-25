@@ -159,11 +159,11 @@ table.tbl tr:hover td { background:var(--bg-hover); }
 
 <script>
 const API='/api/sales';
-const KEY='6c9aa264c91c7a0c5a9847c59e48271536dda8806cdf1b0ebbcc724e38ec7e80';
 const STAGE_COLORS={stage_new:'#378ADD',stage_contacted:'#1D9E75',stage_qualified:'#7F77DD',stage_sample:'#EF9F27',stage_negotiating:'#D85A30',stage_won:'#639922',stage_lost:'#E24B4A'};
 
+// 登录态由 auth.js 的 GitHub OAuth 会话 Cookie 提供，浏览器自动随同域 /api/sales/* 请求带上。
 async function api(path,opts={}){
-  const r=await fetch(API+path,{...opts,headers:{'x-api-key':KEY,'Content-Type':'application/json',...opts.headers}});
+  const r=await fetch(API+path,{...opts,credentials:'same-origin',headers:{'Content-Type':'application/json',...opts.headers}});
   if(!r.ok){ const t=await r.text(); throw new Error('HTTP '+r.status+' '+t.slice(0,120)); }
   return r.json();
 }
@@ -267,5 +267,6 @@ document.getElementById('saveBtn').addEventListener('click',async()=>{
 
 render();
 </script>
+<script src="auth.js"></script>
 </body>
 </html>

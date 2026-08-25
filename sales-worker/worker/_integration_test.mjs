@@ -237,6 +237,44 @@ console.log('=== 16. send-now 测试模式 (testTo) 不污染真实买家 ===');
   const ev = db.prepare("SELECT COUNT(*) c FROM email_events WHERE event_type='sent' AND enrollment_id='e1'").get();
   check('测试模式未落 sent 事件', ev.c === 0, `(c=${ev.c})`);
 }
+// ===== 17. Dashboard GitHub OAuth 登录路由（与 Decap 同一 OAuth App）=====
+console.log('=== 17. Dashboard GitHub OAuth 登录 ===');
+async function rawCall(method, p, headers = {}) {
+  const req = new Request(BASE + p, { method, headers });
+  const res = await worker.fetch(req, env);
+  return { status: res.status, headers: res.headers, body: await res.text() };
+}
+{
+  const auth = await rawCall('GET', '/api/sales/auth?redirect=/sales/');
+  check('GET /api/sales/auth 返回 302', auth.status === 302, `(${auth.status})`);
+  const loc = auth.headers.get('Location') || '';
+  check('跳转 GitHub 授权页', loc.includes('github.com/login/oauth/authorize'), `(${loc.slice(0, 46)}...)`);
+  const sc = auth.headers.get('Set-Cookie') || '';
+  check('auth 写入 state cookie(HttpOnly)', sc.includes('sales_oauth_state=') && sc.includes('HttpOnly'), `(len=${sc.length})`);
+
+  const logout = await rawCall('GET', '/api/sales/logout');
+  check('GET /api/sales/logout 返回 200', logout.status === 200, `(${logout.status})`);
+  const lc = logout.headers.get('Set-Cookie') || '';
+  check('logout 清除 sales_session Cookie', lc.includes('sales_session=') && lc.includes('Max-Age=0'), `(${lc.slice(0, 28)}...)`);
+
+  // 用本地按 SESSION_SECRET 签名的有效会话 Cookie 访问受保护端点应 200
+  const { createHmac } = await import('node:crypto');
+  const payload = Buffer.from(JSON.stringify({ sub: 'tester', exp: Date.now() + 86400000 }))
+    .toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const sig = createHmac('sha256', 'test-session-secret').update(payload).digest('hex');
+  const cookie = payload + '.' + sig;
+  const authed = await rawCall('GET', '/api/sales/accounts?limit=1', { Cookie: 'sales_session=' + cookie });
+  check('有效会话 Cookie 访问受保护端点 200', authed.status === 200, `(${authed.status})`);
+
+  // 篡改签名的 Cookie 应被拒绝（401）
+  const badCookie = payload + '.' + 'deadbeef';
+  const bad = await rawCall('GET', '/api/sales/accounts?limit=1', { Cookie: 'sales_session=' + badCookie });
+  check('签名错误的 Cookie 被拒 401', bad.status === 401, `(${bad.status})`);
+
+  // 完全无凭证应 401
+  const none = await rawCall('GET', '/api/sales/accounts?limit=1');
+  check('无凭证访问受保护端点 401', none.status === 401, `(${none.status})`);
+}
 // 清理 bundle（测试产物，不入库；safe-delete 钩子可能拦截 rm，用 try 包住避免影响总结）
 import { rmSync } from 'node:fs';
 try { rmSync(new URL('./_bundle.mjs', import.meta.url), { force: true }); } catch { /* 忽略清理失败 */ }

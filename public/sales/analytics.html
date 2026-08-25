@@ -213,8 +213,7 @@ const SEED_SOURCES = [
 })).sort((a,b)=>b.total-a.total);
 
 // ============ 真实 API 接入 ============
-const SALES_API_KEY = '6c9aa264c91c7a0c5a9847c59e48271536dda8806cdf1b0ebbcc724e38ec7e80';
-const API_HEADERS = { 'x-api-key': SALES_API_KEY };
+// 登录态由 auth.js 的 GitHub OAuth 会话 Cookie 提供，浏览器自动随同域 /api/sales/* 请求带上。
 
 // 各来源 source 键 → 中文标签
 const SRC_LABELS = {
@@ -224,7 +223,7 @@ const SRC_LABELS = {
 };
 
 async function apiGet(path){
-  const r = await fetch(path, { headers: API_HEADERS });
+  const r = await fetch(path, { credentials: 'same-origin' });
   if(!r.ok) throw new Error('HTTP '+r.status);
   return r.json();
 }
@@ -411,5 +410,6 @@ document.querySelectorAll('.nav-item').forEach(n=>n.addEventListener('click',()=
 // --- Init ---
 renderTrends();
 </script>
+<script src="auth.js"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@
       1) git push origin main      -- Pages Git integration deploys the frontend
       2) D1 schema apply           -- idempotent (D1 already exists)
       3) wrangler secret put       -- SALES_API_KEY / RESEND_API_KEY / SESSION_SECRET / GITHUB_CLIENT_SECRET
+                                     (+ GITHUB_CLIENT_ID [vars] for dashboard GitHub login, same App as Decap)
       4) wrangler deploy           -- mintgroup-sales goes live
       5) Cloudflare DNS hint       -- manual Resend domain verification
       6) online smoke tests        -- auto curl verify endpoints return 200
@@ -67,17 +68,33 @@ Write-Host "`n==> Step 3/6: configure secrets" -ForegroundColor Cyan
 # SALES_API_KEY 必须与前端硬编码值一致（prospecting/outreach/analytics.html 中的 KEY），
 # 否则线上站点每个 x-api-key 请求都会返回 401。该值已暴露在前端源码中，故无 env 时直接用硬编码默认值。
 $SalesApiKeyDefault = "6c9aa264c91c7a0c5a9847c59e48271536dda8806cdf1b0ebbcc724e38ec7e80"
+
+# GITHUB_CLIENT_ID —— 仪表盘 GitHub 登录与官网 Decap CMS 使用【同一个】OAuth App。
+# 它是 [vars]（非 secret），直接写入 wrangler.toml；若不提供则保留现有占位符并警告。
+$GithubClientId = if ($env:GITHUB_CLIENT_ID) { $env:GITHUB_CLIENT_ID } else { $null }
+if (-not $GithubClientId) {
+  $GithubClientId = Read-Host "  GITHUB_CLIENT_ID (same OAuth App as Decap CMS; Enter to keep placeholder)"
+}
+if ($GithubClientId) {
+  $toml = Join-Path $WorkerDir "wrangler.toml"
+  (Get-Content $toml) -replace 'GITHUB_CLIENT_ID\s*=\s*"[^"]*"', "GITHUB_CLIENT_ID = `"$GithubClientId`"" | Set-Content $toml
+  Write-Host "    wrangler.toml GITHUB_CLIENT_ID updated." -ForegroundColor Gray
+} else {
+  Write-Host "    WARNING: GITHUB_CLIENT_ID 未设置，仪表盘 GitHub 登录将不可用。" -ForegroundColor Yellow
+}
+
+# SESSION_SECRET / GITHUB_CLIENT_SECRET 为仪表盘登录必需；SALES_API_KEY / RESEND_API_KEY 为发信与接口鉴权必需。
 $keys = @(
   @{ Name = "SALES_API_KEY";         Required = $true;  Val = (if ($env:SALES_API_KEY) { $env:SALES_API_KEY } else { $SalesApiKeyDefault }) },
   @{ Name = "RESEND_API_KEY";        Required = $true;  Val = $env:RESEND_API_KEY },
-  @{ Name = "SESSION_SECRET";        Required = $false; Val = $env:SESSION_SECRET },
-  @{ Name = "GITHUB_CLIENT_SECRET";  Required = $false; Val = $env:GITHUB_CLIENT_SECRET }
+  @{ Name = "SESSION_SECRET";        Required = $true;  Val = $env:SESSION_SECRET },
+  @{ Name = "GITHUB_CLIENT_SECRET";  Required = $true;  Val = $env:GITHUB_CLIENT_SECRET }
 )
 foreach ($k in $keys) {
   $v = $k.Val
   if (-not $v) {
     if ($k.Required) {
-      $v = Read-Host "  $($k.Name) (required for real sending)"
+      $v = Read-Host "  $($k.Name) (required: dashboard login / real sending)"
     } else {
       $v = Read-Host "  $($k.Name) (optional, Enter to skip)"
       if (-not $v) { continue }
@@ -86,6 +103,8 @@ foreach ($k in $keys) {
   if ($v) {
     Write-Host "    writing $($k.Name) ..." -ForegroundColor Gray
     $v | wrangler secret put $k.Name --name $WorkerName
+  } else {
+    Write-Host "    WARNING: $($k.Name) is required but empty — dashboard login / sending will fail until set." -ForegroundColor Yellow
   }
 }
 
@@ -99,8 +118,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "    Worker deployed." -ForegroundColor Green
 
 # 5. DNS hint (manual, then pause)
-Write-Host "`n==> Step 5/6: Cloudflare DNS config (manual)" -ForegroundColor Cyan
-Write-Host "  Code is live, but real email delivery also needs Resend DNS records in Cloudflare:"
+Write-Host "`n==> Step 5/6: Cloudflare DNS + GitHub OAuth App config (manual)" -ForegroundColor Cyan
+Write-Host "  (A) Real email delivery needs Resend DNS records in Cloudflare:"
 Write-Host "    1. Resend console -> Domains -> mint-gp.com -> copy the 3 records shown"
 Write-Host "       (1x SPF-TXT, 1x DMARC-TXT, 1-3x DKIM-CNAME)"
 Write-Host "    2. Cloudflare console -> mint-gp.com -> DNS -> Records -> Add record"
@@ -108,9 +127,12 @@ Write-Host "       - pick TXT or CNAME per record; strip the trailing .mint-gp.c
 Write-Host "       - DKIM CNAME must stay gray-cloud (DNS only), never orange proxy"
 Write-Host "    3. Back in Resend click Verify; turns green when done"
 Write-Host "       (details in REAL_DELIVERY_SETUP.md section 2)"
-Read-Host "  After adding DNS and Verify, press Enter to finish"
-
-Read-Host "  After adding DNS and Verify, press Enter to run online smoke tests"
+Write-Host "  (B) Dashboard GitHub login needs the callback URL registered in the OAuth App:"
+Write-Host "    GitHub -> Settings -> Developer settings -> OAuth Apps -> (与 Decap 同一应用) ->"
+Write-Host "    Authorization callback URL: add  https://www.mint-gp.com/api/sales/callback"
+Write-Host "    (multiple callback URLs are allowed; keep the existing .../api/callback too)"
+Write-Host "    GITHUB_CLIENT_ID / GITHUB_CLIENT_SECRET must be set on mintgroup-sales (Step 3)."
+Read-Host "  After adding DNS + Verify + OAuth callback URL, press Enter to run online smoke tests"
 
 # 6. online smoke tests (executed, not just printed)
 Write-Host "`n==> Step 6/6: online smoke tests" -ForegroundColor Cyan
@@ -144,9 +166,20 @@ if (-not $SalesKey) {
 }
 
 # 6.3 真实发送（需已配 RESEND_API_KEY + 域名 DNS 已 Verify）。仅打印命令，不自动发。
-Write-Host "  [3/3] real send (manual) -- requires RESEND_API_KEY + verified domain" -ForegroundColor Gray
-Write-Host "        curl -X POST $ApiBase/outreach/send-now -H 'Authorization: Bearer <SESSION_SECRET>' -H 'Content-Type: application/json' -d '{\"enrollmentId\":\"<id>\",\"testMode\":true,\"testTo\":\"you@xx.com\"}'" -ForegroundColor Gray
-Write-Host "        (SESSION_SECRET is the value you put via wrangler secret put, or dev-token for a quick test)" -ForegroundColor Gray
+Write-Host "  [3/4] real send (manual) -- requires RESEND_API_KEY + verified domain" -ForegroundColor Gray
+Write-Host "        curl -X POST $ApiBase/campaigns/[CAMPAIGN_ID]/send-now -H 'Authorization: Bearer dev-token' -H 'Content-Type: application/json' -d '{\"testTo\":\"sophia.wang@mint-gp.com\"}'" -ForegroundColor Gray
+Write-Host "        (testTo 仅发到自己邮箱做自检；去掉 testTo 才是真实群发。SESSION_SECRET 也可作 Bearer)" -ForegroundColor Gray
+
+# 6.4 仪表盘登录路由：GET /api/sales/auth 应 302 跳转到 github.com（OAuth 入口存活）
+Write-Host "  [4/4] GET /api/sales/auth (expect 302 redirect to GitHub)" -ForegroundColor Gray
+try {
+  $code = (curl.exe -s -o $null -w "%{http_code}" "$ApiBase/auth" 2>$null)
+  if ($code -eq "302") { Write-Host "        PASS ($code) -- OAuth login endpoint live" -ForegroundColor Green }
+  else { Write-Host "        FAIL ($code) -- check GITHUB_CLIENT_ID/SESSION_SECRET on mintgroup-sales" -ForegroundColor Yellow }
+} catch {
+  Write-Host "        SKIP (curl not available)" -ForegroundColor Gray
+}
 
 Write-Host "`nDeploy flow finished." -ForegroundColor Green
-Write-Host "Next (manual): add Resend DNS in Cloudflare + Verify in Resend, then real emails will deliver." -ForegroundColor Cyan
+Write-Host "Next (manual): open https://www.mint-gp.com/sales/ and log in with GitHub." -ForegroundColor Cyan
+Write-Host "If login fails: verify the OAuth App callback URL + GITHUB_CLIENT_ID/SECRET + SESSION_SECRET on mintgroup-sales." -ForegroundColor Cyan

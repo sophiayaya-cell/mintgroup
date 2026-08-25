@@ -66,6 +66,8 @@ curl -X POST https://www.mint-gp.com/api/sales/campaigns/<序列ID>/send-now \
 | 打开率长期 0 | 追踪像素被客户端拦截（正常）或 `tracking/open` 端点挂了 | 多数邮件客户端默认不加载远程图片，属正常；仍可用点击/回复率评估 |
 | StartupHub 超时导致邮箱全 guessed | 免费实例冷启动 / 出网受限 | 不影响导入，仅邮箱状态退化；量大可自建实例覆盖 `STARTUPHUB_BASE_URL` |
 | 群发后买家没收到 | 序列 `status` 非 active / `next_step_at` 未到期 / 联系人 `unsubscribed=1` / 邮箱空 | 查 `campaign_enrollments` 与 `contacts` 对应字段 |
+| 打开 `/sales/` 后被弹去 GitHub、回来仍空白/401 | OAuth App 没加 `https://www.mint-gp.com/api/sales/callback` 回调，或 `GITHUB_CLIENT_SECRET`/`SESSION_SECRET` 未设在 mintgroup-sales | 见 REAL_DELIVERY_SETUP.md 第六节；`/api/sales/auth` 返回 500 多为 `GITHUB_CLIENT_ID` 仍是占位符 |
+| 能登录但页面数据 401 | 改了登录代码却没重新 `wrangler deploy` | 重新部署 mintgroup-sales Worker |
 
 ---
 
