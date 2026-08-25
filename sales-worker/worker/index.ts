@@ -271,8 +271,19 @@ async function handleRequest(request: Request, env: Env): Promise<Response> {
   }
   const sendNowMatch = path.match(/^\/api\/campaigns\/([\w-]+)\/send-now$/);
   if (sendNowMatch && method === 'POST') {
-    const r = await sendDueSteps(env as OutreachEnv);
-    return json(r);
+    const campaignId = sendNowMatch[1];
+    let body: Record<string, unknown> = {};
+    try {
+      body = (await request.json()) as Record<string, unknown>;
+    } catch {
+      body = {};
+    }
+    const testTo =
+      typeof body.testTo === 'string' && body.testTo.trim()
+        ? (body.testTo as string).trim()
+        : undefined;
+    const r = await sendDueSteps(env as OutreachEnv, { campaignId, testTo });
+    return json({ ...r, campaign_id: campaignId });
   }
 
   // --- Analytics ---

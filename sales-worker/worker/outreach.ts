@@ -166,22 +166,26 @@ export async function sendViaResend(
     text: string;
     tracking: TrackingUrls;
     tags?: Array<{ name: string; value: string }>;
+    track?: boolean;
   }
 ): Promise<string> {
   const fromName = env.EMAIL_FROM_NAME || 'Mint Sales';
   const from = `${fromName} <${env.EMAIL_FROM}>`;
+  const track = opts.track !== false;
 
-  // 在 HTML 末尾注入打开追踪像素 + 退订链接
+  // 在 HTML 末尾注入打开追踪像素 + 退订链接（仅 track 模式；测试模式不注入，避免污染真实分析）
   let html = opts.html;
-  if (!/<img[^>]+tracking\/open/i.test(html)) {
-    html = html.replace(/<\/body>/i, `<img src="${opts.tracking.open}" width="1" height="1" alt="" style="display:none" /></body>`)
-      || html + `<img src="${opts.tracking.open}" width="1" height="1" alt="" style="display:none" />`;
-  }
-  // 退订页脚（若有 {{unsubscribe_url}} 则替换，否则追加）
-  if (html.includes('{{unsubscribe_url}}')) {
-    html = html.replace(/\{\{\s*unsubscribe_url\s*\}\}/g, opts.tracking.unsubscribe);
-  } else {
-    html += `<p style="font-size:11px;color:#999;margin-top:18px">You received this because you are in our B2B network. <a href="${opts.tracking.unsubscribe}">Unsubscribe</a></p>`;
+  if (track) {
+    if (!/<img[^>]+tracking\/open/i.test(html)) {
+      html = html.replace(/<\/body>/i, `<img src="${opts.tracking.open}" width="1" height="1" alt="" style="display:none" /></body>`)
+        || html + `<img src="${opts.tracking.open}" width="1" height="1" alt="" style="display:none" />`;
+    }
+    // 退订页脚（若有 {{unsubscribe_url}} 则替换，否则追加）
+    if (html.includes('{{unsubscribe_url}}')) {
+      html = html.replace(/\{\{\s*unsubscribe_url\s*\}\}/g, opts.tracking.unsubscribe);
+    } else {
+      html += `<p style="font-size:11px;color:#999;margin-top:18px">You received this because you are in our B2B network. <a href="${opts.tracking.unsubscribe}">Unsubscribe</a></p>`;
+    }
   }
 
   const unsubUrl = opts.tracking.unsubscribe;
@@ -199,12 +203,14 @@ export async function sendViaResend(
       text: opts.text,
       reply_to: env.EMAIL_FROM,
       tags: opts.tags || [],
-      headers: {
-        'List-Unsubscribe': `<${unsubUrl}>`,
-        'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
-        'X-Mint-Enrollment': opts.tags?.find(t => t.name === 'enrollment_id')?.value || '',
-        'X-Mint-Contact': opts.tags?.find(t => t.name === 'contact_id')?.value || '',
-      },
+      ...(track ? {
+        headers: {
+          'List-Unsubscribe': `<${unsubUrl}>`,
+          'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+          'X-Mint-Enrollment': opts.tags?.find(t => t.name === 'enrollment_id')?.value || '',
+          'X-Mint-Contact': opts.tags?.find(t => t.name === 'contact_id')?.value || '',
+        },
+      } : {}),
     }),
   });
 
@@ -227,14 +233,19 @@ const TRANSPARENT_GIF_B64 =
  * 若绑定 SEND_QUEUE，则将发送任务入队（异步）；否则直接发送。
  * 返回处理摘要。
  */
-export async function sendDueSteps(env: OutreachEnv): Promise<{
+export async function sendDueSteps(
+  env: OutreachEnv,
+  opts?: { campaignId?: string; testTo?: string }
+): Promise<{
   due: number;
   sent: number;
   errors: number;
   queued: number;
+  test?: boolean;
+  testTo?: string;
+  mode?: string;
 }> {
-  const due = await env.DB.prepare(
-    `SELECT e.id AS enrollment_id
+  let sql = `SELECT e.id AS enrollment_id
      FROM campaign_enrollments e
      JOIN contacts c ON e.contact_id = c.id
      JOIN campaign_steps cs ON cs.campaign_id = e.campaign_id AND cs.step_order = e.current_step + 1
@@ -242,12 +253,18 @@ export async function sendDueSteps(env: OutreachEnv): Promise<{
        AND c.unsubscribed = 0
        AND c.email IS NOT NULL AND c.email <> ''
        AND e.next_step_at <= datetime('now')
-       AND cs.type = 'email'
-     ORDER BY e.next_step_at ASC`
-  ).all();
+       AND cs.type = 'email'`;
+  const params: string[] = [];
+  if (opts?.campaignId) {
+    sql += ` AND e.campaign_id = ?`;
+    params.push(opts.campaignId);
+  }
+  sql += ` ORDER BY e.next_step_at ASC`;
+  const due = await env.DB.prepare(sql).bind(...params).all();
 
   const ids = (due.results as Array<Record<string, unknown>>).map(r => r.enrollment_id as string);
   let sent = 0, errors = 0, queued = 0;
+  const testTo = opts?.testTo?.trim();
 
   for (const enrollmentId of ids) {
     if (env.SEND_QUEUE) {
@@ -259,14 +276,31 @@ export async function sendDueSteps(env: OutreachEnv): Promise<{
       queued++;
     } else {
       try {
-        await processSendByEnrollment(env, enrollmentId);
+        if (testTo) {
+          await processTestSend(env, enrollmentId, testTo);
+        } else {
+          await processSendByEnrollment(env, enrollmentId);
+        }
         sent++;
       } catch {
         errors++;
       }
     }
   }
-  return { due: ids.length, sent, errors, queued };
+  const r: { due: number; sent: number; errors: number; queued: number; test?: boolean; testTo?: string; mode?: string } = {
+    due: ids.length,
+    sent,
+    errors,
+    queued,
+  };
+  if (testTo) {
+    r.test = true;
+    r.testTo = testTo;
+    r.mode = 'test';
+  } else {
+    r.mode = 'production';
+  }
+  return r;
 }
 
 /** 按 enrollment 查询其当前待发步骤并发送（供 cron 与 Queue 消费共用） */
@@ -306,8 +340,18 @@ export async function processSendByEnrollment(env: OutreachEnv, enrollmentId: st
 /**
  * 单次发送：从 DB 取上下文→渲染→发 Resend→记录事件→推进步骤。
  */
-export async function processSend(env: OutreachEnv, target: SendTarget): Promise<void> {
-  // 取最新上下文
+const EMPTY_TRACKING: TrackingUrls = { open: '', click: () => '', unsubscribe: '' };
+
+/**
+ * 渲染模板并真正发送（不含事件记录/步骤推进），供真实发送与测试模式共用。
+ * track=true 注入打开像素/退订并带 List-Unsubscribe 头；测试模式传 false，
+ * 只发到指定邮箱、且不污染真实买家的打开率/退订统计。
+ */
+async function renderAndDeliver(
+  env: OutreachEnv,
+  target: SendTarget,
+  track = true
+): Promise<{ messageId: string; subject: string }> {
   const account = await env.DB.prepare('SELECT * FROM accounts WHERE id = ?')
     .bind(target.accountId).first() as Record<string, unknown> | null;
   const contact = await env.DB.prepare('SELECT * FROM contacts WHERE id = ?')
@@ -326,8 +370,10 @@ export async function processSend(env: OutreachEnv, target: SendTarget): Promise
   }
   const text = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
-  const tracking = buildTrackingUrls(env, target.enrollmentId, target.stepId, target.contactId, target.to);
-  const htmlTracked = wrapLinksWithTracking(html, tracking.click);
+  const tracking = track
+    ? buildTrackingUrls(env, target.enrollmentId, target.stepId, target.contactId, target.to)
+    : EMPTY_TRACKING;
+  const htmlTracked = track ? wrapLinksWithTracking(html, tracking.click) : html;
 
   const messageId = await sendViaResend(env, {
     to: target.to,
@@ -336,12 +382,17 @@ export async function processSend(env: OutreachEnv, target: SendTarget): Promise
     text,
     tracking,
     tags: [
-      { name: 'campaign_id', value: account ? '' : '' }, // 占位，下方覆盖
       { name: 'enrollment_id', value: target.enrollmentId },
       { name: 'contact_id', value: target.contactId },
       { name: 'step_order', value: String(target.stepOrder) },
     ],
+    track,
   });
+  return { messageId, subject };
+}
+
+export async function processSend(env: OutreachEnv, target: SendTarget): Promise<void> {
+  const { messageId, subject } = await renderAndDeliver(env, target, true);
 
   // 记录 sent 事件
   await env.DB.prepare(
@@ -372,6 +423,47 @@ export async function processSend(env: OutreachEnv, target: SendTarget): Promise
        WHERE id = ?`
     ).bind(target.enrollmentId).run();
   }
+}
+
+/**
+ * 测试模式发送：把到期步骤渲染后只发到 testTo，不记录事件、不推进序列，
+ * 真实买家的状态与打开率统计完全不受影响。用于上线自检发送/渲染/送达。
+ */
+export async function processTestSend(
+  env: OutreachEnv,
+  enrollmentId: string,
+  testTo: string
+): Promise<boolean> {
+  const it = await env.DB.prepare(
+    `SELECT e.id AS enrollment_id, e.campaign_id, e.contact_id, e.account_id,
+            c.full_name, c.email, a.company_name,
+            cs.id AS step_id, cs.step_order, cs.subject, cs.body
+     FROM campaign_enrollments e
+     JOIN contacts c ON e.contact_id = c.id
+     JOIN accounts a ON e.account_id = a.id
+     JOIN campaign_steps cs ON cs.campaign_id = e.campaign_id AND cs.step_order = e.current_step + 1
+     WHERE e.id = ? AND e.status = 'active' AND c.unsubscribed = 0
+       AND c.email IS NOT NULL AND c.email <> ''
+       AND cs.type = 'email'`
+  ).bind(enrollmentId).first() as Record<string, unknown> | null;
+
+  if (!it) return false;
+
+  const target: SendTarget = {
+    enrollmentId: it.enrollment_id as string,
+    contactId: it.contact_id as string,
+    accountId: it.account_id as string,
+    stepId: it.step_id as string,
+    stepOrder: Number(it.step_order),
+    to: testTo,
+    fullName: (it.full_name as string) || '',
+    companyName: it.company_name as string,
+    subject: (it.subject as string) || '',
+    body: (it.body as string) || '',
+    context: {},
+  };
+  await renderAndDeliver(env, target, false);
+  return true;
 }
 
 function genId(): string {

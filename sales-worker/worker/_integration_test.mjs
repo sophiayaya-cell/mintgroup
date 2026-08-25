@@ -207,6 +207,36 @@ console.log('=== 15. Phase 4: analytics/sources ===');
   const customs = (d || []).find(x => x.source === 'customs');
   check('含 customs 来源 (导入测试产生)', !!customs, `(found=${!!customs})`);
 }
+console.log('=== 16. send-now 测试模式 (testTo) 不污染真实买家 ===');
+{
+  // 准备：让种子入组 e1 成为"到期待发"
+  db.prepare("UPDATE campaign_enrollments SET next_step_at = datetime('now','-1 hour'), current_step = 0, status='active' WHERE id='e1'").run();
+  // 拦截 Resend：记录实际收件人，避免真实外发
+  const realFetch = globalThis.fetch;
+  let resendTo = null, resendCalls = 0;
+  globalThis.fetch = async (url, opts) => {
+    if (typeof url === 'string' && url.includes('api.resend.com')) {
+      resendCalls++;
+      try { const b = JSON.parse(opts?.body || '{}'); resendTo = (b.to || [])[0]; } catch {}
+      return new Response(JSON.stringify({ id: 're_' + resendCalls }), { status: 200, headers: { 'content-type': 'application/json' } });
+    }
+    return realFetch(url, opts);
+  };
+  const r = await call('POST', '/api/sales/campaigns/cmp1/send-now', { testTo: 'safe-test@mint-gp.com' }, AUTH);
+  globalThis.fetch = realFetch; // 还原，避免影响后续
+  check('HTTP 200', r.status === 200, `(${r.status})`);
+  check('mode=test', r.data?.mode === 'test', `(mode=${r.data?.mode})`);
+  check('testTo 回显', r.data?.testTo === 'safe-test@mint-gp.com', `(${r.data?.testTo})`);
+  check('Resend 收件人=testTo (非真实买家)', resendTo === 'safe-test@mint-gp.com', `(to=${resendTo})`);
+  check('sent=1', r.data?.sent === 1, `(sent=${r.data?.sent})`);
+  // 真实买家序列未被推进：current_step 仍为 0，status 仍 active
+  const e = db.prepare("SELECT current_step, status FROM campaign_enrollments WHERE id='e1'").get();
+  check('真实入组步骤未推进', e.current_step === 0, `(step=${e.current_step})`);
+  check('真实入组状态未变', e.status === 'active', `(status=${e.status})`);
+  // 未写入 sent 事件（测试模式不记录，避免污染打开率/退订统计）
+  const ev = db.prepare("SELECT COUNT(*) c FROM email_events WHERE event_type='sent' AND enrollment_id='e1'").get();
+  check('测试模式未落 sent 事件', ev.c === 0, `(c=${ev.c})`);
+}
 // 清理 bundle（测试产物，不入库；safe-delete 钩子可能拦截 rm，用 try 包住避免影响总结）
 import { rmSync } from 'node:fs';
 try { rmSync(new URL('./_bundle.mjs', import.meta.url), { force: true }); } catch { /* 忽略清理失败 */ }
