@@ -5,7 +5,7 @@
     Chains the full deploy:
       1) git push origin main      -- Pages Git integration deploys the frontend
       2) D1 schema apply           -- idempotent (D1 already exists)
-      3) wrangler secret put       -- RESEND_API_KEY / SESSION_SECRET / GITHUB_CLIENT_SECRET
+      3) wrangler secret put       -- SALES_API_KEY / RESEND_API_KEY / SESSION_SECRET / GITHUB_CLIENT_SECRET
       4) wrangler deploy           -- mintgroup-sales goes live
       5) Cloudflare DNS hint       -- manual Resend domain verification
       6) online smoke tests        -- auto curl verify endpoints return 200
@@ -64,10 +64,14 @@ if ($LASTEXITCODE -ne 0) {
 
 # 3. secrets (env first, else prompt; Enter skips optional ones)
 Write-Host "`n==> Step 3/6: configure secrets" -ForegroundColor Cyan
+# SALES_API_KEY 必须与前端硬编码值一致（prospecting/outreach/analytics.html 中的 KEY），
+# 否则线上站点每个 x-api-key 请求都会返回 401。该值已暴露在前端源码中，故无 env 时直接用硬编码默认值。
+$SalesApiKeyDefault = "6c9aa264c91c7a0c5a9847c59e48271536dda8806cdf1b0ebbcc724e38ec7e80"
 $keys = @(
-  @{ Name = "RESEND_API_KEY";       Required = $true;  Val = $env:RESEND_API_KEY },
-  @{ Name = "SESSION_SECRET";       Required = $false; Val = $env:SESSION_SECRET },
-  @{ Name = "GITHUB_CLIENT_SECRET"; Required = $false; Val = $env:GITHUB_CLIENT_SECRET }
+  @{ Name = "SALES_API_KEY";         Required = $true;  Val = (if ($env:SALES_API_KEY) { $env:SALES_API_KEY } else { $SalesApiKeyDefault }) },
+  @{ Name = "RESEND_API_KEY";        Required = $true;  Val = $env:RESEND_API_KEY },
+  @{ Name = "SESSION_SECRET";        Required = $false; Val = $env:SESSION_SECRET },
+  @{ Name = "GITHUB_CLIENT_SECRET";  Required = $false; Val = $env:GITHUB_CLIENT_SECRET }
 )
 foreach ($k in $keys) {
   $v = $k.Val
@@ -126,9 +130,9 @@ try {
 
 # 6.2 analytics/trends 受保护，带 x-api-key 应 200
 Write-Host "  [2/3] GET /analytics/trends (protected, x-api-key, expect 200)" -ForegroundColor Gray
-$SalesKey = $env:SALES_API_KEY
+$SalesKey = if ($env:SALES_API_KEY) { $env:SALES_API_KEY } else { "6c9aa264c91c7a0c5a9847c59e48271536dda8806cdf1b0ebbcc724e38ec7e80" }
 if (-not $SalesKey) {
-  Write-Host "        SKIP -- SALES_API_KEY env not set (it is hardcoded in frontend)" -ForegroundColor Gray
+  Write-Host "        SKIP -- SALES_API_KEY not available" -ForegroundColor Gray
 } else {
   try {
     $code = (curl.exe -s -o $null -w "%{http_code}" -H "x-api-key: $SalesKey" "$ApiBase/analytics/trends?days=30" 2>$null)

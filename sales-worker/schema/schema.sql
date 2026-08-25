@@ -269,7 +269,7 @@ CREATE TABLE IF NOT EXISTS settings (
 
 INSERT OR IGNORE INTO settings (key, value) VALUES
   ('email_provider', 'resend'),
-  ('email_from', 'sales@mint-gp.com'),
+  ('email_from', 'sophia.wang@mint-gp.com'),
   ('email_from_name', 'Mint Hygiene Sales'),
   ('currency', 'USD'),
   ('timezone', 'Asia/Shanghai');

@@ -69,7 +69,7 @@ wrangler secret put SESSION_SECRET --name mintgroup-sales
 # 粘贴一段随机串，例如：openssl rand -hex 32
 ```
 
-> `EMAIL_FROM=sales@mint-gp.com` 已在 wrangler.toml 的 [vars] 里设好，无需改。
+> `EMAIL_FROM=sophia.wang@mint-gp.com` 已在 wrangler.toml 的 [vars] 里设好（sales@mint-gp.com 不存在，统一用真实邮箱），无需改。
 
 #### 3.1 密钥丢失 / 轮换怎么办
 
@@ -125,7 +125,7 @@ curl -X POST https://www.mint-gp.com/api/sales/outreach/send-now \
   -d '{"enrollmentId":"<某个enrollment>","testMode":true,"testTo":"你的邮箱@xx.com"}'
 ```
 
-收件箱应收到来自 `sales@mint-gp.com` 的邮件（含打开像素 + 退订页脚）。
+收件箱应收到来自 `sophia.wang@mint-gp.com` 的邮件（含打开像素 + 退订页脚）。
 
 ---
 

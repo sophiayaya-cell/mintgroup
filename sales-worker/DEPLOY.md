@@ -236,4 +236,4 @@ export NODE=~/.workbuddy/binaries/node/versions/22.22.2/node.exe
   OAuth session（复用 `verifySession`）。
 - 真实线索来源（Europages / ImportGenius / LinkedIn）需在 `worker/connectors.ts`
   填入对应 API key 并实现抓取；当前为与业务匹配的种子数据集。
-- 邮件真实送达依赖 Resend + 发信域名 `sales@mint-gp.com` 的 DNS 校验（SPF/DKIM）。
+- 邮件真实送达依赖 Resend + 发信域名 `mint-gp.com`（发件地址 `sophia.wang@mint-gp.com`）的 DNS 校验（SPF/DKIM）。

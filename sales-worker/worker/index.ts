@@ -925,7 +925,7 @@ const UNSUBSCRIBE_HTML = `<!DOCTYPE html><html lang="zh-CN"><head><meta charset=
 .check{width:56px;height:56px;border-radius:50%;background:#E1F5EE;color:#1D9E75;font-size:30px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
 h1{font-size:19px;margin:0 0 8px;color:#1c1917}h2{font-size:14px;font-weight:400;color:#78716c;margin:0;line-height:1.6}</style></head>
 <body><div class="card"><div class="check">✓</div><h1>您已成功退订</h1>
-<h2>我们将不再向您发送营销邮件。<br>如需重新订阅，请联系 sales@mint-gp.com。</h2></div></body></html>`;
+<h2>我们将不再向您发送营销邮件。<br>如需重新订阅，请联系 sophia.wang@mint-gp.com。</h2></div></body></html>`;
 
 async function getCampaign(env: Env, campaignId: string): Promise<Response> {
   const c = await env.DB.prepare('SELECT * FROM campaigns WHERE id = ?').bind(campaignId).first();

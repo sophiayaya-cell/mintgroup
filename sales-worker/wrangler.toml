@@ -30,7 +30,8 @@ crons = ["0 * * * *"]
 
 # 环境变量（非敏感，可直接写；敏感项走 wrangler secret put）
 [vars]
-EMAIL_FROM = "sales@mint-gp.com"
+# 实际存在的邮箱；sales@mint-gp.com 不存在，故发件/退信回复都指向 sophia.wang@mint-gp.com
+EMAIL_FROM = "sophia.wang@mint-gp.com"
 EMAIL_FROM_NAME = "Mint Sales"
 APP_BASE_URL = "https://www.mint-gp.com"
 # GITHUB_CLIENT_ID 与 mintgroup-auth 用同一个 GitHub OAuth App（Decap CMS 用）
