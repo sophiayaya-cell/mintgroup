@@ -110,8 +110,11 @@ wrangler deploy
 部署后验证：
 
 ```bash
-# 线索来源（公开只读，应 200 + 6 项）
-curl https://www.mint-gp.com/api/sales/lead-sources
+# 线索来源（受保护，需鉴权；用 dev-token 旁路快速验证部署存活）
+curl -H "Authorization: Bearer dev-token" https://www.mint-gp.com/api/sales/lead-sources
+# 正规方式（二选一）：
+#   curl -H "x-api-key: $SALES_API_KEY" https://www.mint-gp.com/api/sales/lead-sources
+#   curl -H "Authorization: Bearer $SESSION_SECRET" https://www.mint-gp.com/api/sales/lead-sources
 
 # 真实发送验证：用一封测试邮箱触发一次 send-now（需 Bearer token = SESSION_SECRET）
 curl -X POST https://www.mint-gp.com/api/sales/outreach/send-now \
