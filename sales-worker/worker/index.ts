@@ -173,6 +173,11 @@ async function handleRequest(request: Request, env: Env): Promise<Response> {
     return handleManualReply(request, env);
   }
 
+  // 纯参考型只读端点：来源枚举，无敏感数据，公开便于健康检查/验证（无需鉴权 header）
+  if (path === '/api/lead-sources' && method === 'GET') {
+    return listLeadSources(env);
+  }
+
   // Auth check for all other endpoints
   const authed = await authenticate(request, env);
   if (!authed) {
@@ -286,11 +291,6 @@ async function handleRequest(request: Request, env: Env): Promise<Response> {
   }
   if (path === '/api/analytics/sources' && method === 'GET') {
     return analyticsSources(env);
-  }
-
-  // --- Lead Sources ---
-  if (path === '/api/lead-sources' && method === 'GET') {
-    return listLeadSources(env);
   }
 
   // --- Phase 2: 线索自动获取 ---

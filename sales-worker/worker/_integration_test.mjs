@@ -154,14 +154,19 @@ console.log('=== 9. 受保护：leads/import (去重导入) ===');
   const opp = db.prepare("SELECT COUNT(*) c FROM opportunities WHERE account_id=?").get(acct.id);
   check('自动建商机', opp.c === 1, `(c=${opp.c})`);
 }
-console.log('=== 10. 鉴权：无 token 应 401 ===');
+console.log('=== 10. 鉴权：lead-sources 已公开，无 token 应 200 ===');
 {
   const r = await call('GET', '/api/sales/lead-sources');
+  check('HTTP 200', r.status === 200, `(${r.status})`);
+}
+console.log('=== 11. 鉴权：受保护端点无 token 应 401 ===');
+{
+  const r = await call('GET', '/api/sales/accounts');
   check('HTTP 401', r.status === 401, `(${r.status})`);
 }
-console.log('=== 11. 鉴权：错误 token 应 401 ===');
+console.log('=== 11b. 鉴权：受保护端点错误 token 应 401 ===');
 {
-  const r = await call('GET', '/api/sales/lead-sources', null, { headers: { Authorization: 'Bearer wrong' } });
+  const r = await call('GET', '/api/sales/accounts', null, { headers: { Authorization: 'Bearer wrong' } });
   check('HTTP 401', r.status === 401, `(${r.status})`);
 }
 console.log('=== 12. 路由：未知路径应 404 ===');
