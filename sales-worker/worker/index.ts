@@ -1153,12 +1153,12 @@ async function handleManualReply(request: Request, env: Env): Promise<Response> 
   return json(r);
 }
 
-// --- Dashboard GitHub OAuth 登录（与 Decap CMS 共用同一个 GitHub OAuth App）---
+// --- Dashboard GitHub OAuth 登录（专用 OAuth App「Mint Sales Dashboard」）---
 // 登录流程：/api/sales/auth（跳 GitHub）→ /api/sales/callback（换 token、签发 sales_session Cookie）→ 302 回 /sales/
 async function handleSalesAuth(request: Request, env: Env): Promise<Response> {
   if (!env.GITHUB_CLIENT_ID || env.GITHUB_CLIENT_ID === 'REPLACE_WITH_OAUTH_APP_ID' || !env.SESSION_SECRET) {
     return new Response(
-      'Dashboard 登录未配置：请在 mintgroup-sales Worker 上设置 GITHUB_CLIENT_ID（与 Decap 同一 OAuth App）与 SESSION_SECRET',
+      'Dashboard 登录未配置：请在 mintgroup-sales Worker 上设置 GITHUB_CLIENT_ID（Mint Sales Dashboard 专用 OAuth App）与 SESSION_SECRET',
       { status: 500 }
     );
   }
