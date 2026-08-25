@@ -71,6 +71,19 @@ wrangler secret put SESSION_SECRET --name mintgroup-sales
 
 > `EMAIL_FROM=sales@mint-gp.com` 已在 wrangler.toml 的 [vars] 里设好，无需改。
 
+#### 3.1 密钥丢失 / 轮换怎么办
+
+Resend 的 API Key **创建时只显示一次，之后后台不再展示明文**，所以"没记录下来"无法"查看"，只能**重新生成一个新 key**。处理步骤：
+
+1. 登录 https://resend.com → 左侧 **API Keys** → **Create API Key**（也可把旧的删掉，避免留下废弃 key）。
+2. 创建后立即复制 `re_xxx`（只弹这一次），马上粘贴进下面的 `wrangler secret put`。
+3. `wrangler secret put RESEND_API_KEY --name mintgroup-sales` 会**直接覆盖** Worker 里旧的 secret，**无需先删旧的**；put 成功后 Cloudflare 会自动重新部署，新 key 立即生效。
+4. 旧 key 若没删，在 Resend 后台手动 Delete 即可（留着也能用，但建议删除以缩小泄露面）。
+
+> 注意：Cloudflare Worker 的 secret **无法反向读取明文**——一旦 `wrangler secret put` 进去就再也看不到，所以丢了只能按上面重新生成。下次拿到 key 建议立刻存进密码管理器（如 Bitwarden / 1Password）或写进本地 `.env`（已被 `.gitignore` 忽略，不会入库）。
+
+> `SESSION_SECRET` **不是 Resend 的东西**，而是你自己生成的随机串（`openssl rand -hex 32`）。它若已经设进 Worker 且在用，无需重设；只有想轮换时才换——注意换了会让现有 `Bearer <SESSION_SECRET>` 的会话全部失效，需重新用新值调接口。
+
 ---
 
 ## 二、邮箱发现：StartupHub（已内置，免配置）
