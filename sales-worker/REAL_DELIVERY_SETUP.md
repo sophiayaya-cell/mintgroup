@@ -12,20 +12,50 @@
 - 打开 https://resend.com  → Sign up（用你日常邮箱注册，免费层 3000 封/月、100 封/天、1 个域名）。
 - 进入 **API Keys** → Create API Key → 复制 `re_xxx` 开头的 key（只显示一次）。
 
-### 2. 验证发信域名 `mint-gp.com`
-- Resend 控制台 → **Domains** → Add Domain → 填 `mint-gp.com` → 选区域（默认 us）。
-- Resend 会给出一组 DNS 记录，到 **Cloudflare 控制台 → mint-gp.com → DNS → Records** 添加：
+### 2. 验证发信域名 `mint-gp.com`（截图级步骤）
 
-  | 类型 | 名称 | 内容 | 说明 |
-  |---|---|---|---|
-  | TXT | `mint-gp.com` 或 `@` | `v=spf1 include:amazonses.com ~all` | 覆盖默认 SPF（Resend 用 SES 发信） |
-  | TXT | `_dmarc` | `v=DMARC1; p=none; rua=mailto:dmarc@mint-gp.com` | DMARC 策略（初期用 none 观察） |
-  | CNAME | `xxx._domainkey` | Resend 给的 `xxx.dkim.amazonses.com` | DKIM 签名（Resend 控制台会列出具体主机名+值，通常 1~3 条） |
+> 目标：让 Resend 能代表 `mint-gp.com` 发信，且收件方承认签名合法。
+> 一共 3 步：Resend 里加域名 → 把 Resend 给的 DNS 记录逐项抄到 Cloudflare → 回 Resend 点 Verify。
 
-  > 注：Resend 控制台会**逐条列出**确切的 Name/Value，以上为通用形态，以控制台显示为准。
-  > Cloudflare 里 CNAME 主机名去掉 `mint-gp.com.` 后缀只填前缀（如 `resend._domainkey`）。
+#### 2.1 在 Resend 后台添加域名
+1. 登录 https://resend.com → 左侧菜单 **Domains**（域名）→ 右上角 **Add Domain**。
+2. 弹窗里填 `mint-gp.com` → 区域选 **us-east-1**（默认即可）→ 点 **Add**。
+3. 进入域名详情页，页面会显示一个 **DNS records（DNS 记录）** 面板，通常列出 **3 条记录**（1 条 SPF-TXT、1 条 DMARC-TXT、1~3 条 DKIM-CNAME）。
+   - 每条记录都有 **Type（类型）/ Host（主机）/ Value（值/目标）** 三列，右侧有复制按钮。
+   - 记下这 3 条的内容，下一步原样抄到 Cloudflare。**以这个面板显示的值为准**，下面的表只是示例，不要照抄字面。
 
-- 回到 Resend 点 **Verify**，等状态变绿（DNS 生效通常 5~30 分钟，最长 24h）。
+   | Resend 面板上的 Type | 典型 Host（示例） | 典型 Value（示例） | 含义 |
+   |---|---|---|---|
+   | `TXT` | `mint-gp.com`（或 `@`） | `v=spf1 include:amazonses.com ~all` | SPF：授权 Resend 代发 |
+   | `TXT` | `_dmarc` | `v=DMARC1; p=none; rua=mailto:dmarc@mint-gp.com` | DMARC：初期 `p=none` 仅观察 |
+   | `CNAME` | `resend._domainkey`（或类似 `xxx._domainkey`） | `resend.dkim.amazonses.com`（或 `dkim.resend.com` 等） | DKIM：签名公钥指针（可能 2~3 条） |
+
+#### 2.2 在 Cloudflare 后台逐项添加 DNS 记录
+1. 登录 https://dash.cloudflare.com → 选站点 **mint-gp.com** → 顶部 **DNS** → **Records** 标签。
+2. 点右上角蓝色 **Add record**（添加记录）。对 Resend 面板里的**每一条**记录重复以下操作：
+
+   - **Type（类型）**：从下拉框选 Resend 给的类型（TXT 或 CNAME），**不要选错**。
+   - **Name（名称）**：把 Resend 的 Host **去掉末尾的 `.mint-gp.com`** 再填：
+     - Host 是 `mint-gp.com` 或 `@` → 填 `@`（或留空，Cloudflare 会自动补根域名）。
+     - Host 是 `_dmarc` → 填 `_dmarc`。
+     - Host 是 `resend._domainkey` → 填 `resend._domainkey`（**只填前缀，不要带 `.mint-gp.com`**，否则会变成 `resend._domainkey.mint-gp.com.mint-gp.com` 双重后缀而失败）。
+   - **Content / Target（内容/目标）**：
+     - TXT 类型 → 把 Resend 的 Value **整段**粘贴进 Content（含 `v=spf1...` 或 `v=DMARC1...`，不要丢分号）。
+     - CNAME 类型 → 把 Resend 的 Value 粘贴进 Target（形如 `resend.dkim.amazonses.com`，**末尾不要手填点号**，Cloudflare 会补）。
+   - **TTL**：保持 **Auto**（自动）。
+   - **代理状态（关键！）**：点一下右侧的小云朵，确保它是 **灰色（DNS only / 仅 DNS）**，不是橙色（Proxied / 已代理）。
+     - ⚠️ DKIM 的 CNAME **绝不能开代理（橙色云）**，否则收件方查不到正确签名，邮件必进垃圾箱或验证失败。SPF/DMARC 的 TXT 不受影响，但统一设成灰云最稳妥。
+   - 填完点 **Save**（保存）。重复直到 3 条都加完。
+3. 添加后，Cloudflare 的 Records 列表里应能看见这 3 条，且云朵都是灰色。
+
+#### 2.3 回 Resend 点 Verify
+1. 回到 Resend 的域名详情页，等 **1~2 分钟** 让 DNS 传播（Cloudflare 保存后通常几十秒就生效，但 Resend 校验有缓存）。
+2. 点页面上的 **Verify**（或刷新页面后出现的 Verify Domain）按钮。
+3. 状态从 `Pending` / `Not verified` 变为 **`Verified`**（绿色）即成功。
+   - 若仍 `Pending`：等 5~30 分钟再点一次；最长 24h。多半是某条记录 Host 多写了后缀或 CNAME 开了代理，回头按 2.2 核对。
+   - 可用第三方核对：在终端跑 `dig +short TXT mint-gp.com` 应回显 `v=spf1 include:amazonses.com ~all`；`dig +short CNAME resend._domainkey.mint-gp.com` 应回显 `resend.dkim.amazonses.com`（值以你的面板为准）。
+
+> 小提示：Resend 较新版本会把 DKIM 合并成 1 条 CNAME，老版本是 3 条——**条数以你后台面板显示为准**，逐条照抄即可，不要凭记忆补删。
 
 ### 3. 注入密钥到 Cloudflare Worker
 在 `sales-worker/` 目录执行（把 key 换成你的）：
