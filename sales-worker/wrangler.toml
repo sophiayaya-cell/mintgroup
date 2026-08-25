@@ -34,9 +34,9 @@ crons = ["0 * * * *"]
 EMAIL_FROM = "sophia.wang@mint-gp.com"
 EMAIL_FROM_NAME = "Mint Sales"
 APP_BASE_URL = "https://www.mint-gp.com"
-# GITHUB_CLIENT_ID 与 mintgroup-auth 用同一个 GitHub OAuth App（Decap CMS 用）
-# 真实值取自线上 /api/auth 重定向，即 Decap 所用 OAuth App 的 Client ID
-GITHUB_CLIENT_ID = "Ov23liU2zW26MsfdDT77"
+# GITHUB_CLIENT_ID 为「Mint Sales Dashboard」专用 OAuth App（与 Decap 分开）
+# Client Secret 用 wrangler secret put GITHUB_CLIENT_SECRET 设置，勿写进本文件
+GITHUB_CLIENT_ID = "Ov23li5B9ExQ7fHwEaj5"
 
 # 可选: 异步发送队列（避免 cron 单次超时）
 # 启用步骤：1) 取消下方注释  2) wrangler queues create mint-sales-send  3) deploy
