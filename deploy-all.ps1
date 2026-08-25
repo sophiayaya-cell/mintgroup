@@ -8,6 +8,7 @@
       3) wrangler secret put       -- RESEND_API_KEY / SESSION_SECRET / GITHUB_CLIENT_SECRET
       4) wrangler deploy           -- mintgroup-sales goes live
       5) Cloudflare DNS hint       -- manual Resend domain verification
+      6) online smoke tests        -- auto curl verify endpoints return 200
     Usage:
       .\deploy-all.ps1
       $env:RESEND_API_KEY="re_xxx"; $env:SESSION_SECRET="..."; .\deploy-all.ps1
@@ -29,7 +30,7 @@ if (-not (Get-Command wrangler -ErrorAction SilentlyContinue)) {
 }
 
 # 1. push frontend (Pages auto-deploys via Git integration)
-Write-Host "`n==> Step 1/5: git push origin main (frontend auto-deploy)" -ForegroundColor Cyan
+Write-Host "`n==> Step 1/6: git push origin main (frontend auto-deploy)" -ForegroundColor Cyan
 Set-Location $RepoRoot
 $branch = git rev-parse --abbrev-ref HEAD
 if ($branch -ne "main") {
@@ -49,7 +50,7 @@ if ($branch -ne "main") {
 }
 
 # 2. D1 schema (idempotent)
-Write-Host "`n==> Step 2/5: apply D1 schema (idempotent)" -ForegroundColor Cyan
+Write-Host "`n==> Step 2/6: apply D1 schema (idempotent)" -ForegroundColor Cyan
 Set-Location $WorkerDir
 # 动态读取 wrangler.toml 中的 database_name，确保与 Worker 绑定一致
 $dbName = (Select-String -Path (Join-Path $WorkerDir "wrangler.toml") -Pattern 'database_name\s*=\s*"([^"]+)"' | ForEach-Object { $_.Matches.Groups[1].Value } | Select-Object -First 1)
@@ -62,7 +63,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 # 3. secrets (env first, else prompt; Enter skips optional ones)
-Write-Host "`n==> Step 3/5: configure secrets" -ForegroundColor Cyan
+Write-Host "`n==> Step 3/6: configure secrets" -ForegroundColor Cyan
 $keys = @(
   @{ Name = "RESEND_API_KEY";       Required = $true;  Val = $env:RESEND_API_KEY },
   @{ Name = "SESSION_SECRET";       Required = $false; Val = $env:SESSION_SECRET },
@@ -85,7 +86,7 @@ foreach ($k in $keys) {
 }
 
 # 4. deploy worker
-Write-Host "`n==> Step 4/5: wrangler deploy" -ForegroundColor Cyan
+Write-Host "`n==> Step 4/6: wrangler deploy" -ForegroundColor Cyan
 wrangler deploy
 if ($LASTEXITCODE -ne 0) {
   Write-Host "    deploy failed, see output above." -ForegroundColor Red
@@ -94,7 +95,7 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "    Worker deployed." -ForegroundColor Green
 
 # 5. DNS hint (manual, then pause)
-Write-Host "`n==> Step 5/5: Cloudflare DNS config (manual)" -ForegroundColor Cyan
+Write-Host "`n==> Step 5/6: Cloudflare DNS config (manual)" -ForegroundColor Cyan
 Write-Host "  Code is live, but real email delivery also needs Resend DNS records in Cloudflare:"
 Write-Host "    1. Resend console -> Domains -> mint-gp.com -> copy the 3 records shown"
 Write-Host "       (1x SPF-TXT, 1x DMARC-TXT, 1-3x DKIM-CNAME)"
@@ -105,8 +106,43 @@ Write-Host "    3. Back in Resend click Verify; turns green when done"
 Write-Host "       (details in REAL_DELIVERY_SETUP.md section 2)"
 Read-Host "  After adding DNS and Verify, press Enter to finish"
 
-# verify hints
-Write-Host "`n==> Verify commands (run manually)" -ForegroundColor Cyan
-Write-Host "    curl https://www.mint-gp.com/api/sales/lead-sources" -ForegroundColor Gray
-Write-Host "    # real send example: see REAL_DELIVERY_SETUP.md section 3 (needs Bearer SESSION_SECRET + valid enrollmentId)" -ForegroundColor Gray
+Read-Host "  After adding DNS and Verify, press Enter to run online smoke tests"
+
+# 6. online smoke tests (executed, not just printed)
+Write-Host "`n==> Step 6/6: online smoke tests" -ForegroundColor Cyan
+# 等部署传播几秒，避免刚 deploy 完就测到旧实例
+Start-Sleep -Seconds 5
+
+$ApiBase = "https://www.mint-gp.com/api/sales"
+# 6.1 lead-sources 现已公开，裸 curl 应 200
+Write-Host "  [1/3] GET /lead-sources (public, expect 200)" -ForegroundColor Gray
+try {
+  $code = (curl.exe -s -o $null -w "%{http_code}" "$ApiBase/lead-sources" 2>$null)
+  if ($code -eq "200") { Write-Host "        PASS ($code)" -ForegroundColor Green }
+  else { Write-Host "        FAIL ($code) -- deploy may not have propagated yet, retry in a minute" -ForegroundColor Yellow }
+} catch {
+  Write-Host "        SKIP (curl not available)" -ForegroundColor Gray
+}
+
+# 6.2 analytics/trends 受保护，带 x-api-key 应 200
+Write-Host "  [2/3] GET /analytics/trends (protected, x-api-key, expect 200)" -ForegroundColor Gray
+$SalesKey = $env:SALES_API_KEY
+if (-not $SalesKey) {
+  Write-Host "        SKIP -- SALES_API_KEY env not set (it is hardcoded in frontend)" -ForegroundColor Gray
+} else {
+  try {
+    $code = (curl.exe -s -o $null -w "%{http_code}" -H "x-api-key: $SalesKey" "$ApiBase/analytics/trends?days=30" 2>$null)
+    if ($code -eq "200") { Write-Host "        PASS ($code)" -ForegroundColor Green }
+    else { Write-Host "        FAIL ($code)" -ForegroundColor Yellow }
+  } catch {
+    Write-Host "        SKIP (curl not available)" -ForegroundColor Gray
+  }
+}
+
+# 6.3 真实发送（需已配 RESEND_API_KEY + 域名 DNS 已 Verify）。仅打印命令，不自动发。
+Write-Host "  [3/3] real send (manual) -- requires RESEND_API_KEY + verified domain" -ForegroundColor Gray
+Write-Host "        curl -X POST $ApiBase/outreach/send-now -H 'Authorization: Bearer <SESSION_SECRET>' -H 'Content-Type: application/json' -d '{\"enrollmentId\":\"<id>\",\"testMode\":true,\"testTo\":\"you@xx.com\"}'" -ForegroundColor Gray
+Write-Host "        (SESSION_SECRET is the value you put via wrangler secret put, or dev-token for a quick test)" -ForegroundColor Gray
+
 Write-Host "`nDeploy flow finished." -ForegroundColor Green
+Write-Host "Next (manual): add Resend DNS in Cloudflare + Verify in Resend, then real emails will deliver." -ForegroundColor Cyan
