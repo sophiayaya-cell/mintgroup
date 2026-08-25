@@ -35,7 +35,8 @@ EMAIL_FROM = "sophia.wang@mint-gp.com"
 EMAIL_FROM_NAME = "Mint Sales"
 APP_BASE_URL = "https://www.mint-gp.com"
 # GITHUB_CLIENT_ID 与 mintgroup-auth 用同一个 GitHub OAuth App（Decap CMS 用）
-GITHUB_CLIENT_ID = "REPLACE_WITH_OAUTH_APP_ID"
+# 真实值取自线上 /api/auth 重定向，即 Decap 所用 OAuth App 的 Client ID
+GITHUB_CLIENT_ID = "Ov23liU2zW26MsfdDT77"
 
 # 可选: 异步发送队列（避免 cron 单次超时）
 # 启用步骤：1) 取消下方注释  2) wrangler queues create mint-sales-send  3) deploy
